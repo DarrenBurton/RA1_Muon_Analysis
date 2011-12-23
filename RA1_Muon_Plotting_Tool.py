@@ -582,7 +582,7 @@ class Number_Extractor(object):
       print "\n\nMaking Tables for %s" % category
       self.f = open('LatexTables.tex','w')
       
-      if category == "Had": self.Latex_Table(dict,caption = "Binned %s Predictions" %category, 
+      if category == "Total_SM": self.Latex_Table(dict,caption = "Binned %s Predictions" %category, 
             rows = [{"label": r'''Total Had Selection MC''',"entryFunc": self.MakeList(self.Had_Yield_Per_Bin,"Yield","SM_Stat_Error")},
                     {"label": r'''MC $\mu +$~jets''',         "entryFunc":self.MakeList(self.Muon_Yield_Per_Bin,"Yield","SM_Stat_Error")},
                     {"label": r'''MC Ratio''',                "entryFunc":self.MakeList(dict,"Trans","Trans_Error")},
@@ -612,7 +612,7 @@ class Number_Extractor(object):
       
       self.f.close()
 
-  def MakeList(self,dict,key,error = "",decimal = ""):
+  def MakeList(self,dict,key,error = ""):
       List = []
       for entry in sorted(dict.iterkeys()):
         if error: List.append(self.toString("%4.2f" %dict[entry][key])+"  \pm  "+ self.toString("%4.2f" %dict[entry][error]))
