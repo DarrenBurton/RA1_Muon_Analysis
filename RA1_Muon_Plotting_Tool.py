@@ -9,23 +9,26 @@ from optparse import OptionParser
 import array
 import math as m
 
-def Data_Scaler(htbin,hist,alphat="",yield_scale="",number_mode=""):
-      if yield_scale is "alphat":
-        Scale_Amount = {"275_325":{"55":float(1./0.843),"6":float(1/0.88)},"325_375":{"53":float(1/0.893),"55":float(1/0.955),"6":1.},"375_475":{"52":float(1/0.862),"53":float(1/0.972),"55":float(1/0.971),"6":1.},"475_575":{"51":float(1/0.87),"52":float(1/0.86),"53":float(1/0.972),"55":1.,"6":1.},"575_675":{"51":float(1/0.877),"52":float(1/0.849),"53":1.,"55":1.,"6":1.},"675_775": {"51":float(1/0.848),"52":1.,"53":1.,"55":1.,"6":1.},"775_875": {"51":1.,"52":1.,"53":1.,"55":1.,"6":1.} ,"875_inf": {"51":1.,"52":1.,"53":1.,"55":1.,"6":1.} }
-        if htbin in Scale_Amount: 
-          if alphat in Scale_Amount[htbin] and Scale_Amount[htbin][alphat] != 1: 
-            print "Scaling data due to Trigger efficiency of %s percent " % ((1/Scale_Amount[htbin][alphat])*100)
-            if number_mode: return float(Scale_Amount[htbin][alphat])
-            else: hist.Scale(Scale_Amount[htbin][alphat])
-          else : return float(1.0)  
-      else:
-        Scale_Amount = {"275_325":float(1/0.9153),"325_375":float(1/0.9562),"375_475":float(1/0.9688),"475_575":float(1/0.9789),"575_675":1,"675_775":1,"775_875":1,"875_inf":1}
-        if htbin in Scale_Amount and Scale_Amount[htbin] != 1:
-            print "Scaling data due to Trigger efficiency of %s percent " % ((1/Scale_Amount[htbin]) * 100)
-            if number_mode: return float(Scale_Amount[htbin])
-            else:  hist.Scale(Scale_Amount[htbin])
-        else: return float(1.0)
-          
+def Data_Scaler(htbin,hist,alphat="",yield_scale="",number_mode="",scale= ""):
+
+      if scale is False: return float(1.0)
+      else :
+        if yield_scale is "alphat":
+          Scale_Amount = {"275_325":{"55":float(1./0.843),"6":float(1/0.88)},"325_375":{"53":float(1/0.893),"55":float(1/0.955),"6":1.},"375_475":{"52":float(1/0.862),"53":float(1/0.972),"55":float(1/0.971),"6":1.},"475_575":{"51":float(1/0.87),"52":float(1/0.86),"53":float(1/0.972),"55":1.,"6":1.},"575_675":{"51":float(1/0.877),"52":float(1/0.849),"53":1.,"55":1.,"6":1.},"675_775": {"51":float(1/0.848),"52":1.,"53":1.,"55":1.,"6":1.},"775_875": {"51":1.,"52":1.,"53":1.,"55":1.,"6":1.} ,"875_inf": {"51":1.,"52":1.,"53":1.,"55":1.,"6":1.} }
+          if htbin in Scale_Amount: 
+            if alphat in Scale_Amount[htbin] and Scale_Amount[htbin][alphat] != 1: 
+              print "Scaling data due to Trigger efficiency of %s percent " % ((1/Scale_Amount[htbin][alphat])*100)
+              if number_mode: return float(Scale_Amount[htbin][alphat])
+              else: hist.Scale(Scale_Amount[htbin][alphat])
+            else : return float(1.0)  
+        else:
+          Scale_Amount = {"275_325":float(1/0.9153),"325_375":float(1/0.9562),"375_475":float(1/0.9688),"475_575":float(1/0.9789),"575_675":1,"675_775":1,"775_875":1,"875_inf":1}
+          if htbin in Scale_Amount and Scale_Amount[htbin] != 1:
+              print "Scaling data due to Trigger efficiency of %s percent " % ((1/Scale_Amount[htbin]) * 100)
+              if number_mode: return float(Scale_Amount[htbin])
+              else:  hist.Scale(Scale_Amount[htbin])
+          else: return float(1.0)
+            
 class Plotter(object):
 
   def __init__(self):
@@ -60,12 +63,13 @@ class Plotter(object):
     parser.add_option("-q","--qcdfile",dest="QCD_File",default=False,help="QCD MC To Make Plots From")
     parser.add_option("-t","--ttbarfile",dest="TTbar_File",default=False,help="TTbar MC To Make Plots From")
     parser.add_option("-d","--dimuonfile",dest="DiMuon_File",default=False,help="DiMuon MC To Make Plots From")
+    parser.add_option("-g","--gammafile",dest="Photon_File",default=False,help="Photon MC To Make Plots From")
     parser.add_option("-a","--alphat",action = "store_const", const ="alphat", dest="runmode",default=False,help="Binned Alpha T Mode")
     parser.add_option("-c","--control_muon",action = "store_const", const = "muon", dest="runmode",default=False,help="Binned Muon Control Mode")
     parser.add_option("-b","--muon_numbers",action = "store_const", const = "default", dest="runmode",default=False,help="3 Binned Muon Sample")
     parser.add_option("-i","--lumo",dest="Lumo",default=0.1,help="Set Luminosity")
+    parser.add_option("-s","--scaling",action = "store_false",dest="Do_Scaling",default=True,help="Turn Data Scaling off")
     parser.add_option("-p","--plots",action = "store_false",dest="Make_Plots",default=True,help="Turn plotting off")
-    parser.add_option("-l","--leg",action = "store_false",dest="Make_Legend",default=True,help="Draw Legend (Default True)")
     parser.add_option("-n","--numbers",dest="Make_Predictions",default=False,help="Make Numbers, Input txt file with list of MC")
     (self.options,self.args) = parser.parse_args()
 
@@ -79,8 +83,7 @@ class Plotter(object):
          if subdirect.GetName() == "susyTree" : pass      
          else :
           for subkey in subdirect.GetListOfKeys() :
-           if subkey.GetName() != "tree":
-               self.Path_List.append("%s/%s" % (subdirect.GetName(),subkey.GetName()))        
+           if subkey.GetName() != "tree": self.Path_List.append("%s/%s" % (subdirect.GetName(),subkey.GetName()))        
        Hist_In_Folder =temp.Get(self.Path_List[0])
        HistNames = Hist_In_Folder.GetListOfKeys() 
        for hist in HistNames: self.Hist_List.append(hist.GetName())
@@ -130,6 +133,7 @@ class Plotter(object):
   def Make_Plots(self,htbin,histname,rootpath):
       print "At Histogram %s %s" %(rootpath,histname)
       DataFile =  r.TFile.Open("../%s" %self.options.Root_File)
+      self.Plot_Closer = [DataFile]
       plot  = DataFile.Get("%s/%s" %(rootpath, histname)) 
       c1 = r.TCanvas("canvas"+str(rootpath),"canname"+str(histname),1200,1200) 
       c1.cd(1)
@@ -138,11 +142,10 @@ class Plotter(object):
       self.histclone_keeper = []
       self.max_maker = [plot]
       plot.SetMarkerStyle(20)
-      Data_Scaler(htbin,plot,alphat=(rootpath.split("/")[0]).split('_alphaT_')[1], yield_scale = self.options.runmode)
+      Data_Scaler(htbin,plot,alphat=(rootpath.split("/")[0]).split('_alphaT_')[1], yield_scale = self.options.runmode, scale = self.options.Do_Scaling)
       self.Hist_Options(histname,plot,canvas = c1,word=True)
-      if self.options.Make_Legend is True: 
-        self.Legend_Maker()
-        self.leg.AddEntry(plot,"Data","L")
+      self.Legend_Maker()
+      self.leg.AddEntry(plot,"Data","L")
       self.MC_Draw(rootpath,histname)
       self.yaxis_maximiser(plot)
       self.Drawer(self.max_maker) 
@@ -152,14 +155,8 @@ class Plotter(object):
       if self.reversed ==1:
         self.ReversedDrawer(histname,c1,self.histclone_keeper,rootpath)        
         c1.SaveAs("%s/%s/%s_%s_reversed.png" %(htbin,histname,histname,rootpath.split("/")[0]))
-      DataFile.Close()
-      if self.options.MC_File: self.MCFile.Close()
-      if self.options.WJets_File: self.WJetsFile.Close()
-      if self.options.TTbar_File: self.TTbarFile.Close()
-      if self.options.Zinv_File: self.ZinvFile.Close()
-      if self.options.QCD_File: self.QCDFile.Close()
-      if self.options.DiMuon_File: self.DiMuonFile.Close()
-
+      for file in self.Plot_Closer: file.Close()
+     
   def Drawer(self,hist_collection):
     for num,plot in enumerate(hist_collection):
       if num == 0 :
@@ -212,6 +209,9 @@ class Plotter(object):
       if self.options.DiMuon_File: 
         self.DiMuonFile = r.TFile.Open("../%s" %self.options.DiMuon_File) 
         self.Add_MCplot("dimuon_plot",rootpath,histname,6,"Zmumu",self.DiMuonFile)
+      if self.options.Photon_File: 
+        self.PhotonFile = r.TFile.Open("../%s" %self.options.Photon_File) 
+        self.Add_MCplot("photon_plot",rootpath,histname,6,"Photon + Jets",self.PhotonFile)
 
   def Add_MCplot(self,mcplot,rootpath,histname,color,leg_entry,File):
       mcplot  = File.Get("%s/%s" %(rootpath, histname))
@@ -221,6 +221,7 @@ class Plotter(object):
       mcplot.SetLineWidth(3)
       self.Hist_Options(histname,mcplot)
       self.max_maker.append(mcplot)
+      self.Plot_Closer.append(File)
 
   def Legend_Maker(self): 
       self.leg = r.TLegend(0.67,0.67,0.91,0.85)
@@ -412,20 +413,19 @@ class Number_Extractor(object):
 
   def __init__(self):
     if a.options.Make_Predictions:  self.Get_Numbers()
-    else : pass
 
   def Get_Numbers(self):
     print "\n\nGetting Numbers\n\n"
     self.File_List()
     self.Get_Binning(self.Input_Files)
     self.Print_Binning()
-    if a.options.Make_Predictions : self.Prediction_Maker(self.Final_Info)
+    if a.options.Make_Ratios : self.Prediction_Maker(self.Final_Info)
     if a.options.runmode: self.Make_2D_Data_Table(self.Final_Info)
 
   def File_List(self):
     self.Input_Files = []
     self.SampleInfo = {}
-    MC_Weights = {"TTbar":0.00425452,"WJetsInc":0.0666131,"WJets250":0.000450549,"WJets300":0.00102329,"Zinv50":0.00485311,"Zinv100":0.00410382,"Zinv200":0.0013739,"Zmumu":0.00849073,"Data":1.}
+    MC_Weights = {"TTbar":0.00425452,"WJetsInc":0.0666131,"WJets250":0.000450549,"WJets300":0.00102329,"Zinv50":0.00485311,"Zinv100":0.00410382,"Zinv200":0.0013739,"Zmumu":0.00849073,"Photon":1.,"Data":1.}
 
     self.f = open(a.options.Make_Predictions, "r")
     for line in self.f.readlines():
@@ -454,68 +454,117 @@ class Number_Extractor(object):
          for hist in HistNames:
             if hist.GetName() == "HT": 
                 for path in Path_Bin_List:
-                  try :
                     Bin_Info = {"Category":0,"SampleType":0,"HT":0,"AlphaT":0,"Yield":0,"MC_Weight":0,"Yield_Error":0}
                     Grab_Integral = temp.Get("%s/%s" %(path,hist.GetName()))
                     Bin_Info["SampleType"] = self.SampleInfo[input]["SampleType"]
                     Bin_Info["Category"] = self.SampleInfo[input]["AnalysisType"]
                     Bin_Info["MC_Weight"] = self.SampleInfo[input]["Weight"]
-                    Bin_Info["Yield"] = (Grab_Integral.Integral()*Data_Scaler((path.split('/')[0]).split('_alphaT_')[0],hist, alphat = (path.split('/')[0]).split('_alphaT_')[1],  yield_scale=a.options.runmode,number_mode=True) if self.SampleInfo[input]["SampleType"] == "Data" else Grab_Integral.Integral()*10*float(a.options.Lumo))
+                    Bin_Info["Yield"] = (Grab_Integral.Integral()*Data_Scaler((path.split('/')[0]).split('_alphaT_')[0],hist, alphat = (path.split('/')[0]).split('_alphaT_')[1],  yield_scale=a.options.runmode,number_mode=True,scale = a.options.Do_Scaling) if self.SampleInfo[input]["SampleType"] == "Data" else Grab_Integral.Integral()*10*float(a.options.Lumo))
                     Bin_Info["Yield_Error"] = (m.sqrt(Grab_Integral.Integral()*float(Bin_Info["MC_Weight"]))*10.0*float(a.options.Lumo) if self.SampleInfo[input]["SampleType"] != "Data" else sqrt(float(Bin_Info["Yield"])))
-
                     Bin_Info["HT"] = (path.split('/')[0]).split('_alphaT_')[0]
                     Bin_Info["AlphaT"] = (path.split('/')[0]).split('_alphaT_')[1]
                     if Bin_Info["AlphaT"] == '6': Bin_Info["AlphaT"] = '60'
                     self.Final_Info["%s_%s/%s" %(self.SampleInfo[input]["AnalysisType"],self.SampleInfo[input]["SampleType"],path)] = Bin_Info
-                  except AttributeError:pass
          temp.Close()
   
   def Prediction_Maker(self,dict):
       
-      category = "Muon"
+      inhad_zinv = False
+      inhad_wjets = False
+      indimuon = False
+      inmuon = False
+      inphoton = False
 
-      self.Had_Yield_Per_Bin = {'275':{ "Data":0,"Yield":0,"TotError":[],"SM_Stat_Error":0},'325':{ "Data":0,"Yield":0,"TotError":[],"SM_Stat_Error":0  },'375':{ "Data":0,"Yield":0,"TotError":[], "SM_Stat_Error":0 },'475':{ "Data":0, "Yield":0,"TotError":[], "SM_Stat_Error":0  },'575':{ "Data":0,"Yield":0,"TotError":[], "SM_Stat_Error":0 },'675':{ "Data":0,"Yield":0,"TotError":[], "SM_Stat_Error":0  },'775':{ "Data":0, "Yield":0,"TotError":[], "SM_Stat_Error":0  },'875':{ "Data":0, "Yield":0,"TotError":[], "SM_Stat_Error":0} }
+      self.bins = ('275','325','375','475','575','675','775','875')
+      entries = ('Data','Yield','SM_Stat_Error','Muon_Trans','DiMuon_Trans','TotError')
 
-      self.Muon_Yield_Per_Bin = {'275':{ "Data":0,"Yield":0,"TotError":[],"SM_Stat_Error":0, "Muon_Trans":0,"Di_Muon_Trans":0 },'325':{ "Data":0,"Yield":0,"TotError":[],"SM_Stat_Error":0,"Muon_Trans":0,"Di_Muon_Trans":0 },'375':{ "Data":0,"Yield":0,"TotError":[], "SM_Stat_Error":0 ,"Muon_Trans":0,"Di_Muon_Trans":0 },'475':{ "Data":0, "Yield":0,"TotError":[], "SM_Stat_Error":0 , "Muon_Trans":0,"Di_Muon_Trans":0  },'575':{ "Data":0,"Yield":0,"TotError":[], "SM_Stat_Error":0 ,"Muon_Trans":0,"Di_Muon_Trans":0 },'675':{ "Data":0, "Yield":0,"TotError":[], "SM_Stat_Error":0,"Muon_Trans":0,"Di_Muon_Trans":0 },'775':{ "Data":0, "Yield":0,"TotError":[], "SM_Stat_Error":0,"Muon_Trans":0,"Di_Muon_Trans":0 },'875':{ "Data":0, "Yield":0,"TotError":[], "SM_Stat_Error":0,"Muon_Trans":0,"Di_Muon_Trans":0  } }
+      self.Had_Yield_Per_Bin = dict.fromkeys(self.bins)
+      self.Had_Muon_Yield_Per_Bin = dict.fromkeys(self.bins)
+      self.Had_Zmumu_Yield_Per_Bin = dict.fromkeys(self.bins)
+      self.Muon_Yield_Per_Bin = dict.fromkeys(self.bins)
+      self.DiMuon_Yield_Per_Bin = dict.fromkeys(self.bins)
+      self.Photon_Yield_Per_Bin = dict.fromkeys(self.bins)
 
-      self.DiMuon_Yield_Per_Bin = {'275':{ "Data":0,"Yield":0,"TotError":[],"SM_Stat_Error":0 },'325':{ "Data":0,"Yield":0,"TotError":[],"SM_Stat_Error":0  },'375':{ "Data":0,"Yield":0,"TotError":[], "SM_Stat_Error":0 },'475':{ "Data":0, "Yield":0,"TotError":[], "SM_Stat_Error":0  },'575':{ "Data":0,"Yield":0,"TotError":[], "SM_Stat_Error":0 },'675':{ "Data":0, "Yield":0,"TotError":[], "SM_Stat_Error":0  },'775':{"Data":0,  "Yield":0,"TotError":[], "SM_Stat_Error":0  },'875':{ "Data":0, "Yield":0,"TotError":[], "SM_Stat_Error":0} }
+      dictionaries = [self.Had_Yield_Per_Bin,self.Had_Muon_Yield_Per_Bin,self.Had_Zmumu_Yield_Per_Bin,self.DiMuon_Yield_Per_Bin,self.Muon_Yield_Per_Bin,self.Photon_Yield_Per_Bin]
+      for dicto in dictionaries:
+        for key in self.bins:
+          dicto[key] = dict.fromkeys(entries,0)
+          dicto[key]['TotError'] = [] 
 
       for entry in dict: 
         if dict[entry]["SampleType"] == "Data":
-          if dict[entry]["Category"] == "Had": self.Had_Yield_Per_Bin[(dict[entry]["HT"]).split('_')[0]]["Data"] = dict[entry]["Yield"]
+          if dict[entry]["Category"] == "Had": 
+            self.Had_Yield_Per_Bin[(dict[entry]["HT"]).split('_')[0]]["Data"] = dict[entry]["Yield"]
+            self.Had_Muon_Yield_Per_Bin[(dict[entry]["HT"]).split('_')[0]]["Data"] = dict[entry]["Yield"]
+            self.Had_Zmumu_Yield_Per_Bin[(dict[entry]["HT"]).split('_')[0]]["Data"] = dict[entry]["Yield"]
           if dict[entry]["Category"] == "Muon": self.Muon_Yield_Per_Bin[(dict[entry]["HT"]).split('_')[0]]["Data"] = dict[entry]["Yield"]
           if dict[entry]["Category"] == "DiMuon": self.DiMuon_Yield_Per_Bin[(dict[entry]["HT"]).split('_')[0]]["Data"] = dict[entry]["Yield"]
 
         elif dict[entry]["Category"] == "Had" : 
-            if dict[entry]["SampleType"] == "Zinv": category = "Total_SM"
+            if dict[entry]["SampleType"] == "Zinv50" or dict[entry]["SampleType"] == "Zinv100" or dict[entry]["SampleType"] == "Zinv200": 
+              inhad_zinv = True
+              self.Had_Zmumu_Yield_Per_Bin[(dict[entry]["HT"]).split('_')[0]]["Yield"] +=  dict[entry]["Yield"]
+              self.Had_Zmumu_Yield_Per_Bin[(dict[entry]["HT"]).split('_')[0]]["TotError"].append(dict[entry]["Yield_Error"])
+            else:  
+              inhad_wjet = True
+              self.Had_Muon_Yield_Per_Bin[(dict[entry]["HT"]).split('_')[0]]["Yield"] +=  dict[entry]["Yield"]
+              self.Had_Muon_Yield_Per_Bin[(dict[entry]["HT"]).split('_')[0]]["TotError"].append(dict[entry]["Yield_Error"])
+            
             self.Had_Yield_Per_Bin[(dict[entry]["HT"]).split('_')[0]]["Yield"] +=  dict[entry]["Yield"]
             self.Had_Yield_Per_Bin[(dict[entry]["HT"]).split('_')[0]]["TotError"].append(dict[entry]["Yield_Error"])
+
         elif dict[entry]["Category"] == "Muon":
+            inmuon = True
             self.Muon_Yield_Per_Bin[(dict[entry]["HT"]).split('_')[0]]["Yield"] +=  dict[entry]["Yield"]
             self.Muon_Yield_Per_Bin[(dict[entry]["HT"]).split('_')[0]]["TotError"].append(dict[entry]["Yield_Error"])
         elif dict[entry]["Category"] == "DiMuon":
-            category = "Di_Muon"
+            indimuon = True
             self.DiMuon_Yield_Per_Bin[(dict[entry]["HT"]).split('_')[0]]["Yield"] +=  dict[entry]["Yield"]
             self.DiMuon_Yield_Per_Bin[(dict[entry]["HT"]).split('_')[0]]["TotError"].append(dict[entry]["Yield_Error"])
+        elif dict[entry]["Category"] == "Photon":
+            inphoton = True
+            self.Photon_Yield_Per_Bin[(dict[entry]["HT"]).split('_')[0]]["Yield"] +=  dict[entry]["Yield"]
+            self.Photon_Yield_Per_Bin[(dict[entry]["HT"]).split('_')[0]]["TotError"].append(dict[entry]["Yield_Error"])
       
-      for bin in self.Muon_Yield_Per_Bin:
-        Sum_Had = 0
-        Sum_Muon = 0
-        Sum_DiMuon = 0
-        for x in self.Had_Yield_Per_Bin[bin]["TotError"]: Sum_Had += x*x
-        self.Had_Yield_Per_Bin[bin]["SM_Stat_Error"] = sqrt(Sum_Had)
-
-        for y in self.Muon_Yield_Per_Bin[bin]["TotError"]: Sum_Muon += y*y
-        self.Muon_Yield_Per_Bin[bin]["SM_Stat_Error"] = sqrt(Sum_Muon)
-
-        for z in self.DiMuon_Yield_Per_Bin[bin]["TotError"]: Sum_DiMuon += z*z
-        self.DiMuon_Yield_Per_Bin[bin]["SM_Stat_Error"] = sqrt(Sum_DiMuon)
+      for bin in self.Muon_Yield_Per_Bin: 
+        for dict in dictionaries: 
+          try:  dict[bin]["SM_Stat_Error"] = sqrt(reduce(lambda x,y : x+y,map(lambda x: x*x, dict[bin]["TotError"])))
+          except TypeError: pass
       
-      if category == "Di_Muon": self.Table_Prep(self.Muon_Yield_Per_Bin,self.DiMuon_Yield_Per_Bin)
-      else: self.Table_Prep(self.Muon_Yield_Per_Bin,self.Had_Yield_Per_Bin)
-   
-      self.Produce_Tables(self.Dict_For_Table,category = category)
-      self.Ratio_Plots(self.Dict_For_Table, category = category)
+      self.f = open('LatexTables.tex','w')
+      
+      if inhad_wjet and indimuon and inmuon and inhad_zinv:
+        category = "Combined_SM"
+        self.Table_Prep(self.Muon_Yield_Per_Bin,self.Had_Muon_Yield_Per_Bin, comb = self.DiMuon_Yield_Per_Bin, comb_test=self.Had_Zmumu_Yield_Per_Bin)
+        self.Produce_Tables(self.Dict_For_Table,category = category, dict2 = self.Combination_Pred_Table)
+
+      if inmuon and inhad_zinv and inhad_wjet:
+        category = "Total_SM"
+        self.Table_Prep(self.Muon_Yield_Per_Bin,self.Had_Yield_Per_Bin)
+        self.Produce_Tables(self.Dict_For_Table,category = category)
+        self.Ratio_Plots(self.Dict_For_Table, category = category)
+
+      if inhad_zinv and indimuon:
+        category = "Di_Muon_Zinv"
+        self.Table_Prep(self.DiMuon_Yield_Per_Bin,self.Had_Zmumu_Yield_Per_Bin)
+        self.Produce_Tables(self.Dict_For_Table,category = category)
+        self.Ratio_Plots(self.Dict_For_Table, category = category)
+
+      if inmuon and indimuon:
+        category = "Di_Muon"
+        self.Table_Prep(self.Muon_Yield_Per_Bin,self.DiMuon_Yield_Per_Bin)
+        self.Produce_Tables(self.Dict_For_Table,category = category)
+        self.Ratio_Plots(self.Dict_For_Table, category = category)
+
+      if inhad_wjet and inmuon:
+        category = "Muon"
+        self.Table_Prep(self.Muon_Yield_Per_Bin,self.Had_Muon_Yield_Per_Bin)
+        self.Produce_Tables(self.Dict_For_Table,category = category)
+        self.Ratio_Plots(self.Dict_For_Table, category = category)
+
+      if inphoton: pass  
+
+      self.f.close()
 
   def Ratio_Plots(self,dict,category =""):
       c1 = TCanvas() 
@@ -551,13 +600,21 @@ class Number_Extractor(object):
       pred_plot.Draw("Psame")
       c1.SaveAs("%s_Prediction_Numbers.png" %category)
 
-  def Table_Prep(self,control,test):
-  
-      self.Dict_For_Table = {'275':{'Data_Pred':0,'Prediction':0,'Pred_Error':0,'Data':0,'Trans':0,'Trans_Error':0 }, '325':{'Data_Pred':0,'Prediction':0,'Pred_Error':0,'Data':0,'Trans':0,'Trans_Error':0 }, '375':{'Data_Pred':0,'Prediction':0,'Pred_Error':0,'Data':0,'Trans':0,'Trans_Error':0 }, '475':{'Data_Pred':0,'Prediction':0,'Pred_Error':0,'Data':0,'Trans':0,'Trans_Error':0 }, '575':{'Data_Pred':0,'Prediction':0,'Pred_Error':0,'Data':0,'Trans':0,'Trans_Error':0 }, '675':{'Data_Pred':0,'Prediction':0,'Pred_Error':0,'Data':0,'Trans':0,'Trans_Error':0 }, '775':{'Data_Pred':0,'Prediction':0,'Pred_Error':0,'Data':0,'Trans':0,'Trans_Error':0 }, '875':{'Data_Pred':0,'Prediction':0,'Pred_Error':0,'Data':0,'Trans':0,'Trans_Error':0 } }
+  def Table_Prep(self,control,test,comb="",comb_test=""):
+      
+      self.Dict_For_Table = dict.fromkeys(self.bins)
+      self.Combination_Pred_Table = dict.fromkeys(self.bins)
+      entries = ('Data_Pred','Prediction','Pred_Error','Data','Trans','Trans_Error')
+      dictionaries = [self.Dict_For_Table,self.Combination_Pred_Table]
+
+      for dicto in dictionaries:
+        for key in self.bins: dicto[key] = dict.fromkeys(entries,0)
 
       for bin in control: 
-          self.Dict_For_Table[bin]['Trans'] = test[bin]["Yield"]/control[bin]["Yield"] 
-          control_error =  control[bin]["SM_Stat_Error"]/control[bin]["Yield"] 
+          try:self.Dict_For_Table[bin]['Trans'] = test[bin]["Yield"]/control[bin]["Yield"]
+          except ZeroDivisionError: pass
+          try: control_error =  control[bin]["SM_Stat_Error"]/control[bin]["Yield"] 
+          except ZeroDivisionError: control_error = 0
           try :test_error =  test[bin]["SM_Stat_Error"]/test[bin]["Yield"] 
           except ZeroDivisionError: test_error = 0
           self.Dict_For_Table[bin]['Trans_Error'] = self.Dict_For_Table[bin]['Trans'] * m.sqrt((control_error*control_error)+(test_error*test_error))
@@ -566,6 +623,21 @@ class Number_Extractor(object):
           self.Dict_For_Table[bin]['Data'] = test[bin]["Data"]
           try:self.Dict_For_Table[bin]['Pred_Error'] = self.Dict_For_Table[bin]['Prediction']*m.sqrt((1/self.Dict_For_Table[bin]['Data_Pred'])+((self.Dict_For_Table[bin]['Trans_Error']/self.Dict_For_Table[bin]['Trans'])*(self.Dict_For_Table[bin]['Trans_Error']/self.Dict_For_Table[bin]['Trans'])))
           except ZeroDivisionError: self.Dict_For_Table[bin]['Pred_Error'] = 0
+
+      if comb:
+        for bin in control:
+          try:self.Combination_Pred_Table[bin]['Trans'] = comb_test[bin]["Yield"]/comb[bin]["Yield"]
+          except ZeroDivisionError: pass
+          try: control_error =  comb[bin]["SM_Stat_Error"]/comb[bin]["Yield"] 
+          except ZeroDivisionError: control_error = 0
+          try :test_error =  comb_test[bin]["SM_Stat_Error"]/comb_test[bin]["Yield"] 
+          except ZeroDivisionError: test_error = 0
+          self.Combination_Pred_Table[bin]['Trans_Error'] = self.Combination_Pred_Table[bin]['Trans'] * m.sqrt((control_error*control_error)+(test_error*test_error))
+          self.Combination_Pred_Table[bin]['Data_Pred'] = comb[bin]["Data"]
+          self.Combination_Pred_Table[bin]['Prediction'] = comb[bin]["Data"]*self.Combination_Pred_Table[bin]['Trans']
+          self.Combination_Pred_Table[bin]['Data'] = comb_test[bin]["Data"]
+          try:self.Combination_Pred_Table[bin]['Pred_Error'] = self.Combination_Pred_Table[bin]['Prediction']*m.sqrt((1/self.Combination_Pred_Table[bin]['Data_Pred'])+((self.Combination_Pred_Table[bin]['Trans_Error']/self.Combination_Pred_Table[bin]['Trans'])*(self.Combination_Pred_Table[bin]['Trans_Error']/self.Combination_Pred_Table[bin]['Trans'])))
+          except ZeroDivisionError: self.Combination_Pred_Table[bin]['Pred_Error'] = 0
 
   def Print_Binning(self):
       self.HT_Bin_Total = []
@@ -578,9 +650,8 @@ class Number_Extractor(object):
       print "Numbers of HT bins are %s" %len(self.HT_Bin_Total)
       print "Number of Alpha T Slices are %s" %len(self.AlphaT_Bin_Total)
 
-  def Produce_Tables(self,dict,category=""):
+  def Produce_Tables(self,dict,category="",dict2 =""):
       print "\n\nMaking Tables for %s" % category
-      self.f = open('LatexTables.tex','w')
       
       if category == "Total_SM": self.Latex_Table(dict,caption = "Binned %s Predictions" %category, 
             rows = [{"label": r'''Total Had Selection MC''',"entryFunc": self.MakeList(self.Had_Yield_Per_Bin,"Yield","SM_Stat_Error")},
@@ -589,8 +660,7 @@ class Number_Extractor(object):
                     {"label": r'''Data $\mu +$~jets''',       "entryFunc":self.MakeList(dict,"Data_Pred")},
                     {"label":r'''Total SM Prediction''', "entryFunc":self.MakeList(dict,"Prediction","Pred_Error")},
                     {"label": r'''Data Had Selection''',       "entryFunc":self.MakeList(dict,"Data")},])
-           
-      
+            
       if category == "Muon": self.Latex_Table(dict,caption = "Binned %s Predictions" %category, 
             rows = [{"label": r'''W + TTbar Had MC''',"entryFunc": self.MakeList(self.Had_Yield_Per_Bin,"Yield","SM_Stat_Error")},
                     {"label": r'''W + TTbar MC $\mu +$~jets''',         "entryFunc":self.MakeList(self.Muon_Yield_Per_Bin,"Yield","SM_Stat_Error")},
@@ -598,9 +668,7 @@ class Number_Extractor(object):
                     {"label": r'''Data $\mu +$~jets''',       "entryFunc":self.MakeList(dict,"Data_Pred")},
                     {"label":r'''W + TTbar Prediction''', "entryFunc":self.MakeList(dict,"Prediction","Pred_Error")},
                     {"label": r'''Data Had Selection''',       "entryFunc":self.MakeList(dict,"Data")},])
-           
-      
-     
+               
       if category == "Di_Muon": self.Latex_Table(dict,caption = "Binned %s Predictions" %category, 
             rows = [{"label": r'''Z mumu Selection MC''',"entryFunc": self.MakeList(self.DiMuon_Yield_Per_Bin,"Yield","SM_Stat_Error")},
                     {"label": r'''MC $\mu +$~jets''',         "entryFunc":self.MakeList(self.Muon_Yield_Per_Bin,"Yield","SM_Stat_Error")},
@@ -608,19 +676,27 @@ class Number_Extractor(object):
                     {"label": r'''Data $\mu +$~jets''',       "entryFunc":self.MakeList(dict,"Data_Pred")},
                     {"label":r'''Z mu mu Prediction''', "entryFunc":self.MakeList(dict,"Prediction","Pred_Error")},
                     {"label": r'''Data Z mumu''',       "entryFunc":self.MakeList(dict,"Data")},])
-           
+     
+      if category == "Di_Muon_Zinv": self.Latex_Table(dict,caption = "Binned %s Predictions" %category, 
+            rows = [{"label": r'''Z nunu Had Selection MC''',"entryFunc": self.MakeList(self.Had_Yield_Per_Bin,"Yield","SM_Stat_Error")},
+                    {"label": r'''Z mumu Selection MC''',         "entryFunc":self.MakeList(self.DiMuon_Yield_Per_Bin,"Yield","SM_Stat_Error")},
+                    {"label": r'''MC Ratio''',                "entryFunc":self.MakeList(dict,"Trans","Trans_Error")},
+                    {"label": r'''Data Z mu mu''',       "entryFunc":self.MakeList(dict,"Data_Pred")},
+                    {"label":r'''Z nunu Prediction''', "entryFunc":self.MakeList(dict,"Prediction","Pred_Error")}])
+               
+      if category == "Combined_SM": self.Latex_Table(dict,caption = "Binned %s Predictions" %category, 
+            rows = [{"label": r'''TTbar + W Prediction from Muon''', "entryFunc":self.MakeList(dict,"Prediction","Pred_Error")},
+                    {"label": r'''Zinv Prediction from DiMuon''', "entryFunc":self.MakeList(dict2,"Prediction","Pred_Error")},
+                    {"label":r'''Combined SM Prediction''', "entryFunc":self.MakeList(dict,"Prediction","Pred_Error",combined=dict2)},
+                    {"label": r'''Data  Had Selection''',  "entryFunc":self.MakeList(dict,"Data")},])
       
-      self.f.close()
-
-  def MakeList(self,dict,key,error = ""):
+  def MakeList(self,dict,key,error = "",combined = ""):
       List = []
       for entry in sorted(dict.iterkeys()):
-        if error: List.append(self.toString("%4.2f" %dict[entry][key])+"  \pm  "+ self.toString("%4.2f" %dict[entry][error]))
-        else: List.append(self.toString("%4.2f" %dict[entry][key]))
+        if error: List.append(self.toString("%4.2f" %(dict[entry][key]+combined[entry][key] if combined else dict[entry][key]))+"  \pm  "+ self.toString("%4.2f" %(dict[entry][error]+combined[entry][error] if combined else dict[entry][error])))
+        else: List.append(self.toString("%4.2f" %(dict[entry][key]+combined[entry][key] if combined else dict[entry][key])))
       return List  
         
-        
-
   def Make_2D_Data_Table(self,files):
            
       self.HT_Bin_Total.sort()
@@ -703,6 +779,7 @@ class Number_Extractor(object):
       s += "\n\hline"
       s += "\n\end{tabular}"
       s += "\n\end{table}"
+      s += "\n\n\n\n"
       self.f.write(s)
       print s
       print "\n\n TexTable Output to MakeLatexTables.tex"
