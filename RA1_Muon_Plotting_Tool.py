@@ -662,7 +662,7 @@ class Number_Extractor(object):
                     {"label": r'''Data Had Selection''',       "entryFunc":self.MakeList(dict,"Data")},])
             
       if category == "Muon": self.Latex_Table(dict,caption = "Binned %s Predictions" %category, 
-            rows = [{"label": r'''W + TTbar Had MC''',"entryFunc": self.MakeList(self.Had_Yield_Per_Bin,"Yield","SM_Stat_Error")},
+            rows = [{"label": r'''W + TTbar Had MC''',"entryFunc": self.MakeList(self.Had_Muon_Yield_Per_Bin,"Yield","SM_Stat_Error")},
                     {"label": r'''W + TTbar MC $\mu +$~jets''',         "entryFunc":self.MakeList(self.Muon_Yield_Per_Bin,"Yield","SM_Stat_Error")},
                     {"label": r'''MC Ratio''',                "entryFunc":self.MakeList(dict,"Trans","Trans_Error")},
                     {"label": r'''Data $\mu +$~jets''',       "entryFunc":self.MakeList(dict,"Data_Pred")},
@@ -678,7 +678,7 @@ class Number_Extractor(object):
                     {"label": r'''Data Z mumu''',       "entryFunc":self.MakeList(dict,"Data")},])
      
       if category == "Di_Muon_Zinv": self.Latex_Table(dict,caption = "Binned %s Predictions" %category, 
-            rows = [{"label": r'''Z nunu Had Selection MC''',"entryFunc": self.MakeList(self.Had_Yield_Per_Bin,"Yield","SM_Stat_Error")},
+            rows = [{"label": r'''Z nunu Had Selection MC''',"entryFunc": self.MakeList(self.Had_Zmumu_Yield_Per_Bin,"Yield","SM_Stat_Error")},
                     {"label": r'''Z mumu Selection MC''',         "entryFunc":self.MakeList(self.DiMuon_Yield_Per_Bin,"Yield","SM_Stat_Error")},
                     {"label": r'''MC Ratio''',                "entryFunc":self.MakeList(dict,"Trans","Trans_Error")},
                     {"label": r'''Data Z mu mu''',       "entryFunc":self.MakeList(dict,"Data_Pred")},
@@ -693,7 +693,7 @@ class Number_Extractor(object):
   def MakeList(self,dict,key,error = "",combined = ""):
       List = []
       for entry in sorted(dict.iterkeys()):
-        if error: List.append(self.toString("%4.2f" %(dict[entry][key]+combined[entry][key] if combined else dict[entry][key]))+"  \pm  "+ self.toString("%4.2f" %(dict[entry][error]+combined[entry][error] if combined else dict[entry][error])))
+        if error: List.append(self.toString("%4.2f" %(dict[entry][key]+combined[entry][key] if combined else dict[entry][key]))+"  \pm  "+ self.toString("%4.2f" %(sqrt((dict[entry][error]*dict[entry][error])+(combined[entry][error]*combined[entry][error])) if combined else dict[entry][error])))
         else: List.append(self.toString("%4.2f" %(dict[entry][key]+combined[entry][key] if combined else dict[entry][key])))
       return List  
         
