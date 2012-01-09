@@ -49,8 +49,6 @@ class Number_Extractor(object):
       inmuon = False
       inphoton = False
 
-      Bin_Info["Yield_Error"] = (m.sqrt(Grab_Integral.Integral()*float(Bin_Info["MC_Weight"]))*10.0*float(a.options.Lumo) if self.SampleInfo[input]["SampleType"] != "Data" else sqrt(float(Bin_Info["Yield"])))
-
       MC_Weights = {"TTbar":0.00425452,"WJetsInc":0.0666131,"WJets250":0.000450549,"WJets300":0.00102329,"Zinv50":0.00485311,"Zinv100":0.00410382,"Zinv200":0.0013739,"Zmumu":0.00849073,"Photon":1.,"Data":1.}
 
       self.bins = ('275','325','375','475','575','675','775','875')
@@ -302,5 +300,5 @@ class Number_Extractor(object):
       self.table.write(s)
       print s
 
-if __name__=="__main__":
-  a = Number_Extractor()
+#if __name__=="__main__":
+#  a = Number_Extractor()
