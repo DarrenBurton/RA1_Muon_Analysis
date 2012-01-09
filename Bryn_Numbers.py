@@ -30,24 +30,27 @@ def Data_Scaler(htbin,hist,alphat="",yield_scale="",number_mode="",scale= ""):
           else: return float(1.0)
 class Number_Extractor(object):
 
-  def __init__(self):
+  def __init__(self,passed_dictionary):
+
     print "\n\nGetting Numbers\n\n"
-    self.f = open('dictionaries.txt',"r")
-    for line in self.f.readlines():
-      i = 1
-      dict = line
-      self.table = open('Table_%s.tex'%i,'w')
-      self.Prediction_Maker(dict)
-      self.table.close()
-      i += 1
- 
+    test = {"dict1":{"HT":"275","Yield":220.,"SampleType":"Data","Category":"Muon"},"dict2":{"HT":"275","Yield":100.,"SampleType":"Data","Category":"Had"}, "dict3":{"HT":"275","Yield":200.,"SampleType":"WJets250","Category":"Muon"}, "dict4":{"HT":"275","Yield":80.,"SampleType":"TTbar","Category":"Had"}, "dict5":{"HT":"275","Yield":110.,"SampleType":"WJets250","Category":"Had"}, "dict6":{"HT":"275","Yield":105.,"SampleType":"TTbar","Category":"Muon"}  }
+
+    i = 1
+    self.table = open('Table_%s.tex'%i,'w')
+    #self.Prediction_Maker(test)
+    self.Preiction_Maker(passed_dictionary)
+    self.table.close()
+    i += 1
+
   def Prediction_Maker(self,dict):
       
       inhad_zinv = False
-      inhad_wjets = False
+      inhad_wjet = False
       indimuon = False
       inmuon = False
       inphoton = False
+
+      #Bin_Info["Yield_Error"] = (m.sqrt(Grab_Integral.Integral()*float(Bin_Info["MC_Weight"]))*10.0*float(a.options.Lumo) if self.SampleInfo[input]["SampleType"] != "Data" else sqrt(float(Bin_Info["Yield"])))
 
       MC_Weights = {"TTbar":0.00425452,"WJetsInc":0.0666131,"WJets250":0.000450549,"WJets300":0.00102329,"Zinv50":0.00485311,"Zinv100":0.00410382,"Zinv200":0.0013739,"Zmumu":0.00849073,"Photon":1.,"Data":1.}
 
@@ -65,10 +68,11 @@ class Number_Extractor(object):
       for dicto in dictionaries:
         for key in self.bins:
           dicto[key] = dict.fromkeys(entries,0)
-          dicto[key]['TotError'] = [] 
+          dicto[key]['TotError'] = []
 
       for entry in dict:
         Error = 0
+        Error = m.sqrt(dict[entry]["Yield"]*float(MC_Weights[dict[entry]["SampleType"]]))
         if dict[entry]["SampleType"] == "Data":
           if dict[entry]["Category"] == "Had": 
             self.Had_Yield_Per_Bin[dict[entry]["HT"]]["Data"] = dict[entry]["Yield"]
@@ -77,7 +81,7 @@ class Number_Extractor(object):
           if dict[entry]["Category"] == "Muon": self.Muon_Yield_Per_Bin[dict[entry]["HT"]]["Data"] = dict[entry]["Yield"]
           if dict[entry]["Category"] == "DiMuon": self.DiMuon_Yield_Per_Bin[dict[entry]["HT"]]["Data"] = dict[entry]["Yield"]
 
-        Error = sqrt(dict[entry]["Yield"]*float(MC_Weights[dict[entry]["SampleType"]])*47)
+
         elif dict[entry]["Category"] == "Had" :
             if dict[entry]["SampleType"] == "Zinv50" or dict[entry]["SampleType"] == "Zinv100" or dict[entry]["SampleType"] == "Zinv200": 
               inhad_zinv = True
@@ -140,8 +144,6 @@ class Number_Extractor(object):
 
       if inphoton: pass  
 
-      self.f.close()
-
   def Ratio_Plots(self,dict,category =""):
       c1 = TCanvas() 
       ratio_plot = TH1F("ratio_plot","",8,0,8)
@@ -177,7 +179,7 @@ class Number_Extractor(object):
       c1.SaveAs("%s_Prediction_Numbers.png" %category)
 
   def Table_Prep(self,control,test,comb="",comb_test=""):
-      
+
       self.Dict_For_Table = dict.fromkeys(self.bins)
       self.Combination_Pred_Table = dict.fromkeys(self.bins)
       entries = ('Data_Pred','Prediction','Pred_Error','Data','Trans','Trans_Error')
@@ -187,7 +189,8 @@ class Number_Extractor(object):
         for key in self.bins: dicto[key] = dict.fromkeys(entries,0)
 
       for bin in control: 
-          try:self.Dict_For_Table[bin]['Trans'] = test[bin]["Yield"]/control[bin]["Yield"]
+          try:
+            self.Dict_For_Table[bin]['Trans'] = test[bin]["Yield"]/control[bin]["Yield"]
           except ZeroDivisionError: pass
           try: control_error =  control[bin]["SM_Stat_Error"]/control[bin]["Yield"] 
           except ZeroDivisionError: control_error = 0
@@ -263,7 +266,7 @@ class Number_Extractor(object):
         else: List.append(self.toString("%4.2f" %(dict[entry][key]+combined[entry][key] if combined else dict[entry][key])))
       return List  
         
-   def oneRow(self,label = "", labelWidth = 23, entryList = [], entryWidth = 30, extra = "") :
+  def oneRow(self,label = "", labelWidth = 23, entryList = [], entryWidth = 30, extra = "") :
     s = ""
     s += "\n"+label.ljust(labelWidth)+" & "+" & ".join([(self.toString(entry)).ljust(entryWidth) for entry in entryList])+r"\\ "
     return s 
@@ -275,7 +278,7 @@ class Number_Extractor(object):
   def Latex_Table(self,dict,rows,caption = ""):
       s = "\n"
       s += r'''\begin{table}[ht!]'''
-      s += "\n\caption{%s %s fb$^{-1}$}"%(caption,a.options.Lumo)
+      s += "\n\caption{%s %s fb$^{-1}$}"%(caption,"4.7")
       s += "\n\label{tab:results-W}"
       s += "\n\centering"
       s += "\n"+r'''\footnotesize'''
@@ -301,4 +304,4 @@ class Number_Extractor(object):
       print s
 
 #if __name__=="__main__":
-#  a = Number_Extractor()
+#  a = Number_Extractor("Hi")
