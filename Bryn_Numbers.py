@@ -72,7 +72,7 @@ class Number_Extractor(object):
 
       for entry in dict:
         Error = 0
-        Error = m.sqrt(dict[entry]["Yield"]*float(MC_Weights[dict[entry]["SampleType"]]))
+        Error = m.sqrt(dict[entry]["Yield"]*float(MC_Weights[dict[entry]["SampleType"]])*47)
         if dict[entry]["SampleType"] == "Data":
           if dict[entry]["Category"] == "Had": 
             self.Had_Yield_Per_Bin[dict[entry]["HT"]]["Data"] = dict[entry]["Yield"]
