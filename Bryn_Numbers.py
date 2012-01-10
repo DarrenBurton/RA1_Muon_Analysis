@@ -9,25 +9,15 @@ from optparse import OptionParser
 import array
 import math as m
 
-def Data_Scaler(htbin,hist,alphat="",yield_scale="",number_mode="",scale= ""):
+def Data_Scaler(htbin,hist):
 
-      if scale is False: return float(1.0)
-      else :
-        if yield_scale is "alphat":
-          Scale_Amount = {"275_325":{"55":float(1./0.843),"6":float(1/0.88)},"325_375":{"53":float(1/0.893),"55":float(1/0.955),"6":1.},"375_475":{"52":float(1/0.862),"53":float(1/0.972),"55":float(1/0.971),"6":1.},"475_575":{"51":float(1/0.87),"52":float(1/0.86),"53":float(1/0.972),"55":1.,"6":1.},"575_675":{"51":float(1/0.877),"52":float(1/0.849),"53":1.,"55":1.,"6":1.},"675_775": {"51":float(1/0.848),"52":1.,"53":1.,"55":1.,"6":1.},"775_875": {"51":1.,"52":1.,"53":1.,"55":1.,"6":1.} ,"875_inf": {"51":1.,"52":1.,"53":1.,"55":1.,"6":1.} }
-          if htbin in Scale_Amount: 
-            if alphat in Scale_Amount[htbin] and Scale_Amount[htbin][alphat] != 1: 
-              print "Scaling data due to Trigger efficiency of %s percent " % ((1/Scale_Amount[htbin][alphat])*100)
-              if number_mode: return float(Scale_Amount[htbin][alphat])
-              else: hist.Scale(Scale_Amount[htbin][alphat])
-            else : return float(1.0)  
-        else:
-          Scale_Amount = {"275_325":float(1/0.9153),"325_375":float(1/0.9562),"375_475":float(1/0.9688),"475_575":float(1/0.9789),"575_675":1,"675_775":1,"775_875":1,"875_inf":1}
+          Scale_Amount = {"275":float(1/0.9153),"325":float(1/0.9562),"375":float(1/0.9688),"475":float(1/0.9789),"575":1,"675":1,"775":1,"875":1}
           if htbin in Scale_Amount and Scale_Amount[htbin] != 1:
               print "Scaling data due to Trigger efficiency of %s percent " % ((1/Scale_Amount[htbin]) * 100)
-              if number_mode: return float(Scale_Amount[htbin])
-              else:  hist.Scale(Scale_Amount[htbin])
+              return float(Scale_Amount[htbin])*float(hist)
           else: return float(1.0)
+
+
 class Number_Extractor(object):
 
   def __init__(self,passed_dictionary):
@@ -75,12 +65,11 @@ class Number_Extractor(object):
         Error = m.sqrt(dict[entry]["Yield"]*float(MC_Weights[dict[entry]["SampleType"]])*47)
         if dict[entry]["SampleType"] == "Data":
           if dict[entry]["Category"] == "Had": 
-            self.Had_Yield_Per_Bin[dict[entry]["HT"]]["Data"] = dict[entry]["Yield"]
-            self.Had_Muon_Yield_Per_Bin[dict[entry]["HT"]]["Data"] = dict[entry]["Yield"]
-            self.Had_Zmumu_Yield_Per_Bin[dict[entry]["HT"]]["Data"] = dict[entry]["Yield"]
-          if dict[entry]["Category"] == "Muon": self.Muon_Yield_Per_Bin[dict[entry]["HT"]]["Data"] = dict[entry]["Yield"]
-          if dict[entry]["Category"] == "DiMuon": self.DiMuon_Yield_Per_Bin[dict[entry]["HT"]]["Data"] = dict[entry]["Yield"]
-
+            self.Had_Yield_Per_Bin[dict[entry]["HT"]]["Data"] = Data_Scaler(dict[entry]["HT"],dict[entry]["Yield"])
+            self.Had_Muon_Yield_Per_Bin[dict[entry]["HT"]]["Data"] = Data_Scaler(dict[entry]["HT"],dict[entry]["Yield"])
+            self.Had_Zmumu_Yield_Per_Bin[dict[entry]["HT"]]["Data"] = Data_Scaler(dict[entry]["HT"],dict[entry]["Yield"])
+          if dict[entry]["Category"] == "Muon": self.Muon_Yield_Per_Bin[dict[entry]["HT"]]["Data"] = Data_Scaler(dict[entry]["HT"],dict[entry]["Yield"])
+          if dict[entry]["Category"] == "DiMuon": self.DiMuon_Yield_Per_Bin[dict[entry]["HT"]]["Data"] = Data_Scaler(dict[entry]["HT"],dict[entry]["Yield"])
 
         elif dict[entry]["Category"] == "Had" :
             if dict[entry]["SampleType"] == "Zinv50" or dict[entry]["SampleType"] == "Zinv100" or dict[entry]["SampleType"] == "Zinv200": 
@@ -305,3 +294,4 @@ class Number_Extractor(object):
 
 #if __name__=="__main__":
 #  a = Number_Extractor("Hi")
+
