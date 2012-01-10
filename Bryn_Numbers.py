@@ -231,7 +231,7 @@ class Number_Extractor(object):
                     {"label": r'''Data Had Selection''',       "entryFunc":self.MakeList(dict,"Data")},])
             
       if category == "Muon": self.Latex_Table(dict,caption = "Binned %s Predictions" %category, 
-            rows = [{"label": r'''W + TTbar Had MC''',"entryFunc": self.MakeList(self.Had_Yield_Per_Bin,"Yield","SM_Stat_Error")},
+            rows = [{"label": r'''W + TTbar Had MC''',"entryFunc": self.MakeList(self.Had_Muon_Yield_Per_Bin,"Yield","SM_Stat_Error")},
                     {"label": r'''W + TTbar MC $\mu +$~jets''',         "entryFunc":self.MakeList(self.Muon_Yield_Per_Bin,"Yield","SM_Stat_Error")},
                     {"label": r'''MC Ratio''',                "entryFunc":self.MakeList(dict,"Trans","Trans_Error")},
                     {"label": r'''Data $\mu +$~jets''',       "entryFunc":self.MakeList(dict,"Data_Pred")},
