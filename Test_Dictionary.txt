@@ -1,0 +1,59 @@
+
+
+This is an example of the dictionary required to produce Tables for the HT 275 Bin.
+
+I will put them in as a list to make it easier to read but it should be passed to the table maker in this form here...
+
+
+test = {"dict1":{"HT":"275","Yield":220.,"SampleType":"Data","Category":"Muon"},"dict2":{"HT":"275","Yield":100.,"SampleType":"Data","Category":"Had"}, "dict3":{"HT":"275","Yield":200.,"SampleType":"WJets250","Category":"Muon"}, "dict4":{"HT":"275","Yield":80.,"SampleType":"TTbar","Category":"Had"}, "dict5":{"HT":"275","Yield":110.,"SampleType":"Photon","Category":"Photon","Error":4}, "dict6":{"HT":"275","Yield":105.,"SampleType":"Zmumu","Category":"DiMuon"}  }
+
+
+HT 275
+
+* dict1 etc can be any name as the script just loops through all entries
+
+Data
+------
+"dict1":{"HT":"275","Yield":3500.,"SampleType":"Data","Category":"Muon"},
+"dict2":{"HT":"275","Yield":1049.,"SampleType":"Data","Category":"Had"},
+"dict3":{"HT":"275","Yield":2011.,"SampleType":"Data","Category":"DiMuon"},
+"dict4":{"HT":"275","Yield":1802.,"SampleType":"Data","Category":"Photon","Error":10},
+
+*Error in dict4 is because we are just taking Teds MC errors and not using the MC weights in the propogation so in my code I have a line that says if dict[entry]["Category"] is Photon then Error = dict[entry]["Error"] , otherwise it will propogate it using the MC weights and the given yield
+
+
+Muon MC
+
+"dict5":{"HT":"275","Yield":180.,"SampleType":"TTbar","Category":"Muon"},
+"dict6":{"HT":"275","Yield":228.,"SampleType":"WJets250","Category":"Muon"},
+"dict7":{"HT":"275","Yield":121.,"SampleType":"WJets300","Category":"Muon"},
+"dict8":{"HT":"275","Yield":573.,"SampleType":"WJetsInc","Category":"Muon"},
+
+Had MC
+
+"dict9":{"HT":"275","Yield":220.,"SampleType":"TTbar","Category":"Had"},
+"dict10":{"HT":"275","Yield":220.,"SampleType":"WJets250","Category":"Had"},
+"dict11":{"HT":"275","Yield":220.,"SampleType":"WJets300","Category":"Had"},
+"dict12":{"HT":"275","Yield":220.,"SampleType":"WJetsInc","Category":"Had"},
+"dict13":{"HT":"275","Yield":220.,"SampleType":"Zinv50","Category":"Had"},
+"dict14":{"HT":"275","Yield":220.,"SampleType":"Zinv100","Category":"Had"},
+"dict15":{"HT":"275","Yield":220.,"SampleType":"Zinv200","Category":"Had"},
+
+DiMuon MC
+
+"dict16":{"HT":"275","Yield":170.,"SampleType":"Zmumu","Category":"DiMuon"},
+
+So here Zmumu is the DY MC Sample I see you have a none zero TTbar contribution. Do we include that in the prediction? I dont know as i thought we say use dimuon to predict Z inv using
+
+Zinv Prediction Had   =    DiMuon Data    x    Zinv Had / DY MC  
+
+How would TTbar fit in there unless you have DY + TTbar in which case then just add another dict with "SampleTYpe":"TTbar". Maybe thats correct as the DiMuon Data would contain some TTbar too then if its present in the MC
+
+
+Photon MC
+
+"dict17":{"HT":"275","Yield":2120.,"SampleType":"Photon","Category":"Photon"},
+
+Here the Photon Sampletype is the Gamma + Jets MC.
+
+ So if you have these dictionaries for each HT bin then the tablemaker will take care of the rest
