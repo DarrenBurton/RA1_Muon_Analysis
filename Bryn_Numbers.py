@@ -23,12 +23,12 @@ class Number_Extractor(object):
   def __init__(self,passed_dictionary):
 
     print "\n\nGetting Numbers\n\n"
-    test = {"dict1":{"HT":"275","Yield":220.,"SampleType":"Data","Category":"Muon"},"dict2":{"HT":"275","Yield":100.,"SampleType":"Data","Category":"Had"}, "dict3":{"HT":"275","Yield":200.,"SampleType":"WJets250","Category":"Muon"}, "dict4":{"HT":"275","Yield":80.,"SampleType":"TTbar","Category":"Had"}, "dict5":{"HT":"275","Yield":110.,"SampleType":"WJets250","Category":"Had"}, "dict6":{"HT":"275","Yield":105.,"SampleType":"TTbar","Category":"Muon"}  }
+    test = {"dict1":{"HT":"275","Yield":220.,"SampleType":"Data","Category":"Muon"},"dict2":{"HT":"275","Yield":100.,"SampleType":"Data","Category":"Had"}, "dict3":{"HT":"275","Yield":200.,"SampleType":"WJets250","Category":"Muon"}, "dict4":{"HT":"275","Yield":80.,"SampleType":"TTbar","Category":"Had"}, "dict5":{"HT":"275","Yield":110.,"SampleType":"Photon","Category":"Photon","Error":4}, "dict6":{"HT":"275","Yield":105.,"SampleType":"Zmumu","Category":"DiMuon"}  }
 
     i = 1
     self.table = open('Table_%s.tex'%i,'w')
-    #self.Prediction_Maker(test)
-    self.Preiction_Maker(passed_dictionary)
+    self.Prediction_Maker(test)
+    #self.Preiction_Maker(passed_dictionary)
     self.table.close()
     i += 1
 
@@ -62,7 +62,9 @@ class Number_Extractor(object):
 
       for entry in dict:
         Error = 0
-        Error = m.sqrt(dict[entry]["Yield"]*float(MC_Weights[dict[entry]["SampleType"]])*47)
+        if dict[entry]["Category"] is not "Photon":  Error = m.sqrt(dict[entry]["Yield"]*float(MC_Weights[dict[entry]["SampleType"]])*47)
+        else: Error = dict[entry]["Error"]
+
         if dict[entry]["SampleType"] == "Data":
           if dict[entry]["Category"] == "Had": 
             self.Had_Yield_Per_Bin[dict[entry]["HT"]]["Data"] = Data_Scaler(dict[entry]["HT"],dict[entry]["Yield"])
@@ -70,6 +72,7 @@ class Number_Extractor(object):
             self.Had_Zmumu_Yield_Per_Bin[dict[entry]["HT"]]["Data"] = Data_Scaler(dict[entry]["HT"],dict[entry]["Yield"])
           if dict[entry]["Category"] == "Muon": self.Muon_Yield_Per_Bin[dict[entry]["HT"]]["Data"] = Data_Scaler(dict[entry]["HT"],dict[entry]["Yield"])
           if dict[entry]["Category"] == "DiMuon": self.DiMuon_Yield_Per_Bin[dict[entry]["HT"]]["Data"] = Data_Scaler(dict[entry]["HT"],dict[entry]["Yield"])
+          if dict[entry]["Category"] == "Photon": self.Photon_Yield_Per_Bin[dict[entry]["HT"]]["Data"] = Data_Scaler(dict[entry]["HT"],dict[entry]["Yield"])
 
         elif dict[entry]["Category"] == "Had" :
             if dict[entry]["SampleType"] == "Zinv50" or dict[entry]["SampleType"] == "Zinv100" or dict[entry]["SampleType"] == "Zinv200": 
@@ -94,8 +97,8 @@ class Number_Extractor(object):
             self.DiMuon_Yield_Per_Bin[dict[entry]["HT"]]["TotError"].append(Error)
         elif dict[entry]["Category"] == "Photon":
             inphoton = True
-            self.Photon_Yield_Per_Bin[(dict[entry]["HT"]).split('_')[0]]["Yield"] +=  dict[entry]["Yield"]
-            self.Photon_Yield_Per_Bin[(dict[entry]["HT"]).split('_')[0]]["TotError"].append(Error)
+            self.Photon_Yield_Per_Bin[dict[entry]["HT"]]["Yield"] +=  dict[entry]["Yield"]
+            self.Photon_Yield_Per_Bin[dict[entry]["HT"]]["TotError"].append(Error)
       
       for bin in self.Muon_Yield_Per_Bin: 
         for dict in dictionaries: 
@@ -105,6 +108,11 @@ class Number_Extractor(object):
       if inhad_wjet and indimuon and inmuon and inhad_zinv:
         category = "Combined_SM"
         self.Table_Prep(self.Muon_Yield_Per_Bin,self.Had_Muon_Yield_Per_Bin, comb = self.DiMuon_Yield_Per_Bin, comb_test=self.Had_Zmumu_Yield_Per_Bin)
+        self.Produce_Tables(self.Dict_For_Table,category = category, dict2 = self.Combination_Pred_Table)
+
+      if inhad_wjet and inphoton and inmuon and inhad_zinv:
+        category = "Combined_SM_Photon"
+        self.Table_Prep(self.Muon_Yield_Per_Bin,self.Had_Muon_Yield_Per_Bin, comb = self.Photon_Yield_Per_Bin, comb_test=self.Had_Zmumu_Yield_Per_Bin)
         self.Produce_Tables(self.Dict_For_Table,category = category, dict2 = self.Combination_Pred_Table)
 
       if inmuon and inhad_zinv and inhad_wjet:
@@ -131,8 +139,12 @@ class Number_Extractor(object):
         self.Produce_Tables(self.Dict_For_Table,category = category)
         self.Ratio_Plots(self.Dict_For_Table, category = category)
 
-      if inphoton: pass  
-
+      if inphoton and indimuon:
+        category = "Photon_DiMuon"
+        self.Table_Prep(self.Photon_Yield_Per_Bin,self.DiMuon_Yield_Per_Bin)
+        self.Produce_Tables(self.Dict_For_Table,category = category)
+        self.Ratio_Plots(self.Dict_For_Table, category = category)
+  
   def Ratio_Plots(self,dict,category =""):
       c1 = TCanvas() 
       ratio_plot = TH1F("ratio_plot","",8,0,8)
@@ -226,7 +238,15 @@ class Number_Extractor(object):
                     {"label": r'''Data $\mu +$~jets''',       "entryFunc":self.MakeList(dict,"Data_Pred")},
                     {"label":r'''W + TTbar Prediction''', "entryFunc":self.MakeList(dict,"Prediction","Pred_Error")},
                     {"label": r'''Data Had Selection''',       "entryFunc":self.MakeList(dict,"Data")},])
-               
+            
+      if category == "Photon_DiMuon": self.Latex_Table(dict,caption = "Binned %s Predictions" %category, 
+            rows = [{"label": r'''Z mumu MC''',"entryFunc": self.MakeList(self.DiMuon_Yield_Per_Bin,"Yield","SM_Stat_Error")},
+                    {"label": r'''Photon $+$ Jet MC''',         "entryFunc":self.MakeList(self.Photon_Yield_Per_Bin,"Yield","SM_Stat_Error")},
+                    {"label": r'''MC Ratio''',                "entryFunc":self.MakeList(dict,"Trans","Trans_Error")},
+                    {"label": r'''Data gamma $+$ jets''',       "entryFunc":self.MakeList(dict,"Data_Pred")},
+                    {"label":r'''Z mumu Prediction''', "entryFunc":self.MakeList(dict,"Prediction","Pred_Error")},
+                    {"label": r'''Data DiMuon''',       "entryFunc":self.MakeList(dict,"Data")},])
+
       if category == "Di_Muon": self.Latex_Table(dict,caption = "Binned %s Predictions" %category, 
             rows = [{"label": r'''Z mumu Selection MC''',"entryFunc": self.MakeList(self.DiMuon_Yield_Per_Bin,"Yield","SM_Stat_Error")},
                     {"label": r'''MC $\mu +$~jets''',         "entryFunc":self.MakeList(self.Muon_Yield_Per_Bin,"Yield","SM_Stat_Error")},
@@ -247,6 +267,12 @@ class Number_Extractor(object):
                     {"label": r'''Zinv Prediction from DiMuon''', "entryFunc":self.MakeList(dict2,"Prediction","Pred_Error")},
                     {"label":r'''Combined SM Prediction''', "entryFunc":self.MakeList(dict,"Prediction","Pred_Error",combined=dict2)},
                     {"label": r'''Data  Had Selection''',  "entryFunc":self.MakeList(dict,"Data")},])
+                   
+      if category == "Combined_SM_Photon": self.Latex_Table(dict,caption = "Binned %s Predictions" %category, 
+            rows = [{"label": r'''TTbar + W Prediction from Muon''', "entryFunc":self.MakeList(dict,"Prediction","Pred_Error")},
+                    {"label": r'''Zinv Prediction from Photon''', "entryFunc":self.MakeList(dict2,"Prediction","Pred_Error")},
+                    {"label":r'''Combined SM Prediction''', "entryFunc":self.MakeList(dict,"Prediction","Pred_Error",combined=dict2)},
+                    {"label": r'''Data  Had Selection''',  "entryFunc":self.MakeList(dict,"Data")},]) 
       
   def MakeList(self,dict,key,error = "",combined = ""):
       List = []
@@ -292,6 +318,6 @@ class Number_Extractor(object):
       self.table.write(s)
       print s
 
-#if __name__=="__main__":
-#  a = Number_Extractor("Hi")
+if __name__=="__main__":
+  a = Number_Extractor("Hi")
 
