@@ -1,0 +1,1179 @@
+
+\begin{table}[ht!]
+\caption{AlphaT:  Total SM Prediction (Muon + DiMuon) 4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+t$\bar{t}$ + W prediction from $\mu +$ jets & -                              & -                              & -                              & -                             \\ 
+Z$\rightarrow\nu\bar{\nu}$ prediction from $\mu\mu +$ jets & -                              & -                              & -                              & -                             \\ 
+Total SM prediction     & -                              & -                              & -                              & -                             \\ 
+Hadronic yield from data & -                              & -                              & -                              & -                             \\ 
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+t$\bar{t}$ + W prediction from $\mu +$ jets & -                              & -                              & 3.73  $\pm$  2.90              & 15.36  $\pm$  5.66            \\ 
+Z$\rightarrow\nu\bar{\nu}$ prediction from $\mu\mu +$ jets & -                              & -                              & -                              & -                             \\ 
+Total SM prediction     & -                              & -                              & 3.73  $\pm$  2.90              & 15.36  $\pm$  5.66            \\ 
+Hadronic yield from data & -                              & -                              & 17.00                          & 29.00                         \\ 
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT:  Total SM Prediction (Muon + Photon) 4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+$t\bar{t}$ + W prediction from $\mu +$ jets & -                              & -                              & -                              & -                             \\ 
+$Z\rightarrow\nu\bar{\nu}$ Prediction from $\gamma +$ jets & -                              & -                              & -                              & -                             \\ 
+Total SM prediction     & -                              & -                              & -                              & -                             \\ 
+Hadronic yield from data & -                              & -                              & -                              & -                             \\ 
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+$t\bar{t}$ + W prediction from $\mu +$ jets & -                              & -                              & 3.73  $\pm$  2.90              & 15.36  $\pm$  5.66            \\ 
+$Z\rightarrow\nu\bar{\nu}$ Prediction from $\gamma +$ jets & -                              & -                              & 10.48  $\pm$  36.05            & 11.91  $\pm$  57.87           \\ 
+Total SM prediction     & -                              & -                              & 14.21  $\pm$  38.95            & 27.27  $\pm$  63.53           \\ 
+Hadronic yield from data & -                              & -                              & 17.00                          & 29.00                         \\ 
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT: 0.52 Total SM prediction from Muon sample 4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+Hadronic selection MC   & -                              & -                              & -                              & -                             \\ 
+\hline
+WJets Had MC            & -                              & -                              & -                              & -                             \\ 
+$t\bar{t}$ Had MC       & -                              & -                              & -                              & -                             \\ 
+Single $t$ Had MC       & -                              & -                              & -                              & -                             \\ 
+DY Had MC               & -                              & -                              & -                              & -                             \\ 
+Zinv Had MC             & -                              & -                              & -                              & -                             \\ 
+\hline\hline
+$\mu +$ jets selection MC & -                              & -                              & -                              & -                             \\ 
+\hline
+WJets Muon MC           & -                              & -                              & -                              & -                             \\ 
+$t\bar{t}$ Muon MC      & -                              & -                              & -                              & -                             \\ 
+Single $t$ Muon MC      & -                              & -                              & -                              & -                             \\ 
+DY Muon MC              & -                              & -                              & -                              & -                             \\ 
+\hline\hline
+Translation factor      & -                              & -                              & -                              & -                             \\ 
+$\mu +$ jets selection yield data & -                              & -                              & -                              & -                             \\ 
+Total SM prediction     & -                              & -                              & -                              & -                             \\ 
+Hadronic yield data     & -                              & -                              & -                              & -                             \\ 
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+Hadronic selection MC   & -                              & -                              & 27.30  $\pm$  1.70             & 20.30  $\pm$  1.40            \\ 
+\hline
+WJets Had MC            & -                              & -                              & 8.90  $\pm$  0.65              & 5.97  $\pm$  0.53             \\ 
+$t\bar{t}$ Had MC       & -                              & -                              & 8.73  $\pm$  1.31              & 5.71  $\pm$  1.06             \\ 
+Single $t$ Had MC       & -                              & -                              & 0.74  $\pm$  0.18              & 0.56  $\pm$  0.15             \\ 
+DY Had MC               & -                              & -                              & 0.47  $\pm$  0.43              & -                             \\ 
+Zinv Had MC             & -                              & -                              & 8.38  $\pm$  0.73              & 7.94  $\pm$  0.71             \\ 
+\hline\hline
+$\mu +$ jets selection MC & -                              & -                              & 10.14  $\pm$  1.14             & 7.24  $\pm$  0.90             \\ 
+\hline
+WJets Muon MC           & -                              & -                              & 5.52  $\pm$  1.04              & 2.00  $\pm$  0.63             \\ 
+$t\bar{t}$ Muon MC      & -                              & -                              & 4.35  $\pm$  0.45              & 4.58  $\pm$  0.47             \\ 
+Single $t$ Muon MC      & -                              & -                              & 0.21  $\pm$  0.09              & 0.14  $\pm$  0.08             \\ 
+DY Muon MC              & -                              & -                              & -                              & 0.49  $\pm$  0.44             \\ 
+\hline\hline
+Translation factor      & -                              & -                              & 2.69  $\pm$  0.35              & 2.80  $\pm$  0.40             \\ 
+$\mu +$ jets selection yield data & -                              & -                              & 2.00                           & 9.00                          \\ 
+Total SM prediction     & -                              & -                              & 5.38  $\pm$  4.18              & 25.23  $\pm$  9.14            \\ 
+Hadronic yield data     & -                              & -                              & 17.00                          & 29.00                         \\ 
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT: 0.52 TTbar + W prediction from Muon sample 4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+$t\bar{t}$ + W  Hadronic selection MC & -                              & -                              & -                              & -                             \\ 
+$\mu +$ jets selection MC & -                              & -                              & -                              & -                             \\ 
+Translation factor      & -                              & -                              & -                              & -                             \\ 
+$\mu +$ jets selection yield data & -                              & -                              & -                              & -                             \\ 
+$t\bar{t}$ + W prediction & -                              & -                              & -                              & -                             \\ 
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+$t\bar{t}$ + W  Hadronic selection MC & -                              & -                              & 18.91  $\pm$  1.54             & 12.36  $\pm$  1.20            \\ 
+$\mu +$ jets selection MC & -                              & -                              & 10.14  $\pm$  1.14             & 7.24  $\pm$  0.90             \\ 
+Translation factor      & -                              & -                              & 1.87  $\pm$  0.26              & 1.71  $\pm$  0.27             \\ 
+$\mu +$ jets selection yield data & -                              & -                              & 2.00                           & 9.00                          \\ 
+$t\bar{t}$ + W prediction & -                              & -                              & 3.73  $\pm$  2.90              & 15.36  $\pm$  5.66            \\ 
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT: 0.52 Zinv prediction from Photon sample 4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+Z$\rightarrow\nu\bar{\nu}$ hadronic selection MC & -                              & -                              & -                              & -                             \\ 
+$\gamma +$ jets selection MC & -                              & -                              & 190.00  $\pm$  93.99           & 76.00  $\pm$  59.45           \\ 
+Translation factor      & -                              & -                              & -                              & -                             \\ 
+$\gamma +$ jet selection yield data & -                              & -                              & 172.00                         & 72.00                         \\ 
+Z$\rightarrow\nu\bar{\nu}$ prediction & -                              & -                              & -                              & -                             \\ 
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+Z$\rightarrow\nu\bar{\nu}$ hadronic selection MC & -                              & -                              & 8.38  $\pm$  0.73              & 7.94  $\pm$  0.71             \\ 
+$\gamma +$ jets selection MC & 30.00  $\pm$  37.35            & 11.00  $\pm$  22.62            & 4.00  $\pm$  13.64             & 2.00  $\pm$  9.64             \\ 
+Translation factor      & -                              & -                              & 2.10  $\pm$  7.15              & 3.97  $\pm$  19.15            \\ 
+$\gamma +$ jet selection yield data & 26.00                          & 10.00                          & 5.00                           & 3.00                          \\ 
+Z$\rightarrow\nu\bar{\nu}$ prediction & -                              & -                              & 10.48  $\pm$  36.05            & 11.91  $\pm$  57.87           \\ 
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT: 0.52 Zinv prediction from DiMuon sample  4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+Z$\rightarrow\nu\bar{\nu}$ hadronic selection MC & -                              & -                              & -                              & -                             \\ 
+$\mu\bar{\mu} +$ jets selection MC & -                              & -                              & -                              & -                             \\ 
+Translation factor      & -                              & -                              & -                              & -                             \\ 
+$\mu\bar{\mu} +$ jets selection yield data & -                              & -                              & -                              & -                             \\ 
+Z$\rightarrow\nu\bar{\nu}$ prediction & -                              & -                              & -                              & -                             \\ 
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+Z$\rightarrow\nu\bar{\nu}$ hadronic selection MC & -                              & -                              & 8.38  $\pm$  0.73              & 7.94  $\pm$  0.71             \\ 
+$\mu\bar{\mu} +$ jets selection MC & -                              & -                              & -                              & 0.48  $\pm$  0.43             \\ 
+Translation factor      & -                              & -                              & -                              & 16.57  $\pm$  14.93           \\ 
+$\mu\bar{\mu} +$ jets selection yield data & -                              & -                              & -                              & -                             \\ 
+Z$\rightarrow\nu\bar{\nu}$ prediction & -                              & -                              & -                              & -                             \\ 
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT: 0.52 Muon to Predict DiMuon closure test 4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+$\mu\bar{\mu} +$ jets selection MC & -                              & -                              & -                              & -                             \\ 
+WJets DiMuon MC         & -                              & -                              & -                              & -                             \\ 
+$t\bar{t}$ DiMuon MC    & -                              & -                              & -                              & -                             \\ 
+Single $t$ DiMuon MC    & -                              & -                              & -                              & -                             \\ 
+DY DiMuon MC            & -                              & -                              & -                              & -                             \\ 
+\hline
+$\mu +$ jets selection MC & -                              & -                              & -                              & -                             \\ 
+Translation factor      & -                              & -                              & -                              & -                             \\ 
+$\mu +$ jets yield data & -                              & -                              & -                              & -                             \\ 
+$\mu\bar{\mu} +$ jets selection  prediction & -                              & -                              & -                              & -                             \\ 
+$\mu\bar{\mu} +$ jets selection yield data & -                              & -                              & -                              & -                             \\ 
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+$\mu\bar{\mu} +$ jets selection MC & -                              & -                              & -                              & 0.48  $\pm$  0.43             \\ 
+WJets DiMuon MC         & -                              & -                              & -                              & -                             \\ 
+$t\bar{t}$ DiMuon MC    & -                              & -                              & -                              & -                             \\ 
+Single $t$ DiMuon MC    & -                              & -                              & -                              & -                             \\ 
+DY DiMuon MC            & -                              & -                              & -                              & 0.47  $\pm$  0.43             \\ 
+\hline
+$\mu +$ jets selection MC & -                              & -                              & 10.14  $\pm$  1.14             & 7.24  $\pm$  0.90             \\ 
+Translation factor      & -                              & -                              & -                              & 0.07  $\pm$  0.06             \\ 
+$\mu +$ jets yield data & -                              & -                              & 2.00                           & 9.00                          \\ 
+$\mu\bar{\mu} +$ jets selection  prediction & -                              & -                              & -                              & 0.60  $\pm$  0.57             \\ 
+$\mu\bar{\mu} +$ jets selection yield data & -                              & -                              & -                              & -                             \\ 
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT: 0.52 Photon to predict DiMuon closure test 4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+$\mu\bar{\mu} +$ jets selection MC & -                              & -                              & -                              & -                             \\ 
+ $\gamma +$ jets selection MC & -                              & -                              & 190.00  $\pm$  93.99           & 76.00  $\pm$  59.45           \\ 
+Translation factor      & -                              & -                              & -                              & -                             \\ 
+$\gamma +$ jets yield data & -                              & -                              & 172.00                         & 72.00                         \\ 
+$\mu\bar{\mu} +$ jets  prediction & -                              & -                              & -                              & -                             \\ 
+$\mu\bar{\mu} +$ jets yield data & -                              & -                              & -                              & -                             \\ 
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+$\mu\bar{\mu} +$ jets selection MC & -                              & -                              & -                              & 0.48  $\pm$  0.43             \\ 
+ $\gamma +$ jets selection MC & 30.00  $\pm$  37.35            & 11.00  $\pm$  22.62            & 4.00  $\pm$  13.64             & 2.00  $\pm$  9.64             \\ 
+Translation factor      & -                              & -                              & -                              & 0.24  $\pm$  1.18             \\ 
+$\gamma +$ jets yield data & 26.00                          & 10.00                          & 5.00                           & 3.00                          \\ 
+$\mu\bar{\mu} +$ jets  prediction & -                              & -                              & -                              & 0.72  $\pm$  3.55             \\ 
+$\mu\bar{\mu} +$ jets yield data & -                              & -                              & -                              & -                             \\ 
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT: 0.52 Photon to predict Muon closure test 4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+$\mu + $jets selection  MC & -                              & -                              & -                              & -                             \\ 
+$\gamma+$ jets selection MC & -                              & -                              & 190.00  $\pm$  93.99           & 76.00  $\pm$  59.45           \\ 
+Translation factor      & -                              & -                              & -                              & -                             \\ 
+$\gamma +$ jets yield data & -                              & -                              & 172.00                         & 72.00                         \\ 
+$\mu + $jets prediction & -                              & -                              & -                              & -                             \\ 
+$\mu +$ jets yield data & -                              & -                              & -                              & -                             \\ 
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+$\mu + $jets selection  MC & -                              & -                              & 10.14  $\pm$  1.14             & 7.24  $\pm$  0.90             \\ 
+$\gamma+$ jets selection MC & 30.00  $\pm$  37.35            & 11.00  $\pm$  22.62            & 4.00  $\pm$  13.64             & 2.00  $\pm$  9.64             \\ 
+Translation factor      & -                              & -                              & 2.54  $\pm$  8.65              & 3.62  $\pm$  17.47            \\ 
+$\gamma +$ jets yield data & 26.00                          & 10.00                          & 5.00                           & 3.00                          \\ 
+$\mu + $jets prediction & -                              & -                              & 12.68  $\pm$  43.61            & 10.86  $\pm$  52.77           \\ 
+$\mu +$ jets yield data & -                              & -                              & 2.00                           & 9.00                          \\ 
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT: 0.52 Had Yields and MC Breakdown 4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+Hadronic yield data     & -                              & -                              & -                              & -                             \\ 
+Hadronic selection MC   & -                              & -                              & -                              & -                             \\ 
+\hline
+WJets Had MC            & -                              & -                              & -                              & -                             \\ 
+$t\bar{t}$ Had MC       & -                              & -                              & -                              & -                             \\ 
+Single $t$ Had MC       & -                              & -                              & -                              & -                             \\ 
+DY Had MC               & -                              & -                              & -                              & -                             \\ 
+Zinv Had MC             & -                              & -                              & -                              & -                             \\ 
+Had WW                  & -                              & -                              & -                              & -                             \\ 
+Had WZ                  & -                              & -                              & -                              & -                             \\ 
+Had ZZ                  & -                              & -                              & -                              & -                             \\ 
+\hline\hline
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+Hadronic yield data     & -                              & -                              & 17.00                          & 29.00                         \\ 
+Hadronic selection MC   & -                              & -                              & 27.30  $\pm$  1.70             & 20.30  $\pm$  1.40            \\ 
+\hline
+WJets Had MC            & -                              & -                              & 8.90  $\pm$  0.65              & 5.97  $\pm$  0.53             \\ 
+$t\bar{t}$ Had MC       & -                              & -                              & 8.73  $\pm$  1.31              & 5.71  $\pm$  1.06             \\ 
+Single $t$ Had MC       & -                              & -                              & 0.74  $\pm$  0.18              & 0.56  $\pm$  0.15             \\ 
+DY Had MC               & -                              & -                              & 0.47  $\pm$  0.43              & -                             \\ 
+Zinv Had MC             & -                              & -                              & 8.38  $\pm$  0.73              & 7.94  $\pm$  0.71             \\ 
+Had WW                  & -                              & -                              & 0.03  $\pm$  0.03              & 0.04  $\pm$  0.03             \\ 
+Had WZ                  & -                              & -                              & 0.03  $\pm$  0.02              & 0.06  $\pm$  0.03             \\ 
+Had ZZ                  & -                              & -                              & 0.01  $\pm$  0.01              & 0.02  $\pm$  0.01             \\ 
+\hline\hline
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT: 0.52 Muon Yields and MC Breakdown 4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+Muon yield data         & -                              & -                              & -                              & -                             \\ 
+Muon selection MC       & -                              & -                              & -                              & -                             \\ 
+\hline
+WJets Muon MC           & -                              & -                              & -                              & -                             \\ 
+$t\bar{t}$ Muon MC      & -                              & -                              & -                              & -                             \\ 
+Single $t$ Muon MC      & -                              & -                              & -                              & -                             \\ 
+DY Muon MC              & -                              & -                              & -                              & -                             \\ 
+Muon WW                 & -                              & -                              & -                              & -                             \\ 
+Muon WZ                 & -                              & -                              & -                              & -                             \\ 
+Muon ZZ                 & -                              & -                              & -                              & -                             \\ 
+\hline\hline
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+Muon yield data         & -                              & -                              & 2.00                           & 9.00                          \\ 
+Muon selection MC       & -                              & -                              & 10.14  $\pm$  1.14             & 7.24  $\pm$  0.90             \\ 
+\hline
+WJets Muon MC           & -                              & -                              & 4.35  $\pm$  0.45              & 4.58  $\pm$  0.47             \\ 
+$t\bar{t}$ Muon MC      & -                              & -                              & 5.52  $\pm$  1.04              & 2.00  $\pm$  0.63             \\ 
+Single $t$ Muon MC      & -                              & -                              & 0.21  $\pm$  0.09              & 0.14  $\pm$  0.08             \\ 
+DY Muon MC              & -                              & -                              & -                              & 0.49  $\pm$  0.44             \\ 
+Muon WW                 & -                              & -                              & 0.07  $\pm$  0.05              & 0.04  $\pm$  0.04             \\ 
+Muon WZ                 & -                              & -                              & -                              & -                             \\ 
+Muon ZZ                 & -                              & -                              & -                              & -                             \\ 
+\hline\hline
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT: 0.52 DiMuon Yields and MC Breakdown 4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+DiMuon yield data       & -                              & -                              & -                              & -                             \\ 
+DiMuon selection MC     & -                              & -                              & -                              & -                             \\ 
+\hline
+WJets DiMuon MC         & -                              & -                              & -                              & -                             \\ 
+$t\bar{t}$ DiMuon MC    & -                              & -                              & -                              & -                             \\ 
+Single $t$ DiMuon MC    & -                              & -                              & -                              & -                             \\ 
+DY DiMuon MC            & -                              & -                              & -                              & -                             \\ 
+DiMuon WW               & -                              & -                              & -                              & -                             \\ 
+DiMuon WZ               & -                              & -                              & -                              & -                             \\ 
+DiMuon ZZ               & -                              & -                              & -                              & -                             \\ 
+\hline\hline
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+DiMuon yield data       & -                              & -                              & -                              & -                             \\ 
+DiMuon selection MC     & -                              & -                              & -                              & 0.48  $\pm$  0.43             \\ 
+\hline
+WJets DiMuon MC         & -                              & -                              & -                              & -                             \\ 
+$t\bar{t}$ DiMuon MC    & -                              & -                              & -                              & -                             \\ 
+Single $t$ DiMuon MC    & -                              & -                              & -                              & -                             \\ 
+DY DiMuon MC            & -                              & -                              & -                              & 0.47  $\pm$  0.43             \\ 
+DiMuon WW               & -                              & -                              & -                              & -                             \\ 
+DiMuon WZ               & -                              & -                              & -                              & 0.01  $\pm$  0.01             \\ 
+DiMuon ZZ               & -                              & -                              & -                              & -                             \\ 
+\hline\hline
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT:  Total SM Prediction (Muon + DiMuon) 4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+t$\bar{t}$ + W prediction from $\mu +$ jets & -                              & -                              & -                              & -                             \\ 
+Z$\rightarrow\nu\bar{\nu}$ prediction from $\mu\mu +$ jets & -                              & -                              & -                              & -                             \\ 
+Total SM prediction     & -                              & -                              & -                              & -                             \\ 
+Hadronic yield from data & -                              & -                              & -                              & -                             \\ 
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+t$\bar{t}$ + W prediction from $\mu +$ jets & 50.41  $\pm$  9.05             & 31.43  $\pm$  8.08             & 7.55  $\pm$  3.95              & 8.73  $\pm$  4.21             \\ 
+Z$\rightarrow\nu\bar{\nu}$ prediction from $\mu\mu +$ jets & 23.28  $\pm$  19.50            & 34.16  $\pm$  36.04            & -                              & 13.06  $\pm$  21.53           \\ 
+Total SM prediction     & 73.69  $\pm$  28.55            & 65.58  $\pm$  44.12            & 7.55  $\pm$  3.95              & 21.79  $\pm$  25.74           \\ 
+Hadronic yield from data & 106.00                         & 54.00                          & 11.00                          & 15.00                         \\ 
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT:  Total SM Prediction (Muon + Photon) 4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+$t\bar{t}$ + W prediction from $\mu +$ jets & -                              & -                              & -                              & -                             \\ 
+$Z\rightarrow\nu\bar{\nu}$ Prediction from $\gamma +$ jets & -                              & -                              & -                              & -                             \\ 
+Total SM prediction     & -                              & -                              & -                              & -                             \\ 
+Hadronic yield from data & -                              & -                              & -                              & -                             \\ 
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+$t\bar{t}$ + W prediction from $\mu +$ jets & 50.41  $\pm$  9.05             & 31.43  $\pm$  8.08             & 7.55  $\pm$  3.95              & 8.73  $\pm$  4.21             \\ 
+$Z\rightarrow\nu\bar{\nu}$ Prediction from $\gamma +$ jets & 27.33  $\pm$  22.96            & 8.85  $\pm$  12.03             & 5.12  $\pm$  9.82              & 5.87  $\pm$  15.29            \\ 
+Total SM prediction     & 77.74  $\pm$  32.01            & 40.27  $\pm$  20.11            & 12.67  $\pm$  13.77            & 14.60  $\pm$  19.51           \\ 
+Hadronic yield from data & 106.00                         & 54.00                          & 11.00                          & 15.00                         \\ 
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT: 0.53 Total SM prediction from Muon sample 4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+Hadronic selection MC   & -                              & -                              & -                              & -                             \\ 
+\hline
+WJets Had MC            & -                              & -                              & -                              & -                             \\ 
+$t\bar{t}$ Had MC       & -                              & -                              & -                              & -                             \\ 
+Single $t$ Had MC       & -                              & -                              & -                              & -                             \\ 
+DY Had MC               & -                              & -                              & -                              & -                             \\ 
+Zinv Had MC             & -                              & -                              & -                              & -                             \\ 
+\hline\hline
+$\mu +$ jets selection MC & -                              & -                              & -                              & -                             \\ 
+\hline
+WJets Muon MC           & -                              & -                              & -                              & -                             \\ 
+$t\bar{t}$ Muon MC      & -                              & -                              & -                              & -                             \\ 
+Single $t$ Muon MC      & -                              & -                              & -                              & -                             \\ 
+DY Muon MC              & -                              & -                              & -                              & -                             \\ 
+\hline\hline
+Translation factor      & -                              & -                              & -                              & -                             \\ 
+$\mu +$ jets selection yield data & -                              & -                              & -                              & -                             \\ 
+Total SM prediction     & -                              & -                              & -                              & -                             \\ 
+Hadronic yield data     & -                              & -                              & -                              & -                             \\ 
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+Hadronic selection MC   & 102.49  $\pm$  3.07            & 43.09  $\pm$  2.15             & 17.60  $\pm$  1.37             & 14.34  $\pm$  1.08            \\ 
+\hline
+WJets Had MC            & 36.61  $\pm$  1.32             & 13.84  $\pm$  0.81             & 5.88  $\pm$  0.53              & 5.16  $\pm$  0.50             \\ 
+$t\bar{t}$ Had MC       & 26.38  $\pm$  2.28             & 15.79  $\pm$  1.77             & 4.39  $\pm$  0.93              & 2.69  $\pm$  0.73             \\ 
+Single $t$ Had MC       & 1.81  $\pm$  0.28              & 0.59  $\pm$  0.16              & 0.37  $\pm$  0.13              & 0.55  $\pm$  0.15             \\ 
+DY Had MC               & -                              & -                              & 0.85  $\pm$  0.58              & -                             \\ 
+Zinv Had MC             & 37.17  $\pm$  1.54             & 12.78  $\pm$  0.90             & 6.05  $\pm$  0.62              & 5.87  $\pm$  0.61             \\ 
+\hline\hline
+$\mu +$ jets selection MC & 46.64  $\pm$  2.48             & 17.36  $\pm$  1.39             & 6.12  $\pm$  0.82              & 4.85  $\pm$  0.79             \\ 
+\hline
+WJets Muon MC           & 22.82  $\pm$  2.12             & 7.31  $\pm$  1.20              & 2.55  $\pm$  0.71              & 1.49  $\pm$  0.54             \\ 
+$t\bar{t}$ Muon MC      & 20.84  $\pm$  1.00             & 9.72  $\pm$  0.68              & 3.33  $\pm$  0.40              & 2.87  $\pm$  0.37             \\ 
+Single $t$ Muon MC      & 1.20  $\pm$  0.23              & 0.32  $\pm$  0.12              & 0.23  $\pm$  0.10              & 0.01  $\pm$  0.02             \\ 
+DY Muon MC              & 1.46  $\pm$  0.76              & -                              & -                              & 0.49  $\pm$  0.44             \\ 
+\hline\hline
+Translation factor      & 2.20  $\pm$  0.13              & 2.48  $\pm$  0.23              & 2.88  $\pm$  0.45              & 2.96  $\pm$  0.53             \\ 
+$\mu +$ jets selection yield data & 36.00                          & 18.00                          & 4.00                           & 5.00                          \\ 
+Total SM prediction     & 79.10  $\pm$  14.04            & 44.68  $\pm$  11.34            & 11.50  $\pm$  5.97             & 14.78  $\pm$  7.05            \\ 
+Hadronic yield data     & 106.00                         & 54.00                          & 11.00                          & 15.00                         \\ 
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT: 0.53 TTbar + W prediction from Muon sample 4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+$t\bar{t}$ + W  Hadronic selection MC & -                              & -                              & -                              & -                             \\ 
+$\mu +$ jets selection MC & -                              & -                              & -                              & -                             \\ 
+Translation factor      & -                              & -                              & -                              & -                             \\ 
+$\mu +$ jets selection yield data & -                              & -                              & -                              & -                             \\ 
+$t\bar{t}$ + W prediction & -                              & -                              & -                              & -                             \\ 
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+$t\bar{t}$ + W  Hadronic selection MC & 65.32  $\pm$  2.66             & 30.31  $\pm$  1.95             & 11.55  $\pm$  1.22             & 8.47  $\pm$  0.90             \\ 
+$\mu +$ jets selection MC & 46.64  $\pm$  2.48             & 17.36  $\pm$  1.39             & 6.12  $\pm$  0.82              & 4.85  $\pm$  0.79             \\ 
+Translation factor      & 1.40  $\pm$  0.09              & 1.75  $\pm$  0.18              & 1.89  $\pm$  0.32              & 1.75  $\pm$  0.34             \\ 
+$\mu +$ jets selection yield data & 36.00                          & 18.00                          & 4.00                           & 5.00                          \\ 
+$t\bar{t}$ + W prediction & 50.41  $\pm$  9.05             & 31.43  $\pm$  8.08             & 7.55  $\pm$  3.95              & 8.73  $\pm$  4.21             \\ 
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT: 0.53 Zinv prediction from Photon sample 4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+Z$\rightarrow\nu\bar{\nu}$ hadronic selection MC & -                              & -                              & -                              & -                             \\ 
+$\gamma +$ jets selection MC & -                              & -                              & 460.00  $\pm$  146.25          & 180.00  $\pm$  91.49          \\ 
+Translation factor      & -                              & -                              & -                              & -                             \\ 
+$\gamma +$ jet selection yield data & -                              & -                              & 337.00                         & 132.00                        \\ 
+Z$\rightarrow\nu\bar{\nu}$ prediction & -                              & -                              & -                              & -                             \\ 
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+Z$\rightarrow\nu\bar{\nu}$ hadronic selection MC & 37.17  $\pm$  1.54             & 12.78  $\pm$  0.90             & 6.05  $\pm$  0.62              & 5.87  $\pm$  0.61             \\ 
+$\gamma +$ jets selection MC & 68.00  $\pm$  56.23            & 26.00  $\pm$  34.77            & 13.00  $\pm$  24.59            & 7.00  $\pm$  18.04            \\ 
+Translation factor      & 0.55  $\pm$  0.45              & 0.49  $\pm$  0.66              & 0.47  $\pm$  0.88              & 0.84  $\pm$  2.16             \\ 
+$\gamma +$ jet selection yield data & 50.00                          & 18.00                          & 11.00                          & 7.00                          \\ 
+Z$\rightarrow\nu\bar{\nu}$ prediction & 27.33  $\pm$  22.96            & 8.85  $\pm$  12.03             & 5.12  $\pm$  9.82              & 5.87  $\pm$  15.29            \\ 
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT: 0.53 Zinv prediction from DiMuon sample  4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+Z$\rightarrow\nu\bar{\nu}$ hadronic selection MC & -                              & -                              & -                              & -                             \\ 
+$\mu\bar{\mu} +$ jets selection MC & -                              & -                              & -                              & -                             \\ 
+Translation factor      & -                              & -                              & -                              & -                             \\ 
+$\mu\bar{\mu} +$ jets selection yield data & -                              & -                              & -                              & -                             \\ 
+Z$\rightarrow\nu\bar{\nu}$ prediction & -                              & -                              & -                              & -                             \\ 
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+Z$\rightarrow\nu\bar{\nu}$ hadronic selection MC & 37.17  $\pm$  1.54             & 12.78  $\pm$  0.90             & 6.05  $\pm$  0.62              & 5.87  $\pm$  0.61             \\ 
+$\mu\bar{\mu} +$ jets selection MC & 3.19  $\pm$  1.08              & 0.75  $\pm$  0.54              & -                              & 0.45  $\pm$  0.42             \\ 
+Translation factor      & 11.64  $\pm$  3.97             & 17.08  $\pm$  12.41            & -                              & 13.06  $\pm$  12.16           \\ 
+$\mu\bar{\mu} +$ jets selection yield data & 2.00                           & 2.00                           & -                              & 1.00                          \\ 
+Z$\rightarrow\nu\bar{\nu}$ prediction & 23.28  $\pm$  19.50            & 34.16  $\pm$  36.04            & -                              & 13.06  $\pm$  21.53           \\ 
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT: 0.53 Muon to Predict DiMuon closure test 4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+$\mu\bar{\mu} +$ jets selection MC & -                              & -                              & -                              & -                             \\ 
+WJets DiMuon MC         & -                              & -                              & -                              & -                             \\ 
+$t\bar{t}$ DiMuon MC    & -                              & -                              & -                              & -                             \\ 
+Single $t$ DiMuon MC    & -                              & -                              & -                              & -                             \\ 
+DY DiMuon MC            & -                              & -                              & -                              & -                             \\ 
+\hline
+$\mu +$ jets selection MC & -                              & -                              & -                              & -                             \\ 
+Translation factor      & -                              & -                              & -                              & -                             \\ 
+$\mu +$ jets yield data & -                              & -                              & -                              & -                             \\ 
+$\mu\bar{\mu} +$ jets selection  prediction & -                              & -                              & -                              & -                             \\ 
+$\mu\bar{\mu} +$ jets selection yield data & -                              & -                              & -                              & -                             \\ 
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+$\mu\bar{\mu} +$ jets selection MC & 3.19  $\pm$  1.08              & 0.75  $\pm$  0.54              & -                              & 0.45  $\pm$  0.42             \\ 
+WJets DiMuon MC         & 0.47  $\pm$  0.30              & -                              & -                              & -                             \\ 
+$t\bar{t}$ DiMuon MC    & -                              & -                              & -                              & -                             \\ 
+Single $t$ DiMuon MC    & -                              & -                              & -                              & -                             \\ 
+DY DiMuon MC            & 2.72  $\pm$  1.04              & 0.74  $\pm$  0.54              & -                              & 0.44  $\pm$  0.42             \\ 
+\hline
+$\mu +$ jets selection MC & 46.64  $\pm$  2.48             & 17.36  $\pm$  1.39             & 6.12  $\pm$  0.82              & 4.85  $\pm$  0.79             \\ 
+Translation factor      & 0.07  $\pm$  0.02              & 0.04  $\pm$  0.03              & -                              & 0.09  $\pm$  0.09             \\ 
+$\mu +$ jets yield data & 36.00                          & 18.00                          & 4.00                           & 5.00                          \\ 
+$\mu\bar{\mu} +$ jets selection  prediction & 2.46  $\pm$  0.94              & 0.78  $\pm$  0.59              & -                              & 0.46  $\pm$  0.48             \\ 
+$\mu\bar{\mu} +$ jets selection yield data & 2.00                           & 2.00                           & -                              & 1.00                          \\ 
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT: 0.53 Photon to predict DiMuon closure test 4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+$\mu\bar{\mu} +$ jets selection MC & -                              & -                              & -                              & -                             \\ 
+ $\gamma +$ jets selection MC & -                              & -                              & 460.00  $\pm$  146.25          & 180.00  $\pm$  91.49          \\ 
+Translation factor      & -                              & -                              & -                              & -                             \\ 
+$\gamma +$ jets yield data & -                              & -                              & 337.00                         & 132.00                        \\ 
+$\mu\bar{\mu} +$ jets  prediction & -                              & -                              & -                              & -                             \\ 
+$\mu\bar{\mu} +$ jets yield data & -                              & -                              & -                              & -                             \\ 
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+$\mu\bar{\mu} +$ jets selection MC & 3.19  $\pm$  1.08              & 0.75  $\pm$  0.54              & -                              & 0.45  $\pm$  0.42             \\ 
+ $\gamma +$ jets selection MC & 68.00  $\pm$  56.23            & 26.00  $\pm$  34.77            & 13.00  $\pm$  24.59            & 7.00  $\pm$  18.04            \\ 
+Translation factor      & 0.05  $\pm$  0.04              & 0.03  $\pm$  0.04              & -                              & 0.06  $\pm$  0.18             \\ 
+$\gamma +$ jets yield data & 50.00                          & 18.00                          & 11.00                          & 7.00                          \\ 
+$\mu\bar{\mu} +$ jets  prediction & 2.35  $\pm$  2.12              & 0.52  $\pm$  0.80              & -                              & 0.45  $\pm$  1.24             \\ 
+$\mu\bar{\mu} +$ jets yield data & 2.00                           & 2.00                           & -                              & 1.00                          \\ 
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT: 0.53 Photon to predict Muon closure test 4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+$\mu + $jets selection  MC & -                              & -                              & -                              & -                             \\ 
+$\gamma+$ jets selection MC & -                              & -                              & 460.00  $\pm$  146.25          & 180.00  $\pm$  91.49          \\ 
+Translation factor      & -                              & -                              & -                              & -                             \\ 
+$\gamma +$ jets yield data & -                              & -                              & 337.00                         & 132.00                        \\ 
+$\mu + $jets prediction & -                              & -                              & -                              & -                             \\ 
+$\mu +$ jets yield data & -                              & -                              & -                              & -                             \\ 
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+$\mu + $jets selection  MC & 46.64  $\pm$  2.48             & 17.36  $\pm$  1.39             & 6.12  $\pm$  0.82              & 4.85  $\pm$  0.79             \\ 
+$\gamma+$ jets selection MC & 68.00  $\pm$  56.23            & 26.00  $\pm$  34.77            & 13.00  $\pm$  24.59            & 7.00  $\pm$  18.04            \\ 
+Translation factor      & 0.69  $\pm$  0.57              & 0.67  $\pm$  0.89              & 0.47  $\pm$  0.89              & 0.69  $\pm$  1.79             \\ 
+$\gamma +$ jets yield data & 50.00                          & 18.00                          & 11.00                          & 7.00                          \\ 
+$\mu + $jets prediction & 34.30  $\pm$  28.83            & 12.02  $\pm$  16.35            & 5.18  $\pm$  9.94              & 4.85  $\pm$  12.66            \\ 
+$\mu +$ jets yield data & 36.00                          & 18.00                          & 4.00                           & 5.00                          \\ 
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT: 0.53 Had Yields and MC Breakdown 4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+Hadronic yield data     & -                              & -                              & -                              & -                             \\ 
+Hadronic selection MC   & -                              & -                              & -                              & -                             \\ 
+\hline
+WJets Had MC            & -                              & -                              & -                              & -                             \\ 
+$t\bar{t}$ Had MC       & -                              & -                              & -                              & -                             \\ 
+Single $t$ Had MC       & -                              & -                              & -                              & -                             \\ 
+DY Had MC               & -                              & -                              & -                              & -                             \\ 
+Zinv Had MC             & -                              & -                              & -                              & -                             \\ 
+Had WW                  & -                              & -                              & -                              & -                             \\ 
+Had WZ                  & -                              & -                              & -                              & -                             \\ 
+Had ZZ                  & -                              & -                              & -                              & -                             \\ 
+\hline\hline
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+Hadronic yield data     & 106.00                         & 54.00                          & 11.00                          & 15.00                         \\ 
+Hadronic selection MC   & 102.49  $\pm$  3.07            & 43.09  $\pm$  2.15             & 17.60  $\pm$  1.37             & 14.34  $\pm$  1.08            \\ 
+\hline
+WJets Had MC            & 36.61  $\pm$  1.32             & 13.84  $\pm$  0.81             & 5.88  $\pm$  0.53              & 5.16  $\pm$  0.50             \\ 
+$t\bar{t}$ Had MC       & 26.38  $\pm$  2.28             & 15.79  $\pm$  1.77             & 4.39  $\pm$  0.93              & 2.69  $\pm$  0.73             \\ 
+Single $t$ Had MC       & 1.81  $\pm$  0.28              & 0.59  $\pm$  0.16              & 0.37  $\pm$  0.13              & 0.55  $\pm$  0.15             \\ 
+DY Had MC               & -                              & -                              & 0.85  $\pm$  0.58              & -                             \\ 
+Zinv Had MC             & 37.17  $\pm$  1.54             & 12.78  $\pm$  0.90             & 6.05  $\pm$  0.62              & 5.87  $\pm$  0.61             \\ 
+Had WW                  & 0.28  $\pm$  0.10              & 0.01  $\pm$  0.02              & -                              & -                             \\ 
+Had WZ                  & 0.10  $\pm$  0.03              & 0.05  $\pm$  0.02              & 0.05  $\pm$  0.02              & 0.07  $\pm$  0.03             \\ 
+Had ZZ                  & 0.13  $\pm$  0.03              & 0.03  $\pm$  0.01              & 0.02  $\pm$  0.01              & 0.01  $\pm$  0.01             \\ 
+\hline\hline
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT: 0.53 Muon Yields and MC Breakdown 4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+Muon yield data         & -                              & -                              & -                              & -                             \\ 
+Muon selection MC       & -                              & -                              & -                              & -                             \\ 
+\hline
+WJets Muon MC           & -                              & -                              & -                              & -                             \\ 
+$t\bar{t}$ Muon MC      & -                              & -                              & -                              & -                             \\ 
+Single $t$ Muon MC      & -                              & -                              & -                              & -                             \\ 
+DY Muon MC              & -                              & -                              & -                              & -                             \\ 
+Muon WW                 & -                              & -                              & -                              & -                             \\ 
+Muon WZ                 & -                              & -                              & -                              & -                             \\ 
+Muon ZZ                 & -                              & -                              & -                              & -                             \\ 
+\hline\hline
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+Muon yield data         & 36.00                          & 18.00                          & 4.00                           & 5.00                          \\ 
+Muon selection MC       & 46.64  $\pm$  2.48             & 17.36  $\pm$  1.39             & 6.12  $\pm$  0.82              & 4.85  $\pm$  0.79             \\ 
+\hline
+WJets Muon MC           & 20.84  $\pm$  1.00             & 9.72  $\pm$  0.68              & 3.33  $\pm$  0.40              & 2.87  $\pm$  0.37             \\ 
+$t\bar{t}$ Muon MC      & 22.82  $\pm$  2.12             & 7.31  $\pm$  1.20              & 2.55  $\pm$  0.71              & 1.49  $\pm$  0.54             \\ 
+Single $t$ Muon MC      & 1.20  $\pm$  0.23              & 0.32  $\pm$  0.12              & 0.23  $\pm$  0.10              & 0.01  $\pm$  0.02             \\ 
+DY Muon MC              & 1.46  $\pm$  0.76              & -                              & -                              & 0.49  $\pm$  0.44             \\ 
+Muon WW                 & 0.32  $\pm$  0.10              & 0.02  $\pm$  0.02              & 0.01  $\pm$  0.02              & -                             \\ 
+Muon WZ                 & -                              & -                              & -                              & -                             \\ 
+Muon ZZ                 & -                              & -                              & -                              & -                             \\ 
+\hline\hline
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT: 0.53 DiMuon Yields and MC Breakdown 4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+DiMuon yield data       & -                              & -                              & -                              & -                             \\ 
+DiMuon selection MC     & -                              & -                              & -                              & -                             \\ 
+\hline
+WJets DiMuon MC         & -                              & -                              & -                              & -                             \\ 
+$t\bar{t}$ DiMuon MC    & -                              & -                              & -                              & -                             \\ 
+Single $t$ DiMuon MC    & -                              & -                              & -                              & -                             \\ 
+DY DiMuon MC            & -                              & -                              & -                              & -                             \\ 
+DiMuon WW               & -                              & -                              & -                              & -                             \\ 
+DiMuon WZ               & -                              & -                              & -                              & -                             \\ 
+DiMuon ZZ               & -                              & -                              & -                              & -                             \\ 
+\hline\hline
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+DiMuon yield data       & 2.00                           & 2.00                           & -                              & 1.00                          \\ 
+DiMuon selection MC     & 3.19  $\pm$  1.08              & 0.75  $\pm$  0.54              & -                              & 0.45  $\pm$  0.42             \\ 
+\hline
+WJets DiMuon MC         & -                              & -                              & -                              & -                             \\ 
+$t\bar{t}$ DiMuon MC    & 0.47  $\pm$  0.30              & -                              & -                              & -                             \\ 
+Single $t$ DiMuon MC    & -                              & -                              & -                              & -                             \\ 
+DY DiMuon MC            & 2.72  $\pm$  1.04              & 0.74  $\pm$  0.54              & -                              & 0.44  $\pm$  0.42             \\ 
+DiMuon WW               & -                              & -                              & -                              & -                             \\ 
+DiMuon WZ               & -                              & -                              & -                              & 0.01  $\pm$  0.01             \\ 
+DiMuon ZZ               & 0.00  $\pm$  0.00              & 0.01  $\pm$  0.01              & -                              & -                             \\ 
+\hline\hline
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT:  Total SM Prediction (Muon + DiMuon) 4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+t$\bar{t}$ + W prediction from $\mu +$ jets & 1886.58  $\pm$  102.49         & 731.33  $\pm$  60.56           & 563.13  $\pm$  26.90           & 192.44  $\pm$  16.00          \\ 
+Z$\rightarrow\nu\bar{\nu}$ prediction from $\mu\mu +$ jets & 1458.15  $\pm$  157.29         & 602.57  $\pm$  86.26           & 477.34  $\pm$  85.52           & 159.90  $\pm$  47.46          \\ 
+Total SM prediction     & 3344.73  $\pm$  259.78         & 1333.90  $\pm$  146.82         & 1040.47  $\pm$  112.42         & 352.34  $\pm$  63.47          \\ 
+Hadronic yield from data & 3703.00                        & 1536.00                        & 1043.00                        & 346.00                        \\ 
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+t$\bar{t}$ + W prediction from $\mu +$ jets & 51.52  $\pm$  7.65             & 24.71  $\pm$  6.22             & 9.00  $\pm$  3.38              & 1.18  $\pm$  1.62             \\ 
+Z$\rightarrow\nu\bar{\nu}$ prediction from $\mu\mu +$ jets & 53.60  $\pm$  22.77            & 8.03  $\pm$  11.30             & -                              & 7.35  $\pm$  6.41             \\ 
+Total SM prediction     & 105.12  $\pm$  30.42           & 32.74  $\pm$  17.53            & 9.00  $\pm$  3.38              & 8.53  $\pm$  8.03             \\ 
+Hadronic yield from data & 122.00                         & 44.00                          & 14.00                          & 6.00                          \\ 
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT:  Total SM Prediction (Muon + Photon) 4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+$t\bar{t}$ + W prediction from $\mu +$ jets & 1886.58  $\pm$  102.49         & 731.33  $\pm$  60.56           & 563.13  $\pm$  26.90           & 192.44  $\pm$  16.00          \\ 
+$Z\rightarrow\nu\bar{\nu}$ Prediction from $\gamma +$ jets & -                              & -                              & 431.54  $\pm$  83.15           & 161.25  $\pm$  53.16          \\ 
+Total SM prediction     & 1886.58  $\pm$  102.49         & 731.33  $\pm$  60.56           & 994.67  $\pm$  110.04          & 353.69  $\pm$  69.16          \\ 
+Hadronic yield from data & 3703.00                        & 1536.00                        & 1043.00                        & 346.00                        \\ 
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+$t\bar{t}$ + W prediction from $\mu +$ jets & 51.52  $\pm$  7.65             & 24.71  $\pm$  6.22             & 9.00  $\pm$  3.38              & 1.18  $\pm$  1.62             \\ 
+$Z\rightarrow\nu\bar{\nu}$ Prediction from $\gamma +$ jets & 52.77  $\pm$  27.41            & 24.81  $\pm$  22.48            & 9.18  $\pm$  14.18             & 7.04  $\pm$  12.99            \\ 
+Total SM prediction     & 104.29  $\pm$  35.06           & 49.52  $\pm$  28.71            & 18.18  $\pm$  17.56            & 8.22  $\pm$  14.61            \\ 
+Hadronic yield from data & 122.00                         & 44.00                          & 14.00                          & 6.00                          \\ 
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT: 0.55 Total SM prediction from Muon sample 4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+Hadronic selection MC   & 3950.92  $\pm$  71.99          & 1592.89  $\pm$  44.78          & 1104.12  $\pm$  9.42           & 396.03  $\pm$  5.72           \\ 
+\hline
+WJets Had MC            & 1600.00  $\pm$  70.40          & 617.60  $\pm$  43.74           & 368.98  $\pm$  4.16            & 128.93  $\pm$  2.47           \\ 
+$t\bar{t}$ Had MC       & 537.00  $\pm$  10.31           & 219.20  $\pm$  6.59            & 176.50  $\pm$  5.91            & 69.57  $\pm$  3.71            \\ 
+Single $t$ Had MC       & 48.73  $\pm$  1.44             & 19.26  $\pm$  0.91             & 12.70  $\pm$  0.74             & 4.34  $\pm$  0.43             \\ 
+DY Had MC               & 13.27  $\pm$  2.29             & 3.59  $\pm$  1.19              & 4.60  $\pm$  1.35              & 1.15  $\pm$  0.67             \\ 
+Zinv Had MC             & 1706.70  $\pm$  10.60          & 718.04  $\pm$  6.79            & 532.21  $\pm$  5.84            & 189.20  $\pm$  3.48           \\ 
+\hline\hline
+$\mu +$ jets selection MC & 1690.38  $\pm$  59.54          & 771.58  $\pm$  40.44           & 525.07  $\pm$  7.04            & 181.65  $\pm$  4.13           \\ 
+\hline
+WJets Muon MC           & 495.40  $\pm$  9.90            & 221.60  $\pm$  6.62            & 155.10  $\pm$  5.54            & 55.65  $\pm$  3.32            \\ 
+$t\bar{t}$ Muon MC      & 1110.00  $\pm$  58.64          & 512.40  $\pm$  39.84           & 345.69  $\pm$  4.05            & 118.30  $\pm$  2.37           \\ 
+Single $t$ Muon MC      & 52.77  $\pm$  1.50             & 23.57  $\pm$  1.00             & 16.55  $\pm$  0.84             & 6.56  $\pm$  0.53             \\ 
+DY Muon MC              & 15.04  $\pm$  2.44             & 7.62  $\pm$  1.73              & 4.24  $\pm$  1.29              & 0.31  $\pm$  0.35             \\ 
+\hline\hline
+Translation factor      & 2.34  $\pm$  0.09              & 2.06  $\pm$  0.12              & 2.10  $\pm$  0.03              & 2.18  $\pm$  0.06             \\ 
+$\mu +$ jets selection yield data & 1421.00                        & 645.00                         & 517.00                         & 169.00                        \\ 
+Total SM prediction     & 3321.30  $\pm$  158.46         & 1331.57  $\pm$  94.98          & 1087.16  $\pm$  50.84          & 368.46  $\pm$  30.03          \\ 
+Hadronic yield data     & 3703.00                        & 1536.00                        & 1043.00                        & 346.00                        \\ 
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+Hadronic selection MC   & 142.44  $\pm$  3.35            & 55.47  $\pm$  2.28             & 18.68  $\pm$  1.14             & 13.18  $\pm$  0.96            \\ 
+\hline
+WJets Had MC            & 46.29  $\pm$  1.48             & 15.58  $\pm$  0.86             & 6.59  $\pm$  0.56              & 4.47  $\pm$  0.46             \\ 
+$t\bar{t}$ Had MC       & 20.97  $\pm$  2.04             & 14.50  $\pm$  1.69             & 1.68  $\pm$  0.58              & 1.16  $\pm$  0.48             \\ 
+Single $t$ Had MC       & 1.65  $\pm$  0.27              & 0.63  $\pm$  0.16              & 0.10  $\pm$  0.07              & 0.46  $\pm$  0.14             \\ 
+DY Had MC               & 0.47  $\pm$  0.43              & -                              & -                              & -                             \\ 
+Zinv Had MC             & 72.25  $\pm$  2.15             & 24.39  $\pm$  1.25             & 10.20  $\pm$  0.81             & 7.04  $\pm$  0.67             \\ 
+\hline\hline
+$\mu +$ jets selection MC & 70.84  $\pm$  2.72             & 22.64  $\pm$  1.46             & 7.54  $\pm$  0.72              & 5.19  $\pm$  0.62             \\ 
+\hline
+WJets Muon MC           & 22.50  $\pm$  2.11             & 6.16  $\pm$  1.10              & 1.03  $\pm$  0.45              & 0.95  $\pm$  0.43             \\ 
+$t\bar{t}$ Muon MC      & 43.47  $\pm$  1.44             & 15.34  $\pm$  0.85             & 6.28  $\pm$  0.55              & 4.04  $\pm$  0.44             \\ 
+Single $t$ Muon MC      & 2.44  $\pm$  0.32              & 0.54  $\pm$  0.15              & 0.23  $\pm$  0.10              & 0.15  $\pm$  0.08             \\ 
+DY Muon MC              & 1.97  $\pm$  0.88              & 0.38  $\pm$  0.39              & -                              & -                             \\ 
+\hline\hline
+Translation factor      & 2.01  $\pm$  0.09              & 2.45  $\pm$  0.19              & 2.48  $\pm$  0.28              & 2.54  $\pm$  0.36             \\ 
+$\mu +$ jets selection yield data & 52.00                          & 18.00                          & 8.00                           & 1.00                          \\ 
+Total SM prediction     & 104.55  $\pm$  15.25           & 44.09  $\pm$  10.93            & 19.83  $\pm$  7.29             & 2.54  $\pm$  3.47             \\ 
+Hadronic yield data     & 122.00                         & 44.00                          & 14.00                          & 6.00                          \\ 
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT: 0.55 TTbar + W prediction from Muon sample 4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+$t\bar{t}$ + W  Hadronic selection MC & 2244.22  $\pm$  71.21          & 874.85  $\pm$  44.26           & 571.92  $\pm$  7.40            & 206.83  $\pm$  4.54           \\ 
+$\mu +$ jets selection MC & 1690.38  $\pm$  59.54          & 771.58  $\pm$  40.44           & 525.07  $\pm$  7.04            & 181.65  $\pm$  4.13           \\ 
+Translation factor      & 1.33  $\pm$  0.06              & 1.13  $\pm$  0.08              & 1.09  $\pm$  0.02              & 1.14  $\pm$  0.04             \\ 
+$\mu +$ jets selection yield data & 1421.00                        & 645.00                         & 517.00                         & 169.00                        \\ 
+$t\bar{t}$ + W prediction & 1886.58  $\pm$  102.49         & 731.33  $\pm$  60.56           & 563.13  $\pm$  26.90           & 192.44  $\pm$  16.00          \\ 
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+$t\bar{t}$ + W  Hadronic selection MC & 70.19  $\pm$  2.57             & 31.08  $\pm$  1.91             & 8.48  $\pm$  0.81              & 6.14  $\pm$  0.68             \\ 
+$\mu +$ jets selection MC & 70.84  $\pm$  2.72             & 22.64  $\pm$  1.46             & 7.54  $\pm$  0.72              & 5.19  $\pm$  0.62             \\ 
+Translation factor      & 0.99  $\pm$  0.05              & 1.37  $\pm$  0.12              & 1.13  $\pm$  0.15              & 1.18  $\pm$  0.19             \\ 
+$\mu +$ jets selection yield data & 52.00                          & 18.00                          & 8.00                           & 1.00                          \\ 
+$t\bar{t}$ + W prediction & 51.52  $\pm$  7.65             & 24.71  $\pm$  6.22             & 9.00  $\pm$  3.38              & 1.18  $\pm$  1.62             \\ 
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT: 0.55 Zinv prediction from Photon sample 4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+Z$\rightarrow\nu\bar{\nu}$ hadronic selection MC & 1706.70  $\pm$  10.60          & 718.04  $\pm$  6.79            & 532.21  $\pm$  5.84            & 189.20  $\pm$  3.48           \\ 
+$\gamma +$ jets selection MC & -                              & -                              & 1290.00  $\pm$  244.92         & 440.00  $\pm$  143.04         \\ 
+Translation factor      & -                              & -                              & 0.41  $\pm$  0.08              & 0.43  $\pm$  0.14             \\ 
+$\gamma +$ jet selection yield data & -                              & -                              & 1046.00                        & 375.00                        \\ 
+Z$\rightarrow\nu\bar{\nu}$ prediction & -                              & -                              & 431.54  $\pm$  83.15           & 161.25  $\pm$  53.16          \\ 
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+Z$\rightarrow\nu\bar{\nu}$ hadronic selection MC & 72.25  $\pm$  2.15             & 24.39  $\pm$  1.25             & 10.20  $\pm$  0.81             & 7.04  $\pm$  0.67             \\ 
+$\gamma +$ jets selection MC & 178.00  $\pm$  90.98           & 58.00  $\pm$  51.93            & 20.00  $\pm$  30.50            & 14.00  $\pm$  25.51           \\ 
+Translation factor      & 0.41  $\pm$  0.21              & 0.42  $\pm$  0.38              & 0.51  $\pm$  0.78              & 0.50  $\pm$  0.92             \\ 
+$\gamma +$ jet selection yield data & 130.00                         & 59.00                          & 18.00                          & 14.00                         \\ 
+Z$\rightarrow\nu\bar{\nu}$ prediction & 52.77  $\pm$  27.41            & 24.81  $\pm$  22.48            & 9.18  $\pm$  14.18             & 7.04  $\pm$  12.99            \\ 
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT: 0.55 Zinv prediction from DiMuon sample  4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+Z$\rightarrow\nu\bar{\nu}$ hadronic selection MC & 1706.70  $\pm$  10.60          & 718.04  $\pm$  6.79            & 532.21  $\pm$  5.84            & 189.20  $\pm$  3.48           \\ 
+$\mu\bar{\mu} +$ jets selection MC & 133.43  $\pm$  7.09            & 77.46  $\pm$  5.49             & 46.83  $\pm$  4.23             & 17.75  $\pm$  2.58            \\ 
+Translation factor      & 12.79  $\pm$  0.68             & 9.27  $\pm$  0.66              & 11.37  $\pm$  1.03             & 10.66  $\pm$  1.56            \\ 
+$\mu\bar{\mu} +$ jets selection yield data & 114.00                         & 65.00                          & 42.00                          & 15.00                         \\ 
+Z$\rightarrow\nu\bar{\nu}$ prediction & 1458.15  $\pm$  157.29         & 602.57  $\pm$  86.26           & 477.34  $\pm$  85.52           & 159.90  $\pm$  47.46          \\ 
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+Z$\rightarrow\nu\bar{\nu}$ hadronic selection MC & 72.25  $\pm$  2.15             & 24.39  $\pm$  1.25             & 10.20  $\pm$  0.81             & 7.04  $\pm$  0.67             \\ 
+$\mu\bar{\mu} +$ jets selection MC & 9.44  $\pm$  1.90              & 3.04  $\pm$  1.09              & 0.14  $\pm$  0.17              & 1.92  $\pm$  0.79             \\ 
+Translation factor      & 7.66  $\pm$  1.56              & 8.03  $\pm$  2.92              & 73.43  $\pm$  87.83            & 3.67  $\pm$  1.55             \\ 
+$\mu\bar{\mu} +$ jets selection yield data & 7.00                           & 1.00                           & -                              & 2.00                          \\ 
+Z$\rightarrow\nu\bar{\nu}$ prediction & 53.60  $\pm$  22.77            & 8.03  $\pm$  11.30             & -                              & 7.35  $\pm$  6.41             \\ 
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT: 0.55 Muon to Predict DiMuon closure test 4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+$\mu\bar{\mu} +$ jets selection MC & 133.43  $\pm$  7.09            & 77.46  $\pm$  5.49             & 46.83  $\pm$  4.23             & 17.75  $\pm$  2.58            \\ 
+WJets DiMuon MC         & 6.88  $\pm$  1.17              & 0.39  $\pm$  0.28              & 1.02  $\pm$  0.45              & 1.42  $\pm$  0.53             \\ 
+$t\bar{t}$ DiMuon MC    & -                              & -                              & -                              & -                             \\ 
+Single $t$ DiMuon MC    & 0.32  $\pm$  0.12              & 0.09  $\pm$  0.06              & 0.31  $\pm$  0.12              & 0.02  $\pm$  0.03             \\ 
+DY DiMuon MC            & 123.90  $\pm$  6.99            & 76.05  $\pm$  5.48             & 44.79  $\pm$  4.21             & 16.12  $\pm$  2.52            \\ 
+\hline
+$\mu +$ jets selection MC & 1690.38  $\pm$  59.54          & 771.58  $\pm$  40.44           & 525.07  $\pm$  7.04            & 181.65  $\pm$  4.13           \\ 
+Translation factor      & 0.08  $\pm$  0.01              & 0.10  $\pm$  0.01              & 0.09  $\pm$  0.01              & 0.10  $\pm$  0.01             \\ 
+$\mu +$ jets yield data & 1421.00                        & 645.00                         & 517.00                         & 169.00                        \\ 
+$\mu\bar{\mu} +$ jets selection  prediction & 112.17  $\pm$  7.75            & 64.75  $\pm$  6.25             & 46.11  $\pm$  4.68             & 16.51  $\pm$  2.74            \\ 
+$\mu\bar{\mu} +$ jets selection yield data & 114.00                         & 65.00                          & 42.00                          & 15.00                         \\ 
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+$\mu\bar{\mu} +$ jets selection MC & 9.44  $\pm$  1.90              & 3.04  $\pm$  1.09              & 0.14  $\pm$  0.17              & 1.92  $\pm$  0.79             \\ 
+WJets DiMuon MC         & 0.19  $\pm$  0.19              & -                              & 0.14  $\pm$  0.17              & 0.71  $\pm$  0.37             \\ 
+$t\bar{t}$ DiMuon MC    & -                              & -                              & -                              & -                             \\ 
+Single $t$ DiMuon MC    & 0.09  $\pm$  0.06              & -                              & -                              & -                             \\ 
+DY DiMuon MC            & 9.04  $\pm$  1.89              & 3.02  $\pm$  1.09              & -                              & 1.21  $\pm$  0.69             \\ 
+\hline
+$\mu +$ jets selection MC & 70.84  $\pm$  2.72             & 22.64  $\pm$  1.46             & 7.54  $\pm$  0.72              & 5.19  $\pm$  0.62             \\ 
+Translation factor      & 0.13  $\pm$  0.03              & 0.13  $\pm$  0.05              & 0.02  $\pm$  0.02              & 0.37  $\pm$  0.16             \\ 
+$\mu +$ jets yield data & 52.00                          & 18.00                          & 8.00                           & 1.00                          \\ 
+$\mu\bar{\mu} +$ jets selection  prediction & 6.93  $\pm$  1.71              & 2.41  $\pm$  1.05              & 0.15  $\pm$  0.18              & 0.37  $\pm$  0.53             \\ 
+$\mu\bar{\mu} +$ jets selection yield data & 7.00                           & 1.00                           & -                              & 2.00                          \\ 
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT: 0.55 Photon to predict DiMuon closure test 4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+$\mu\bar{\mu} +$ jets selection MC & 133.43  $\pm$  7.09            & 77.46  $\pm$  5.49             & 46.83  $\pm$  4.23             & 17.75  $\pm$  2.58            \\ 
+ $\gamma +$ jets selection MC & -                              & -                              & 1290.00  $\pm$  244.92         & 440.00  $\pm$  143.04         \\ 
+Translation factor      & -                              & -                              & 0.04  $\pm$  0.01              & 0.04  $\pm$  0.01             \\ 
+$\gamma +$ jets yield data & -                              & -                              & 1046.00                        & 375.00                        \\ 
+$\mu\bar{\mu} +$ jets  prediction & -                              & -                              & 37.97  $\pm$  8.07             & 15.13  $\pm$  5.44            \\ 
+$\mu\bar{\mu} +$ jets yield data & 114.00                         & 65.00                          & 42.00                          & 15.00                         \\ 
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+$\mu\bar{\mu} +$ jets selection MC & 9.44  $\pm$  1.90              & 3.04  $\pm$  1.09              & 0.14  $\pm$  0.17              & 1.92  $\pm$  0.79             \\ 
+ $\gamma +$ jets selection MC & 178.00  $\pm$  90.98           & 58.00  $\pm$  51.93            & 20.00  $\pm$  30.50            & 14.00  $\pm$  25.51           \\ 
+Translation factor      & 0.05  $\pm$  0.03              & 0.05  $\pm$  0.05              & 0.01  $\pm$  0.01              & 0.14  $\pm$  0.26             \\ 
+$\gamma +$ jets yield data & 130.00                         & 59.00                          & 18.00                          & 14.00                         \\ 
+$\mu\bar{\mu} +$ jets  prediction & 6.89  $\pm$  3.83              & 3.09  $\pm$  3.01              & 0.13  $\pm$  0.24              & 1.92  $\pm$  3.62             \\ 
+$\mu\bar{\mu} +$ jets yield data & 7.00                           & 1.00                           & -                              & 2.00                          \\ 
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT: 0.55 Photon to predict Muon closure test 4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+$\mu + $jets selection  MC & 1690.38  $\pm$  59.54          & 771.58  $\pm$  40.44           & 525.07  $\pm$  7.04            & 181.65  $\pm$  4.13           \\ 
+$\gamma+$ jets selection MC & -                              & -                              & 1290.00  $\pm$  244.92         & 440.00  $\pm$  143.04         \\ 
+Translation factor      & -                              & -                              & 0.41  $\pm$  0.08              & 0.41  $\pm$  0.13             \\ 
+$\gamma +$ jets yield data & -                              & -                              & 1046.00                        & 375.00                        \\ 
+$\mu + $jets prediction & -                              & -                              & 425.75  $\pm$  82.10           & 154.81  $\pm$  51.08          \\ 
+$\mu +$ jets yield data & 1421.00                        & 645.00                         & 517.00                         & 169.00                        \\ 
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+$\mu + $jets selection  MC & 70.84  $\pm$  2.72             & 22.64  $\pm$  1.46             & 7.54  $\pm$  0.72              & 5.19  $\pm$  0.62             \\ 
+$\gamma+$ jets selection MC & 178.00  $\pm$  90.98           & 58.00  $\pm$  51.93            & 20.00  $\pm$  30.50            & 14.00  $\pm$  25.51           \\ 
+Translation factor      & 0.40  $\pm$  0.20              & 0.39  $\pm$  0.35              & 0.38  $\pm$  0.58              & 0.37  $\pm$  0.68             \\ 
+$\gamma +$ jets yield data & 130.00                         & 59.00                          & 18.00                          & 14.00                         \\ 
+$\mu + $jets prediction & 51.74  $\pm$  26.90            & 23.03  $\pm$  20.89            & 6.79  $\pm$  10.49             & 5.19  $\pm$  9.59             \\ 
+$\mu +$ jets yield data & 52.00                          & 18.00                          & 8.00                           & 1.00                          \\ 
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[ht!]
+\caption{AlphaT: 0.55 Had Yields and MC Breakdown 4.65 fb$^{-1}$}
+\label{tab:results-W}
+\centering
+\footnotesize
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\scalht Bin (GeV)       & 275--325                       & 325--375                       & 375--475                       & 475--575                      \\ 
+\hline
+Hadronic yield data     & 3703.00                        & 1536.00                        & 1043.00                        & 346.00                        \\ 
+Hadronic selection MC   & 3950.92  $\pm$  71.99          & 1592.89  $\pm$  44.78          & 1104.12  $\pm$  9.42           & 396.03  $\pm$  5.72           \\ 
+\hline
+WJets Had MC            & 1600.00  $\pm$  70.40          & 617.60  $\pm$  43.74           & 368.98  $\pm$  4.16            & 128.93  $\pm$  2.47           \\ 
+$t\bar{t}$ Had MC       & 537.00  $\pm$  10.31           & 219.20  $\pm$  6.59            & 176.50  $\pm$  5.91            & 69.57  $\pm$  3.71            \\ 
+Single $t$ Had MC       & 48.73  $\pm$  1.44             & 19.26  $\pm$  0.91             & 12.70  $\pm$  0.74             & 4.34  $\pm$  0.43             \\ 
+DY Had MC               & 13.27  $\pm$  2.29             & 3.59  $\pm$  1.19              & 4.60  $\pm$  1.35              & 1.15  $\pm$  0.67             \\ 
+Zinv Had MC             & 1706.70  $\pm$  10.60          & 718.04  $\pm$  6.79            & 532.21  $\pm$  5.84            & 189.20  $\pm$  3.48           \\ 
+Had WW                  & 16.71  $\pm$  0.75             & 5.06  $\pm$  0.41              & 3.30  $\pm$  0.33              & 1.20  $\pm$  0.20             \\ 
+Had WZ                  & 16.83  $\pm$  0.45             & 5.86  $\pm$  0.26              & 3.19  $\pm$  0.19              & 0.89  $\pm$  0.10             \\ 
+Had ZZ                  & 11.68  $\pm$  0.24             & 4.28  $\pm$  0.14              & 2.65  $\pm$  0.11              & 0.75  $\pm$  0.06             \\ 
+\hline\hline
+\hline
+\scalht Bin (GeV)       & 575--675                       & 675--775                       & 775--875                       & 875--$\infty$                 \\ 
+\hline
+Hadronic yield data     & 122.00                         & 44.00                          & 14.00                   
