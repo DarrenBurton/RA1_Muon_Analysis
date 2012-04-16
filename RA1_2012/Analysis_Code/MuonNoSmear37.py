@@ -20,6 +20,12 @@ vbtfElectronIdFilter = Electron_IDFilter( vbtfelectronidWP95ps.ps() )
 ra3PhotonIdFilter    = Photon_IDFilter( ra3photonidps.ps() )
 CustomMuID = OL_CustomVBTFMuID(mu_id_eta_2_1.ps())
 
+#CHOOSE SAMPLE NUMBER
+# 0 = PUS4_Lower # 1 = PUS4_Higher # 2 = PUS6_2011# 3 = MC_2012
+number = 0
+#============
+vertex_reweight = GoodVertexReweighting(PSet(GoodVertexWeights = switches()["reweight_samples"][number][0]).ps())
+
 def addCutFlowMC(b) :
   b.AddWeightFilter("Weight", vertex_reweight)
   b.AddMuonFilter("PreCC",CustomMuID)
@@ -39,9 +45,6 @@ addCutFlowMC(anal_ak5_caloMC)
 outDir = "../../results_"+strftime("%d_%b")+"//MuonNoSmear37/"
 ensure_dir(outDir)
 
-
-#anal_ak5_caloMC.Run(outDir,conf_ak5_caloMC,L1OffSet_MC_Lower_Bins)
-
-anal_ak5_caloMC.Run(outDir,conf_ak5_caloMC,Summer11_MC_Lower_Bins)
+anal_ak5_caloMC.Run(outDir,conf_ak5_caloMC,switches()["reweight_samples"][number][1])
 #anal_ak5_caloMC.Run(outDir,conf_ak5_caloMC,Btag_Systematic_Samples_Lower)
 #anal_ak5_caloMCRun(outDir,conf_ak5_caloMC,Btag_TTbar_Sample_new)

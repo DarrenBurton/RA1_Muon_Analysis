@@ -29,8 +29,6 @@ def ensure_dir(path):
         pass
       else: raise
 
-
-
 # -----------------------------------------------------------------------------
 # Reading the collections from the ntuple
 
@@ -172,7 +170,7 @@ skim = SkimOp(skim_ps.ps())
 genericPSet = PSet(
 DirName      = "275_325Gev",
 MinObjects   = 1,
-MaxObjects   = 15,
+MaxObjects   = 20,
 StandardPlots     = True,
 GenPt = EffToPSet(readBtagWeight("./Btag_Efficiency_Test.txt")).GenPt,
 GenEta = EffToPSet(readBtagWeight("./Btag_Efficiency_Test.txt")).GenEta,
@@ -187,7 +185,6 @@ JetPt_High = EffToPSet(readBtagWeight("./Btag_Systematic_Variation.txt")).GenEta
 Variation  = EffToPSet(readBtagWeight("./Btag_Systematic_Variation.txt")).Pt_Eta_Eff,
 
 )
-
 
 def makePlotOp(OP = (), cutTree = None, cut = None, label = ""):
   """docstring for makePlotOp"""
@@ -211,7 +208,6 @@ def makePlotOp(OP = (), cutTree = None, cut = None, label = ""):
         ]
   )
   skim = SkimOp(skim_ps.ps())
-  # out.append(skim)
   # out.append(skim_ps)
   cutTree.TAttach(cut,alpha)
   #cutTree.TAttach(cut,dump)
@@ -325,9 +321,6 @@ MHTCut = OP_CommonMHTCut(0.)
 MHT_METCut = OP_MHToverMET(1.25,50.)
 DiJet5 = OP_NumComJets("==",2)
 GE2Jets = OP_NumComJets(">=",2)
-
-# Define a crap load more plotting ops, for HT exclusive bins
-
 VertexPtOverHT = OP_SumVertexPtOverHT(0.1)
 #eventDump = EventDump()
 
@@ -380,10 +373,6 @@ single_mu_triggers = {
   "875":["HLT_Mu30_v*","HLT_Mu40_eta2p1_v*"],
 }
 
-#json = JSONFilter("Json Mask", json_to_pset("./Run2011A.json"))
-
-#json = JSONFilter("Json Mask", json_to_pset("./Run2011B.json"))
-#json = JSONFilter("Json Mask", json_to_pset("./Jad_Test.json"))
 json = JSONFilter("Json Mask", json_to_pset("./Golden2011.json"))
 
 zerobtagDiMuon= OP_NumCommonBtagJets("==",0,0.679,5)
@@ -414,11 +403,10 @@ OneMuon = OP_NumComMuons("==",1)
 ZMassCut = RECO_2ndMuonMass(25.0, 91.2, False, "all")
 PFMTCut30 = RECO_PFMTCut(30.0)
 DiMuon = OP_NumComMuons("==",2)
-ZMass_2Muons = RECO_2ndMuonMass(25.0, 91.2, True, "OS")
+ZMass_2Muons = RECO_DiMuon_ZMass(25.0, 91.2, True, "OS")
 minDRMuonJetCut = RECO_MuonJetDRCut(0.5)
 minDRMuonJetCutDiMuon = RECO_MuonJetDRCut(0.5)
 Mu45PtCut = OP_UpperMuPtCut(45.0)
-
 
 def MakeDataTree(Threshold,Muon = None,Split = None):
   out = []
@@ -680,7 +668,6 @@ def MakeMCTree(Threshold, Muon = None,Split = None):
       cutTreeMC.TAttach(PFMTCut30,twobtagOneMuon)
       cutTreeMC.TAttach(PFMTCut30,more_than_two_btagOneMuon)
       
-      """
       out.append(AddBinedHist(cutTree = cutTreeMC,
       OP = ("Muon_ControlPlots",genericPSet), cut = PFMTCut30,
       htBins = HTBins,TriggerDict = None ,lab ="OneMuon_") )
@@ -708,7 +695,6 @@ def MakeMCTree(Threshold, Muon = None,Split = None):
       out.append(AddBinedHist(cutTree = cutTreeMC,
       OP = ("Muon_ControlPlots",genericPSet), cut = more_than_two_btagOneMuon,
       htBins = HTBins,TriggerDict = None,lab ="btag_morethantwo_OneMuon_") )
-      """
 
       cutTreeMC.TAttach(minDRMuonJetCut,DiMuon)
       cutTreeMC.TAttach(DiMuon,ZMass_2Muons)
@@ -723,7 +709,6 @@ def MakeMCTree(Threshold, Muon = None,Split = None):
       # Now lets start binning in HT bins
       # So we can HADD the files at the end and get a chorent set to save the book keeping nightmare:
       # we arrange the HT bins so they are not repoduced though out threshold runs.
-      """
       out.append(AddBinedHist(cutTree = cutTreeMC,
       OP = ("Muon_ControlPlots",genericPSet), cut = zerobtagDiMuon,
       htBins = HTBins,TriggerDict = None,lab ="btag_zero_DiMuon_") )
@@ -747,14 +732,12 @@ def MakeMCTree(Threshold, Muon = None,Split = None):
       out.append(AddBinedHist(cutTree = cutTreeMC,
       OP = ("Muon_ControlPlots",genericPSet), cut = more_than_two_btagDiMuon,
       htBins = HTBins,TriggerDict = None,lab ="btag_morethantwo_DiMuon_") )
-      """
+   
       out.append(AddBinedHist(cutTree = cutTreeMC,
       OP = ("Muon_ControlPlots",genericPSet), cut = ZMass_2Muons,
       htBins = HTBins,TriggerDict = None ,lab = "DiMuon_") )
       
   return (cutTreeMC,secondJetET,Leading_MuPtCut,out)
-
-
 
 # Define the custom muon ID
 
@@ -777,7 +760,7 @@ had_mu_id_eta_2_5 = PSet(
     MuID = "Tight",
     MinPt = 10.,
     MaxEta = 2.5,
-    MaxIsolation = 0.1,
+    MaxIsolation = 0.15,
     DRMuJet = 0.3,
     MaxGlbTrkDxy = 0.02,
     MinGlbTrkNumOfValidHits = 11,
@@ -801,46 +784,44 @@ from montecarlo.Summer11.T_TuneZ2_t_channel_7TeV_powheg_tauola_Summer11_PU_S4_ST
 from montecarlo.Summer11.T_TuneZ2_tW_channel_DR_7TeV_powheg_tauola_Summer11_PU_S4_START42_V11_v1 import *
 from montecarlo.Summer11.Tbar_TuneZ2_t_channel_7TeV_powheg_tauola_Summer11_PU_S4_START42_V11_v1 import *
 from montecarlo.Summer11.Tbar_TuneZ2_tW_channel_DR_7TeV_powheg_tauola_Summer11_PU_S4_START42_V11_v1 import *
-
 # PU S6
 from montecarlo.Summer11.WW_TuneZ2_7TeV_pythia6_tauola_Fall11_PU_S6_START42_V14B_v1 import *
 from montecarlo.Summer11.WZ_TuneZ2_7TeV_pythia6_tauola_Fall11_PU_S6_START42_V14B_v1 import *
 from montecarlo.Summer11.ZZ_TuneZ2_7TeV_pythia6_tauola_Fall11_PU_S6_START42_V14B_v1 import *
 
-##vertex_reweight = GoodVertexReweighting(
-#PSet(GoodVertexWeights =[1.0, 0.6747792521746856, 1.0448420078821972, 1.3055015002285708, 1.3983895957384924, 1.4093911155782819, 1.3850308438481276, 1.3018072225453758, 1.1623455679439036, 1.0517773707737472, 0.89838694986924372, 0.76765214151467354, 0.63185640954246791, 0.49262105848611853, 0.42787145593782405, 0.3847054078776958, 0.35778382190253444, 0.34148368315539618, 0.28535617241618649, 0.24963682196802897, 0.15231738209843554, 0.10766396055685283, 0.066294358386045707, 0.039350814964675719, 0.071293966061105704] ).ps())
-
-vertex_reweight = GoodVertexReweighting(
-PSet(GoodVertexWeights = [1.0, 0.071182041228993354, 0.3788533298983548, 0.70212224756460717, 0.95912926863057879,
+#========== VERTEX REWEIGHTING ===============
+PUS4_2011 = [1.0, 0.071182041228993354, 0.3788533298983548, 0.70212224756460717, 0.95912926863057879,
  1.1063323506805849, 1.1826257455177471, 1.2297382718782017, 1.2772830447358376, 1.4266446590805815, 1.5732065775636328, 
  1.8401056375971667, 2.1784909215394999, 2.506266882602076, 3.3335988825191176, 4.687787057503483, 6.8602191807881647, 
- 11.198474011060968, 14.883466002768214, 20.878255333866864, 1.0, 1.0, 1.0, 1.0, 1.0]).ps())
+ 11.198474011060968, 14.883466002768214, 20.878255333866864, 1.0, 1.0, 1.0, 1.0, 1.0]
 
-PU_S6_Samples = [ WW_TuneZ2_7TeV_pythia6_tauola_Fall11_PU_S6_START42_V14B_v1, 
+PUS6_2011 =  [1.0, 0.6747792521746856, 1.0448420078821972, 1.3055015002285708, 1.3983895957384924, 1.4093911155782819, 1.3850308438481276, 1.3018072225453758, 1.1623455679439036, 1.0517773707737472, 0.89838694986924372, 0.76765214151467354, 0.63185640954246791, 0.49262105848611853, 0.42787145593782405, 0.3847054078776958, 0.35778382190253444, 0.34148368315539618, 0.28535617241618649, 0.24963682196802897, 0.15231738209843554, 0.10766396055685283, 0.066294358386045707, 0.039350814964675719, 0.071293966061105704]
+
+PU_2012 = [1.0, 0.6747792521746856, 1.0448420078821972, 1.3055015002285708, 1.3983895957384924, 1.4093911155782819, 1.3850308438481276, 1.3018072225453758, 1.1623455679439036, 1.0517773707737472, 0.89838694986924372, 0.76765214151467354, 0.63185640954246791, 0.49262105848611853, 0.42787145593782405, 0.3847054078776958, 0.35778382190253444, 0.34148368315539618, 0.28535617241618649, 0.24963682196802897, 0.15231738209843554, 0.10766396055685283, 0.066294358386045707, 0.039350814964675719, 0.071293966061105704]
+#===========================================
+
+#=========== MC Sample Lists ===============
+PUS6_2011_MC = [ WW_TuneZ2_7TeV_pythia6_tauola_Fall11_PU_S6_START42_V14B_v1, 
                 WZ_TuneZ2_7TeV_pythia6_tauola_Fall11_PU_S6_START42_V14B_v1,
                  ZZ_TuneZ2_7TeV_pythia6_tauola_Fall11_PU_S6_START42_V14B_v1]
-
-WJet_Sample =[ WJetsToLNu_250_HT_300_TuneZ2_7TeV_madgraph_tauola_Summer11_PU_S4_START42_V11_v1, WJetsToLNu_300_HT_inf_TuneZ2_7TeV_madgraph_tauola_Summer11_PU_S4_START42_V11_v1_V15_03_19_jetCorrections_L1FastJet_L2Relative_L3Absolute_jetCollections_ak5calo_ak5pf_hbheNoiseFilterDefaultIsoReq_1 ]
-
-DiMuon_Sample = [ DYJetsToLL_TuneZ2_M_50_7TeV_madgraph_tauola_Summer11_PU_S4_START42_V11_v1_V15_03_14_jetCorrections_L1FastJet_L2Relative_L3Absolute_jetCollections_ak5calo_ak5pf_hbheNoiseFilterDefaultIsoReq_1 ]
 
 TTbar_Sample = [ TTJets_TuneZ2_7TeV_madgraph_tauola_Summer11_PU_S4_START42_V11_v1, T_TuneZ2_t_channel_7TeV_powheg_tauola_Summer11_PU_S4_START42_V11_v1,T_TuneZ2_tW_channel_DR_7TeV_powheg_tauola_Summer11_PU_S4_START42_V11_v1,Tbar_TuneZ2_t_channel_7TeV_powheg_tauola_Summer11_PU_S4_START42_V11_v1,
 Tbar_TuneZ2_tW_channel_DR_7TeV_powheg_tauola_Summer11_PU_S4_START42_V11_v1 ]
 
-Zinv_Sample = [ ZJetsToNuNu_50_HT_100_7TeV_madgraph_Summer11_PU_S4_START42_V11_v1,ZJetsToNuNu_100_HT_200_7TeV_madgraph_Summer11_PU_S4_START42_V11_v1,ZJetsToNuNu_200_HT_inf_7TeV_madgraph_Summer11_PU_S4_START42_V11_v1 ]
+PUS4_2011_Higher_MC = [WJetsToLNu_250_HT_300_TuneZ2_7TeV_madgraph_tauola_Summer11_PU_S4_START42_V11_v1,ZJetsToNuNu_50_HT_100_7TeV_madgraph_Summer11_PU_S4_START42_V11_v1, WJetsToLNu_300_HT_inf_TuneZ2_7TeV_madgraph_tauola_Summer11_PU_S4_START42_V11_v1_V15_03_19_jetCorrections_L1FastJet_L2Relative_L3Absolute_jetCollections_ak5calo_ak5pf_hbheNoiseFilterDefaultIsoReq_1,ZJetsToNuNu_100_HT_200_7TeV_madgraph_Summer11_PU_S4_START42_V11_v1,ZJetsToNuNu_200_HT_inf_7TeV_madgraph_Summer11_PU_S4_START42_V11_v1,DYJetsToLL_TuneZ2_M_50_7TeV_madgraph_tauola_Summer11_PU_S4_START42_V11_v1_V15_03_14_jetCorrections_L1FastJet_L2Relative_L3Absolute_jetCollections_ak5calo_ak5pf_hbheNoiseFilterDefaultIsoReq_1 ] + TTbar_Sample + QCD_Summer11_madgraph_All 
 
+PUS4_2011_Lower_MC  = [ZJetsToNuNu_50_HT_100_7TeV_madgraph_Summer11_PU_S4_START42_V11_v1,ZJetsToNuNu_100_HT_200_7TeV_madgraph_Summer11_PU_S4_START42_V11_v1,ZJetsToNuNu_200_HT_inf_7TeV_madgraph_Summer11_PU_S4_START42_V11_v1, WJetsToLNu_TuneZ2_7TeV_madgraph_tauola_Summer11_PU_S4_START42_V11_v1,DYJetsToLL_TuneZ2_M_50_7TeV_madgraph_tauola_Summer11_PU_S4_START42_V11_v1_V15_03_14_jetCorrections_L1FastJet_L2Relative_L3Absolute_jetCollections_ak5calo_ak5pf_hbheNoiseFilterDefaultIsoReq_1 ]+TTbar_Sample + QCD_Summer11_madgraph_All
 
+#Just a dummy List for Now
+MC_2012 = [ TTJets_TuneZ2_7TeV_madgraph_tauola_Summer11_PU_S4_START42_V11_v1, T_TuneZ2_t_channel_7TeV_powheg_tauola_Summer11_PU_S4_START42_V11_v1,T_TuneZ2_tW_channel_DR_7TeV_powheg_tauola_Summer11_PU_S4_START42_V11_v1,Tbar_TuneZ2_t_channel_7TeV_powheg_tauola_Summer11_PU_S4_START42_V11_v1,
+Tbar_TuneZ2_tW_channel_DR_7TeV_powheg_tauola_Summer11_PU_S4_START42_V11_v1 ]
 
+def checkSwitches(d) :
+ pass
+ 
+def switches():
+  d = {}
+  d["reweight_samples"] = [(PUS4_2011,PUS4_2011_Lower_MC),(PUS4_2011,PUS4_2011_Higher_MC),(PUS6_2011,PUS6_2011_MC),(PU_2012,MC_2012)]
+  checkSwitches(d)
+  return d
 
-Btag_Systematic_Samples_Higher = [ZJetsToNuNu_50_HT_100_7TeV_madgraph_Summer11_PU_S4_START42_V11_v1,ZJetsToNuNu_100_HT_200_7TeV_madgraph_Summer11_PU_S4_START42_V11_v1,ZJetsToNuNu_200_HT_inf_7TeV_madgraph_Summer11_PU_S4_START42_V11_v1,TTJets_TuneZ2_7TeV_madgraph_tauola_Summer11_PU_S4_START42_V11_v1, T_TuneZ2_t_channel_7TeV_powheg_tauola_Summer11_PU_S4_START42_V11_v1,T_TuneZ2_tW_channel_DR_7TeV_powheg_tauola_Summer11_PU_S4_START42_V11_v1,Tbar_TuneZ2_t_channel_7TeV_powheg_tauola_Summer11_PU_S4_START42_V11_v1,
-Tbar_TuneZ2_tW_channel_DR_7TeV_powheg_tauola_Summer11_PU_S4_START42_V11_v1,WJetsToLNu_250_HT_300_TuneZ2_7TeV_madgraph_tauola_Summer11_PU_S4_START42_V11_v1,WJetsToLNu_300_HT_inf_TuneZ2_7TeV_madgraph_tauola_Summer11_PU_S4_START42_V11_v1_V15_03_19_jetCorrections_L1FastJet_L2Relative_L3Absolute_jetCollections_ak5calo_ak5pf_hbheNoiseFilterDefaultIsoReq_1 ]
-
-Btag_Systematic_Samples_Lower = [ZJetsToNuNu_50_HT_100_7TeV_madgraph_Summer11_PU_S4_START42_V11_v1,ZJetsToNuNu_100_HT_200_7TeV_madgraph_Summer11_PU_S4_START42_V11_v1,ZJetsToNuNu_200_HT_inf_7TeV_madgraph_Summer11_PU_S4_START42_V11_v1,TTJets_TuneZ2_7TeV_madgraph_tauola_Summer11_PU_S4_START42_V11_v1, T_TuneZ2_t_channel_7TeV_powheg_tauola_Summer11_PU_S4_START42_V11_v1,T_TuneZ2_tW_channel_DR_7TeV_powheg_tauola_Summer11_PU_S4_START42_V11_v1,Tbar_TuneZ2_t_channel_7TeV_powheg_tauola_Summer11_PU_S4_START42_V11_v1,
-Tbar_TuneZ2_tW_channel_DR_7TeV_powheg_tauola_Summer11_PU_S4_START42_V11_v1,WJetsToLNu_TuneZ2_7TeV_madgraph_tauola_Summer11_PU_S4_START42_V11_v1 ]
-
-Btag_Systematic_Samples_Higher_new = [T_TuneZ2_t_channel_7TeV_powheg_tauola_Summer11_PU_S4_START42_V11_v1,T_TuneZ2_tW_channel_DR_7TeV_powheg_tauola_Summer11_PU_S4_START42_V11_v1,Tbar_TuneZ2_t_channel_7TeV_powheg_tauola_Summer11_PU_S4_START42_V11_v1,
-Tbar_TuneZ2_tW_channel_DR_7TeV_powheg_tauola_Summer11_PU_S4_START42_V11_v1,WJetsToLNu_250_HT_300_TuneZ2_7TeV_madgraph_tauola_Summer11_PU_S4_START42_V11_v1,WJetsToLNu_300_HT_inf_TuneZ2_7TeV_madgraph_tauola_Summer11_PU_S4_START42_V11_v1_V15_03_19_jetCorrections_L1FastJet_L2Relative_L3Absolute_jetCollections_ak5calo_ak5pf_hbheNoiseFilterDefaultIsoReq_1 ]
-
-Summer11_MC_Higher_Bins = [WJetsToLNu_250_HT_300_TuneZ2_7TeV_madgraph_tauola_Summer11_PU_S4_START42_V11_v1,ZJetsToNuNu_50_HT_100_7TeV_madgraph_Summer11_PU_S4_START42_V11_v1, WJetsToLNu_300_HT_inf_TuneZ2_7TeV_madgraph_tauola_Summer11_PU_S4_START42_V11_v1_V15_03_19_jetCorrections_L1FastJet_L2Relative_L3Absolute_jetCollections_ak5calo_ak5pf_hbheNoiseFilterDefaultIsoReq_1,ZJetsToNuNu_100_HT_200_7TeV_madgraph_Summer11_PU_S4_START42_V11_v1,ZJetsToNuNu_200_HT_inf_7TeV_madgraph_Summer11_PU_S4_START42_V11_v1,DYJetsToLL_TuneZ2_M_50_7TeV_madgraph_tauola_Summer11_PU_S4_START42_V11_v1_V15_03_14_jetCorrections_L1FastJet_L2Relative_L3Absolute_jetCollections_ak5calo_ak5pf_hbheNoiseFilterDefaultIsoReq_1 ] + TTbar_Sample #+ QCD_Summer11_madgraph_All 
-
-Summer11_MC_Lower_Bins = [ZJetsToNuNu_50_HT_100_7TeV_madgraph_Summer11_PU_S4_START42_V11_v1,ZJetsToNuNu_100_HT_200_7TeV_madgraph_Summer11_PU_S4_START42_V11_v1,ZJetsToNuNu_200_HT_inf_7TeV_madgraph_Summer11_PU_S4_START42_V11_v1, WJetsToLNu_TuneZ2_7TeV_madgraph_tauola_Summer11_PU_S4_START42_V11_v1,DYJetsToLL_TuneZ2_M_50_7TeV_madgraph_tauola_Summer11_PU_S4_START42_V11_v1_V15_03_14_jetCorrections_L1FastJet_L2Relative_L3Absolute_jetCollections_ak5calo_ak5pf_hbheNoiseFilterDefaultIsoReq_1 ]+TTbar_Sample #+ QCD_Summer11_madgraph_All
