@@ -10,6 +10,7 @@ import array, ast
 from math import *
 from plottingUtils import *
 from Jad_Compute import *
+from Btag_calculation import *
 
 def MC_Scaler(htbin,alphat_slice,mc_yield,sample = '',error = '',Keep_AlphaT = ''):
 	  
@@ -32,7 +33,7 @@ def MC_Scaler(htbin,alphat_slice,mc_yield,sample = '',error = '',Keep_AlphaT = '
 
 class Number_Extractor(object):
 
-  def __init__(self,sample_settings,sample_list,number,c_file = "",Triggers = "",Closure = "",Stats = "",AlphaT='',Trans_Plots = ''):
+  def __init__(self,sample_settings,sample_list,number,c_file = "",Triggers = "",Closure = "",Stats = "",AlphaT='',Trans_Plots = '',Calculation = ''):
 
     print "\n\nGetting Numbers\n\n"
     self.Settings = sample_settings
@@ -45,7 +46,8 @@ class Number_Extractor(object):
     self.number = number
     print "Luminosity of Sample is %s fb\n\n" %self.Settings["Lumo"]
     r.gROOT.SetBatch(True)
-    self.Create_Dictionary(sample_settings,sample_list)
+    if Calculation is not None: self.return_dict = Btag_Calc(sample_settings,sample_list,Calculation,number,AlphaT).Make_Dict(sample_settings,sample_list,number) 
+    else:  self.Create_Dictionary(sample_settings,sample_list)
     if self.Make_Root_Stats_File == "True": self.Begin_Stats_Root_Output(sample_settings)
     self.Prediction_Maker(sample_settings,self.return_dict)
     if self.Make_2D_Histos: self.Make_2D_Table(sample_settings,self.return_dict,self.Translation_Dict)
@@ -138,7 +140,7 @@ class Number_Extractor(object):
       c2.SaveAs("Photon_Zinv_Ratio_Plot.pdf")
 
   def Create_Dictionary(self,settings,samples):
-        
+
          table_entries = "{" 
          for key,fi in sorted(samples.iteritems()):
            i = 0
@@ -160,17 +162,31 @@ class Number_Extractor(object):
                     normal.HideOverFlow()
                     if self.Keep_AlphaT == "True":
                       #print "Keeping AlphaT Cut"
-                      table_entries +=" \"Yield\": %.3e ,\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.Integral(int(float(lower)/0.01)+1,int(float(higher)/0.01))),fi[2],fi[3],lower)
+                      err = r.Double(0.0)
+                      normal.hObj.IntegralAndError(int(float(lower)/0.01)+1,int(float(higher)/0.01),err)
+                      table_entries +=" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.Integral(int(float(lower)/0.01)+1,int(float(higher)/0.01))),err,fi[2],fi[3],lower)
+                      #table_entries +=" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.Integral(int(float(0.55)/0.01)+1,int(float(10)/0.01)) if fi[3] =="Had" or str(checkht[0:3]) == "275" or str(checkht[0:3]) == "325" else (normal.hObj.Integral(int(float(lower)/0.01)+1,int(float(higher)/0.01)))),err,fi[2],fi[3],lower)
                     else:
                       #print "No AlphaT for Control Sample Higher Bins"
-                      table_entries +=" \"Yield\": %.3e ,\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.Integral(int(float(lower)/0.01)+1,int(float(higher)/0.01)) if fi[3] =="Had" or str(checkht[0:3]) == "275" or str(checkht[0:3]) == "325" else (normal.hObj.Integral())),fi[2],fi[3],lower)
+                      err = r.Double(0.0)
+                      if (fi[3] == "Had" or str(checkht[0:3]) == "275" or str(checkht[0:3]) == "325"):normal.hObj.IntegralAndError(int(float(lower)/0.01)+1,int(float(higher)/0.01),err)
+                      else: normal.hObj.IntegralAndError(1,2000,err)
+
+                      table_entries +=" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.Integral(int(float(lower)/0.01)+1,int(float(higher)/0.01)) if fi[3] =="Had" or str(checkht[0:3]) == "275" or str(checkht[0:3]) == "325" else (normal.hObj.Integral())),err,fi[2],fi[3],lower)
                     normal.a.Close()
          '''
          Photon dictionaries, uncomment as necessary
          '''
+         if self.number == "Two_btags": table_entries += self.photon_dict_two_btag() 
+         if self.number == "Zero_btags": table_entries += self.photon_dict_zero_btag()  
+         if self.number == "One_btag": table_entries += self.photon_dict_one_btag() 
+         if self.number == "More_Than_Zero_btags": table_entries += self.photon_dict_btag()
          #table_entries += self.photon_dict_btag()          
-         #table_entries += self.photon_dict()
+         if self.number == "BaseLine": table_entries += self.photon_dict()
+
          table_entries +="}"
+         #print table_entries
+         #print table_entries
          self.return_dict = ast.literal_eval(table_entries)
          return self.return_dict
 
@@ -194,6 +210,69 @@ class Number_Extractor(object):
     s+= "\"nphot8\":{\"HT\":\"875\",\"Yield\":2.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
 
     return s
+
+  def photon_dict_one_btag(self):
+    s= "\"phot1\":{\"HT\":\"275\",\"Yield\":0,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+    s+= "\"phot2\":{\"HT\":\"325\",\"Yield\":0,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+    s+= "\"phot3\":{\"HT\":\"375\",\"Yield\":128.,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":10.},\n"
+    s+= "\"phot4\":{\"HT\":\"475\",\"Yield\":41.,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":7.},\n"
+    s+= "\"phot5\":{\"HT\":\"575\",\"Yield\":19.,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":5.},\n"
+    s+= "\"phot6\":{\"HT\":\"675\",\"Yield\":6.,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":3.0},\n"
+    s+= "\"phot7\":{\"HT\":\"775\",\"Yield\":3.,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":2.0},\n"
+    s+= "\"phot8\":{\"HT\":\"875\",\"Yield\":3.,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":1.0},\n"
+    s+= "\"nphot1\":{\"HT\":\"275\",\"Yield\":0,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+    s+= "\"nphot2\":{\"HT\":\"325\",\"Yield\":0,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+    s+= "\"nphot3\":{\"HT\":\"375\",\"Yield\":126.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+    s+= "\"nphot4\":{\"HT\":\"475\",\"Yield\":43.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+    s+= "\"nphot5\":{\"HT\":\"575\",\"Yield\":19.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+    s+= "\"nphot6\":{\"HT\":\"675\",\"Yield\":5.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+    s+= "\"nphot7\":{\"HT\":\"775\",\"Yield\":5.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+    s+= "\"nphot8\":{\"HT\":\"875\",\"Yield\":2.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+
+    return s
+
+  def photon_dict_zero_btag(self):
+    s= "\"phot1\":{\"HT\":\"275\",\"Yield\":0,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+    s+= "\"phot2\":{\"HT\":\"325\",\"Yield\":0,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+    s+= "\"phot3\":{\"HT\":\"375\",\"Yield\":1142.,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":40.},\n"
+    s+= "\"phot4\":{\"HT\":\"475\",\"Yield\":393.,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":20.},\n"
+    s+= "\"phot5\":{\"HT\":\"575\",\"Yield\":158.,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":10.},\n"
+    s+= "\"phot6\":{\"HT\":\"675\",\"Yield\":49.,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":8.0},\n"
+    s+= "\"phot7\":{\"HT\":\"775\",\"Yield\":17.,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":5.0},\n"
+    s+= "\"phot8\":{\"HT\":\"875\",\"Yield\":11.,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":3.0},\n"
+    s+= "\"nphot1\":{\"HT\":\"275\",\"Yield\":0,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+    s+= "\"nphot2\":{\"HT\":\"325\",\"Yield\":0,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+    s+= "\"nphot3\":{\"HT\":\"375\",\"Yield\":909.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+    s+= "\"nphot4\":{\"HT\":\"475\",\"Yield\":328.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+    s+= "\"nphot5\":{\"HT\":\"575\",\"Yield\":109.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+    s+= "\"nphot6\":{\"HT\":\"675\",\"Yield\":50.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+    s+= "\"nphot7\":{\"HT\":\"775\",\"Yield\":13.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+    s+= "\"nphot8\":{\"HT\":\"875\",\"Yield\":12.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+
+    return s
+
+
+  def photon_dict_two_btag(self):
+    s= "\"phot1\":{\"HT\":\"275\",\"Yield\":0,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+    s+= "\"phot2\":{\"HT\":\"325\",\"Yield\":0,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+    s+= "\"phot3\":{\"HT\":\"375\",\"Yield\":16.,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":4.},\n"
+    s+= "\"phot4\":{\"HT\":\"475\",\"Yield\":6.,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":2.},\n"
+    s+= "\"phot5\":{\"HT\":\"575\",\"Yield\":0.,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":1.0},\n"
+    s+= "\"phot6\":{\"HT\":\"675\",\"Yield\":2.1,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":1.0},\n"
+    s+= "\"phot7\":{\"HT\":\"775\",\"Yield\":0.,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0.9},\n"
+    s+= "\"phot8\":{\"HT\":\"875\",\"Yield\":0.9,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0.9},\n"
+    s+= "\"nphot1\":{\"HT\":\"275\",\"Yield\":0,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+    s+= "\"nphot2\":{\"HT\":\"325\",\"Yield\":0,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+    s+= "\"nphot3\":{\"HT\":\"375\",\"Yield\":10.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+    s+= "\"nphot4\":{\"HT\":\"475\",\"Yield\":4.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+    s+= "\"nphot5\":{\"HT\":\"575\",\"Yield\":2.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+    s+= "\"nphot6\":{\"HT\":\"675\",\"Yield\":4.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+    s+= "\"nphot7\":{\"HT\":\"775\",\"Yield\":0.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+    s+= "\"nphot8\":{\"HT\":\"875\",\"Yield\":0.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+
+    return s
+
+
 
 
   def photon_dict(self):
@@ -252,13 +331,15 @@ class Number_Extractor(object):
   def Prediction_Maker(self,settings,dict):
     
       self.bins = ('275','325','375','475','575','675','775','875')
-      self.alphat = ('0.52','0.53','0.55')
+      #self.alphat = ('0.52','0.53','0.55')
+      self.alphat = ('0.55','0.01')
+      #self.alphat = ('0.55')
       entries = ('Data','Yield','SM_Stat_Error','Muon_Trans','DiMuon_Trans','TotError','AlphaT','Btag','SampleName')
       trans_entries = ('Tot_SM_Trans','Tot_SM_Trans_Error','Muon_Trans','Muon_Trans_Error','DiMuon_Trans','DiMuon_Trans_Error','Photon_Trans','Photon_Trans_Error')
-      #MC_Weights = {"TTbar":0.00425452,"WJetsInc":0.0666131,"WJets250":0.000450549,"WJets300":0.00102329,"Zinv50":0.00485311,"Zinv100":0.00410382,"Zinv200":0.0013739,"DY":0.00849073,"Single_Tbar_tW":0.000921006,"Single_Tbar_t":0.000947643,"Single_T_tW":0.00091676,"Single_T_t":0.000915857,"WW":0.000722991,"WZ":0.000253803,"ZZ":0.00010278,"QCDb":1,"Photon":1.,"Data":1.}
+      MC_Weights = {"TTbar":0.00425452,"WJetsInc":0.0666131,"WJets250":0.000450549,"WJets300":0.00102329,"Zinv50":0.00485311,"Zinv100":0.00410382,"Zinv200":0.0013739,"DY":0.00849073,"Single_Tbar_tW":0.000921006,"Single_Tbar_t":0.000947643,"Single_T_tW":0.00091676,"Single_T_t":0.000915857,"WW":0.000722991,"WZ":0.000253803,"ZZ":0.00010278,"QCDb":1,"Photon":1.,"Data":1.}
 
       #L1 OffSet MC Weights
-      MC_Weights = {"TTbar":0.00425455,"WJetsInc":0.0507652,"WJets250":0.000400796,"WJets300":0.00102321,"Zinv50":0.00379111,"Zinv100":0.00318891,"Zinv200":0.00137389,"DY":0.00965997,"Single_Tbar_tW":0.00097485,"Single_Tbar_t":0.000947641,"Single_T_tW":0.000938672,"Single_T_t":0.00102475,"WW":0.000658555,"WZ":0.000246629,"ZZ":0.00010229,"QCDb":1,"Photon":1.,"Data":1.}
+      #MC_Weights = {"TTbar":0.00425455,"WJetsInc":0.0507652,"WJets250":0.000400796,"WJets300":0.00102321,"Zinv50":0.00379111,"Zinv100":0.00318891,"Zinv200":0.00137389,"DY":0.00965997,"Single_Tbar_tW":0.00097485,"Single_Tbar_t":0.000947641,"Single_T_tW":0.000938672,"Single_T_t":0.00102475,"WW":0.000658555,"WZ":0.000246629,"ZZ":0.00010229,"QCDb":1,"Photon":1.,"Data":1.}
 
 
 
@@ -306,6 +387,7 @@ class Number_Extractor(object):
         self.Muon_WZ_Yield_Per_Bin = dict.fromkeys(self.bins)
         self.Muon_ZZ_Yield_Per_Bin = dict.fromkeys(self.bins)
         self.Muon_QCD_B_Yield_Per_Bin = dict.fromkeys(self.bins)
+        self.Muon_Zinv_Yield_Per_Bin = dict.fromkeys(self.bins)
 
         self.DiMuon_Yield_Per_Bin = dict.fromkeys(self.bins)
         self.DiMuon_TTbar_Yield_Per_Bin = dict.fromkeys(self.bins)
@@ -317,33 +399,39 @@ class Number_Extractor(object):
         self.DiMuon_WZ_Yield_Per_Bin = dict.fromkeys(self.bins)
         self.DiMuon_ZZ_Yield_Per_Bin = dict.fromkeys(self.bins)
         self.DiMuon_QCD_B_Yield_Per_Bin = dict.fromkeys(self.bins)
+        self.DiMuon_Zinv_Yield_Per_Bin = dict.fromkeys(self.bins)
 
         self.Photon_Yield_Per_Bin = dict.fromkeys(self.bins)
 
-        dictionaries = [self.Had_Yield_Per_Bin,self.Had_Muon_WJets_Yield_Per_Bin,self.Had_Muon_TTbar_Yield_Per_Bin,self.Had_Muon_Yield_Per_Bin,self.Had_Zmumu_Yield_Per_Bin,        self.Had_Single_Top_Yield_Per_Bin,self.Had_DY_Yield_Per_Bin,self.Muon_Single_Top_Yield_Per_Bin, self.Muon_DY_Yield_Per_Bin,self.DiMuon_Yield_Per_Bin,self.Muon_Yield_Per_Bin,self.Muon_TTbar_Yield_Per_Bin,self.Muon_WJets_Yield_Per_Bin,self.DiMuon_Single_Top_Yield_Per_Bin, self.DiMuon_DY_Yield_Per_Bin,self.DiMuon_TTbar_Yield_Per_Bin,self.DiMuon_WJets_Yield_Per_Bin,self.Photon_Yield_Per_Bin, self.DiMuon_WW_Yield_Per_Bin, self.DiMuon_WZ_Yield_Per_Bin,self.DiMuon_ZZ_Yield_Per_Bin, self.DiMuon_QCD_B_Yield_Per_Bin,self.Muon_WW_Yield_Per_Bin, self.Muon_WZ_Yield_Per_Bin,self.Muon_ZZ_Yield_Per_Bin, self.Muon_QCD_B_Yield_Per_Bin,self.Had_WW_Yield_Per_Bin, self.Had_WZ_Yield_Per_Bin,self.Had_ZZ_Yield_Per_Bin, self.Had_QCD_B_Yield_Per_Bin]
+        dictionaries = [self.Had_Yield_Per_Bin,self.Had_Muon_WJets_Yield_Per_Bin,self.Had_Muon_TTbar_Yield_Per_Bin,self.Had_Muon_Yield_Per_Bin,self.Had_Zmumu_Yield_Per_Bin,        self.Had_Single_Top_Yield_Per_Bin,self.Had_DY_Yield_Per_Bin,self.Muon_Single_Top_Yield_Per_Bin, self.Muon_DY_Yield_Per_Bin,self.DiMuon_Yield_Per_Bin,self.Muon_Yield_Per_Bin,self.Muon_TTbar_Yield_Per_Bin,self.Muon_WJets_Yield_Per_Bin,self.DiMuon_Single_Top_Yield_Per_Bin, self.DiMuon_DY_Yield_Per_Bin,self.DiMuon_TTbar_Yield_Per_Bin,self.DiMuon_WJets_Yield_Per_Bin,self.Photon_Yield_Per_Bin, self.DiMuon_WW_Yield_Per_Bin, self.DiMuon_WZ_Yield_Per_Bin,self.DiMuon_ZZ_Yield_Per_Bin, self.DiMuon_QCD_B_Yield_Per_Bin,self.Muon_WW_Yield_Per_Bin, self.Muon_WZ_Yield_Per_Bin,self.Muon_ZZ_Yield_Per_Bin, self.Muon_QCD_B_Yield_Per_Bin,self.Had_WW_Yield_Per_Bin, self.Had_WZ_Yield_Per_Bin,self.Had_ZZ_Yield_Per_Bin, self.Had_QCD_B_Yield_Per_Bin,self.DiMuon_Zinv_Yield_Per_Bin, self.Muon_Zinv_Yield_Per_Bin ]
 
         #List of Dictionaries for Trigger Corrections
 
         had_dict = [self.Had_Yield_Per_Bin,self.Had_Muon_WJets_Yield_Per_Bin,self.Had_Muon_TTbar_Yield_Per_Bin,self.Had_Muon_Yield_Per_Bin,self.Had_Zmumu_Yield_Per_Bin,        self.Had_Single_Top_Yield_Per_Bin,self.Had_DY_Yield_Per_Bin,self.Had_WW_Yield_Per_Bin, self.Had_WZ_Yield_Per_Bin,self.Had_ZZ_Yield_Per_Bin, self.Had_QCD_B_Yield_Per_Bin]
 
-        muon_dict = [self.Muon_Single_Top_Yield_Per_Bin, self.Muon_DY_Yield_Per_Bin,self.DiMuon_Yield_Per_Bin,self.Muon_Yield_Per_Bin,self.Muon_TTbar_Yield_Per_Bin,self.Muon_WJets_Yield_Per_Bin,self.DiMuon_Single_Top_Yield_Per_Bin, self.DiMuon_DY_Yield_Per_Bin,self.DiMuon_TTbar_Yield_Per_Bin,self.DiMuon_WJets_Yield_Per_Bin, self.DiMuon_WW_Yield_Per_Bin, self.DiMuon_WZ_Yield_Per_Bin,self.DiMuon_ZZ_Yield_Per_Bin, self.DiMuon_QCD_B_Yield_Per_Bin,self.Muon_WW_Yield_Per_Bin, self.Muon_WZ_Yield_Per_Bin,self.Muon_ZZ_Yield_Per_Bin, self.Muon_QCD_B_Yield_Per_Bin]
+        muon_dict = [self.Muon_Single_Top_Yield_Per_Bin, self.Muon_DY_Yield_Per_Bin,self.DiMuon_Yield_Per_Bin,self.Muon_Yield_Per_Bin,self.Muon_TTbar_Yield_Per_Bin,self.Muon_WJets_Yield_Per_Bin,self.DiMuon_Single_Top_Yield_Per_Bin, self.DiMuon_DY_Yield_Per_Bin,self.DiMuon_TTbar_Yield_Per_Bin,self.DiMuon_WJets_Yield_Per_Bin, self.DiMuon_WW_Yield_Per_Bin, self.DiMuon_WZ_Yield_Per_Bin,self.DiMuon_ZZ_Yield_Per_Bin, self.DiMuon_QCD_B_Yield_Per_Bin,self.Muon_WW_Yield_Per_Bin, self.Muon_WZ_Yield_Per_Bin,self.Muon_ZZ_Yield_Per_Bin, self.Muon_QCD_B_Yield_Per_Bin, self.Muon_Zinv_Yield_Per_Bin,self.DiMuon_Zinv_Yield_Per_Bin  ]
 
         # List of Dictionaries for Jad's Closure Tests
 
         jad_dictionaries = [self.Muon_Yield_Per_Bin,self.DiMuon_Yield_Per_Bin,self.Photon_Yield_Per_Bin]
-
         for dicto in dictionaries:
           for key in self.bins:
             dicto[key] = dict.fromkeys(entries,0)
             dicto[key]['TotError'] = []
             dicto[key]['AlphaT'] = self.current_slice
             dicto[key]['Btag'] = self.number
-        
+       
+ 
+        #print self.Muon_Yield_Per_Bin
+
         for entry,fi in dict.iteritems():
           if str(fi['AlphaT']) == str(slices).split('_')[0] :
+            #print str(slices).split('_')[0]
             Error = 0
-            if dict[entry]["Category"] == "Photon": Error = dict[entry]["Error"]
-            else : Error = math.sqrt(dict[entry]["Yield"]*float(MC_Weights[dict[entry]["SampleType"]])*float(self.Settings["Lumo"]*10))
+            if dict[entry]["Category"] == "Photon": Error = dict[entry]["Error"]*(49.8/46.5)
+            else : 
+              #Error = math.sqrt(dict[entry]["Yield"]*float(MC_Weights[dict[entry]["SampleType"]])*float(self.Settings["Lumo"]*10))
+              Error = float(dict[entry]["Error"])
             if dict[entry]["SampleType"] == "Data":
               if dict[entry]["Category"] == "Had": 
                 self.Had_Yield_Per_Bin[dict[entry]["HT"]]["Data"] = dict[entry]["Yield"]
@@ -435,6 +523,10 @@ class Number_Extractor(object):
                   inextras = True
                   self.Muon_QCD_B_Yield_Per_Bin[dict[entry]["HT"]]["Yield"] += dict[entry]["Yield"]
                   self.Muon_QCD_B_Yield_Per_Bin[dict[entry]["HT"]]["TotError"].append(Error)
+                elif dict[entry]["SampleType"] == "Zinv50" or dict[entry]["SampleType"] == "Zinv100" or dict[entry]["SampleType"] == "Zinv200": 
+                  inzinv = True
+                  self.Muon_Zinv_Yield_Per_Bin[dict[entry]["HT"]]["Yield"] += dict[entry]["Yield"]
+                  self.Muon_Zinv_Yield_Per_Bin[dict[entry]["HT"]]["TotError"].append(Error)
 
             elif dict[entry]["Category"] == "DiMuon":
                 indimuon = True
@@ -468,10 +560,15 @@ class Number_Extractor(object):
                   inextras = True
                   self.DiMuon_QCD_B_Yield_Per_Bin[dict[entry]["HT"]]["Yield"] += dict[entry]["Yield"]
                   self.DiMuon_QCD_B_Yield_Per_Bin[dict[entry]["HT"]]["TotError"].append(Error)
+                elif dict[entry]["SampleType"] == "Zinv50" or dict[entry]["SampleType"] == "Zinv100" or dict[entry]["SampleType"] == "Zinv200": 
+                  inzinv = True
+                  self.DiMuon_Zinv_Yield_Per_Bin[dict[entry]["HT"]]["Yield"] += dict[entry]["Yield"]
+                  self.DiMuon_Zinv_Yield_Per_Bin[dict[entry]["HT"]]["TotError"].append(Error)
+
 
             elif dict[entry]["Category"] == "Photon":
                 inphoton = True
-                self.Photon_Yield_Per_Bin[dict[entry]["HT"]]["Yield"] +=  dict[entry]["Yield"]
+                self.Photon_Yield_Per_Bin[dict[entry]["HT"]]["Yield"] +=  dict[entry]["Yield"]*(49.8/46.5)
                 self.Photon_Yield_Per_Bin[dict[entry]["HT"]]["TotError"].append(Error)
           
         for bin in self.Muon_Yield_Per_Bin: 
@@ -557,7 +654,10 @@ class Number_Extractor(object):
         if self.Make_Root_Stats_File == "True": self.Format_Stats_Root_Output(dictionaries,settings)
         
   def Jad_Output(self,input):
+    print "\n\n"
     for file in input:
+      print input
+      print "\n\n\n\n"
       self.c_file.append(file)
 
   def Begin_Stats_Root_Output(self,settings): 
