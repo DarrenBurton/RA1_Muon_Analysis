@@ -12,9 +12,9 @@ from plottingUtils import *
 
 class Btag_Calc(object):
         
-   def __init__(self,settings,samples,btag_measure,number,alphaT_check):
+   def __init__(self,settings,samples,btag_measure,number,alphaT_check,lumi_dict):
         print "In btag Calc taking samples"
-        print samples
+        #print samples
         print "\n\n Making Predictions for %s \n\n" %number
         self.Keep_AlphaT = alphaT_check
         self.settings = settings
@@ -22,6 +22,7 @@ class Btag_Calc(object):
         self.Btag_Rate(btag_measure)
         self.DiMuon_Fit(self.Btag_Efficiencies)
         #print self.Btag_Efficiencies["DiMuon"]
+        self.lumi_dict = lumi_dict
 
    def DiMuon_Fit(self,dictionary):
         
@@ -46,7 +47,7 @@ class Btag_Calc(object):
         data.SetMarkerSize(1.5)
         data.Draw("AP")
         data.Fit(fit)
-        #c1.SaveAs("DataFit.png")
+        c1.SaveAs("DataFit.png")
         print fit.GetParameter(0)
         for num,entry in sorted(dictionary["DiMuon"].iteritems()):
                 self.Btag_Efficiencies["DiMuon"][num]["Mistag_Efficiency"] = fit.GetParameter(0)
@@ -77,8 +78,8 @@ class Btag_Calc(object):
                         sample_dir = fi[1]+dir 
                         subdirect.GetName()
                         if sample_dir == subdirect.GetName():  
-                            for subkey in subdirect.GetListOfKeys():     
-                                if str(checkht[0:3]) in ["275","325"] or fi[3] =="Had" or self.Keep_AlphaT == "True":
+                            for subkey in subdirect.GetListOfKeys():  
+                                if fi[3] =="Had" or (str(lower) == "0.55" and self.Keep_AlphaT == "True"):
                                     if subkey.GetName() == "Matched_vs_Matched_noB_alphaT_all":
                                         plot = file.Get(sample_dir+"/"+subkey.GetName())
                                 else: 
@@ -86,10 +87,32 @@ class Btag_Calc(object):
                                         plot = file.Get(sample_dir+"/"+subkey.GetName())
                    if fi[2] != "Data":table_entries += self.Make_Prediction(plot,fi[3],fi[2],number,dir[0:3],lower)
                    else: table_entries += self.Data_Yield(fi[0],fi[1],dir,lower,higher,fi[2],fi[3])
+        if number == "Inclusive" or number == "BaseLine": table_entries += self.photon_baseline_dict()
         table_entries += "}"
         return_dict = ast.literal_eval(table_entries)
-        print table_entries
+        #print table_entries
         return return_dict
+
+   def photon_baseline_dict(self):
+
+            s= "\"phot1\":{\"HT\":\"275\",\"Yield\":0,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"phot2\":{\"HT\":\"325\",\"Yield\":0,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"phot3\":{\"HT\":\"375\",\"Yield\":1316.,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":40.},\n"
+            s+= "\"phot4\":{\"HT\":\"475\",\"Yield\":444.,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":20.},\n"
+            s+= "\"phot5\":{\"HT\":\"575\",\"Yield\":180.,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":10.},\n"
+            s+= "\"phot6\":{\"HT\":\"675\",\"Yield\":58.,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":8.0},\n"
+            s+= "\"phot7\":{\"HT\":\"775\",\"Yield\":20.,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":5.0},\n"
+            s+= "\"phot8\":{\"HT\":\"875\",\"Yield\":14.,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":3.0},\n"
+            s+= "\"nphot1\":{\"HT\":\"275\",\"Yield\":0,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"nphot2\":{\"HT\":\"325\",\"Yield\":0,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"nphot3\":{\"HT\":\"375\",\"Yield\":150.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"nphot4\":{\"HT\":\"475\",\"Yield\":53.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"nphot5\":{\"HT\":\"575\",\"Yield\":18.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"nphot6\":{\"HT\":\"675\",\"Yield\":6.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"nphot7\":{\"HT\":\"775\",\"Yield\":1.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"nphot8\":{\"HT\":\"875\",\"Yield\":0.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+
+            return s
 
    def Data_Yield(self,file,dir_path,dir,lower,higher,sample_type,category):
       for histName in self.settings['plots']:
@@ -97,15 +120,18 @@ class Btag_Calc(object):
           dir = dir_path+dir
           normal =  GetSumHist(File = ["%s.root"%file], Directories = [dir], Hist = histName, Col = r.kBlack, Norm = None, LegendText = "nBtag")  
           normal.HideOverFlow()
-          if self.Keep_AlphaT == "True":
+          if self.Keep_AlphaT == "True" and str(lower)=="0.55":
             err = r.Double(0.0)
-            normal.hObj.IntegralAndError(int(float(lower)/0.01)+1,int(float(higher)/0.01),err)
-            table_string =" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.Integral(int(float(lower)/0.01)+1,int(float(higher)/0.01))),err,sample_type,category,lower)
+            if category != "Had": normal.hObj.IntegralAndError(int(float(lower)/0.01)+1,int(float(higher)/0.01),err)
+            else: normal.hObj.IntegralAndError(int(float(0.55)/0.01)+1,int(float(higher)/0.01),err)
+            #table_string =" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.Integral(int(float(lower)/0.01)+1,int(float(higher)/0.01))),err,sample_type,category,lower)
+            table_string =" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.Integral(int(float(0.55)/0.01)+1,int(float(10)/0.01)) if category =="Had" else (normal.hObj.Integral(int(float(lower)/0.01)+1,int(float(higher)/0.01)))),err,sample_type,category,lower)
           else:
             err = r.Double(0.0)
-            if (category == "Had" or str(checkht[0:3]) == "275" or str(checkht[0:3]) == "325"):normal.hObj.IntegralAndError(int(float(lower)/0.01)+1,int(float(higher)/0.01),err)
+            #or str(checkht[0:3]) == "275" or str(checkht[0:3]) == "325"
+            if category == "Had" :normal.hObj.IntegralAndError(int(float(lower)/0.01)+1,int(float(higher)/0.01),err)
             else: normal.hObj.IntegralAndError(1,2000,err)
-            table_string =" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.Integral(int(float(lower)/0.01)+1,int(float(higher)/0.01)) if category =="Had" or str(checkht[0:3]) == "275" or str(checkht[0:3]) == "325" else (normal.hObj.Integral())),err,sample_type,category,lower)
+            table_string =" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.Integral(int(float(0.55)/0.01)+1,int(float(higher)/0.01)) if category =="Had" else (normal.hObj.Integral())),err,sample_type,category,lower)
           normal.a.Close()
       return table_string    
 
@@ -113,7 +139,7 @@ class Btag_Calc(object):
    def Make_Prediction(self,plot,sample,category,btag_number,htbin,alphaT):  
         
         def Pred_Zero(plot,htbin,sample,e,m):
-
+             
           sum_zero = 0
           pred_zero = 0
 
@@ -210,7 +236,7 @@ class Btag_Calc(object):
 
           return (pred_three,error_three) 
 
-        prediction_dictionary = {"Zero_btags":['Pred_Zero'],"One_btag":['Pred_One'],"Two_btags":["Pred_Two"],"More_Than_Two_btags":['Pred_Three'],"More_Than_Zero_btags":['Pred_One','Pred_Two','Pred_Three'],"More_Than_One_btags":['Pred_Two','Pred_Three'],"Inclusive":['Pred_Zero','Pred_One','Pred_Two','Pred_Three']}
+        prediction_dictionary = {"Zero_btags":['Pred_Zero'],"One_btag":['Pred_One'],"Two_btags":["Pred_Two"],"More_Than_Two_btag":['Pred_Three'],"More_Than_Zero_btag":['Pred_One','Pred_Two','Pred_Three'],"More_Than_One_btag":['Pred_Two','Pred_Three'],"Inclusive":['Pred_Zero','Pred_One','Pred_Two','Pred_Three']}
         yield_pred = 0
         error_pred = 0
         for entry in  prediction_dictionary[btag_number]:
@@ -225,7 +251,8 @@ class Btag_Calc(object):
            yield_pred +=  calc[0]
            error_pred +=  pow(calc[1],2)
         error_pred = sqrt(error_pred)
-        table_string =" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%(yield_pred*(10*self.settings['Lumo']),error_pred*(self.settings['Lumo']*10),category,sample,alphaT)
+        Luminosity = self.lumi_dict[sample]
+        table_string =" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%(yield_pred*(10*Luminosity),error_pred*(Luminosity*10),category,sample,alphaT)
         return table_string
   
 

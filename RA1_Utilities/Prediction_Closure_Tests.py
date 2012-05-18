@@ -6,36 +6,28 @@ import os,fnmatch,sys
 import glob, errno
 from time import strftime
 from optparse import OptionParser
-import array  #, ast
+import array, ast
 import math as m
 from plottingUtils import *
 from Bryn_Numbers import *
+from Jad_Compute import *
 
+
+
+'''
+Jads Closure Tests are used to show how we can relax the alphaT cut in the control samples
+Therefore the AlphaTSlices are given as 0.55-10 and 0.01-10
+'''
 
 settings = {
   #"dirs":["275_325"],
-  "dirs":["275_325","325_375","375_475","475_575","575_675","675_775","775_875","875",],  #HT Bins
-  "plots":["AlphaT_all",],  # Histogram that Yields are taken from
-  #"AlphaTSlices":["0.52_0.53","0.53_0.55","0.55_20"], # AlphaT Slices
-  "AlphaTSlices":["0.55_20"], # AlphaT Slices
-  "Lumo":0.55, # Luminosity in fb
-  "Multi_Lumi":{'Had':0.55,'Muon':0.45,'DiMuon':0.5}
+  "dirs":["275_325","325_375","375_475","475_575","575_675","675_775","775_875","875",],
+  "plots":["AlphaT_all",],
+  "AlphaTSlices":["0.55_10","0.01_10"],
+  "Lumo":0.55 
   #"AlphaTSlices":["0.55_10"]
       }
 
-
-'''
-Sample Dictionary Instructions
-
-eg "nMuon":("./May_11_root_Files/Muon_Data","btag_two_OneMuon_","Data","Muon"),
-if n at start of name entry then the file is data and will no be scaled to luminosity.
-first argument is path to root file
-second argument is prefix to ht bin. i.e OneMuon_275_325
-third argument is data/mc type, i.e. Data, WJets250 - MC relating to the binned WJets 250-300 HT sample
-fourth argument is sample Type, Had/DiMuon/Muon. 
-
-the only thing that will have to be changed is the second argument depending on wether you are running btag multiplicity/baseline
-'''
 btag_two_samples = {
 
     "nHad":("./New_7TeV_MC_8TeV_xSec/Had_Data","btag_two_","Data","Had"),
@@ -292,20 +284,27 @@ calc_file = {
 }
 
 
-#calc_file = {
-#     "mchad":("./May_11_root_Files/Had_MC.root","Had",""),
-#     "mcmuon":("./May_11_root_Files/Muon_MC.root","Muon","OneMuon_"),
-#     "mcdimuon":("./May_11_root_Files/Muon_MC.root","DiMuon","DiMuon_"),
-#
-#}
+
+
+'''
+All Sample are passed through Number_Extractor and each of the relevant dictionaries are output to c_file.
+Jad_Compute which is then called and closure test png's are produced.
+3rd argument here is entered into dictionary to identify btag multiplicity. Dont change these strings
+
+Addtional options
+Classic - If true then produces 'classic baseline' closure tests. i.e. Photon -> dimuon, muon -> dimuon. Use with basline files only, no btags
+
+Look in Jad_Compute.py for any further comments
+'''
+
 
 if __name__=="__main__":
-  #a = Number_Extractor(settings,btag_two_samples,"Two_btags",Triggers = "True",AlphaT="False",Calculation=calc_file)
-  #b = Number_Extractor(settings,btag_one_samples,"One_btag",Triggers = "True",AlphaT="False",Calculation=calc_file)
-  #c = Number_Extractor(settings,btag_zero_samples,"Zero_btags",Triggers = "True",AlphaT="False",Calculation=calc_file)
-  #d = Number_Extractor(settings,btag_more_than_two_samples,"More_Than_Two_btag",Triggers = "True",AlphaT="False",Calculation=calc_file)
-  #t = Number_Extractor(settings,btag_zero_samples,"Zero_btags",Triggers = "True",AlphaT="False",Calculation=calc_file)
-  #e  = Number_Extractor(settings,btag_more_than_zero_samples,"More_Than_Zero_btag",Triggers = "True",AlphaT="False",Calculation=calc_file)
-  #f  = Number_Extractor(settings,btag_more_than_one_samples,"More_Than_One_btag",Triggers = "True",AlphaT="False",Calculation=calc_file)
-  g  = Number_Extractor(settings,inclusive_samples,"Inclusive",Triggers = "True",AlphaT="False",Calculation=calc_file,Split_Lumi = "False")
-  #g  = Number_Extractor(settings,inclusive_samples,"Inclusive",Triggers = "True",AlphaT="False",Split_Lumi = "False")
+  LIST_FOR_JAD = []
+  a = Number_Extractor(settings,btag_two_samples,"Two_btags",c_file = LIST_FOR_JAD,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file)
+  b = Number_Extractor(settings,btag_one_samples,"One_btag",c_file = LIST_FOR_JAD,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file)
+  c = Number_Extractor(settings,btag_zero_samples,"Zero_btags",c_file = LIST_FOR_JAD,Closure = "True",Triggers = "False",AlphaT="True",Calculation=calc_file)
+  d = Number_Extractor(settings,btag_more_than_two_samples,"More_Than_Two_btag",c_file = LIST_FOR_JAD,Closure = "True",Triggers = "False",AlphaT="True",Calculation=calc_file)
+  e  = Number_Extractor(settings,btag_more_than_zero_samples,"More_Than_Zero_btag",c_file = LIST_FOR_JAD,Closure = "True",Triggers = "False",AlphaT="True",Calculation=calc_file)
+  f  = Number_Extractor(settings,btag_more_than_one_samples,"More_Than_One_btag",c_file = LIST_FOR_JAD,Closure = "True",Triggers = "False",AlphaT="True",Calculation=calc_file)
+  g  = Number_Extractor(settings,inclusive_samples,"Inclusive",c_file = LIST_FOR_JAD,Closure = "True",Triggers = "True",AlphaT="True",Calculation=calc_file)
+  h = Jad_Compute(LIST_FOR_JAD,Lumo = settings["Lumo"])

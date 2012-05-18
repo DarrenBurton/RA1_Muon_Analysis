@@ -18,7 +18,7 @@ settings = {
   "dirs":["275_325","325_375","375_475","475_575","575_675","675_775","775_875","875",],
   "plots":["AlphaT_all",],
   "AlphaTSlices":["0.55_10","0.01_10"],
-  "Lumo":5.0
+  "Lumo":4.65
   
   #"AlphaTSlices":["0.55_10"]
       }
@@ -27,7 +27,7 @@ samples = {
     "nMuon":("./Root_Files/Muon_Data","OneMuon_","Data","Muon"),
     
     #Muon MC
-     "mcMuonW1":("./Root_Files/Muon_WJetsInc","OneMuon_","WJetsInc","Muon"),
+     #"mcMuonW1":("./Root_Files/Muon_WJetsInc","OneMuon_","WJetsInc","Muon"),
      "mcMuonW2":("./Root_Files/Muon_WJets250","OneMuon_","WJets250","Muon"),
      "mcMuonW3":("./Root_Files/Muon_WJets300","OneMuon_","WJets300","Muon"),
      "mcMuonTtw":("./Root_Files/Muon_TTbar","OneMuon_","TTbar","Muon"),
@@ -46,7 +46,7 @@ samples = {
     "nDimuon":("./Root_Files/Muon_Data","DiMuon_","Data","DiMuon"),
     
     #Muon MC
-     "mcDimuonW1":("./Root_Files/Muon_WJetsInc","DiMuon_","WJetsInc","DiMuon"),
+     #"mcDimuonW1":("./Root_Files/Muon_WJetsInc","DiMuon_","WJetsInc","DiMuon"),
      "mcDimuonW2":("./Root_Files/Muon_WJets250","DiMuon_","WJets250","DiMuon"),
      "mcDimuonW3":("./Root_Files/Muon_WJets300","DiMuon_","WJets300","DiMuon"),
      "mcDimuonTtw":("./Root_Files/Muon_TTbar","DiMuon_","TTbar","DiMuon"),

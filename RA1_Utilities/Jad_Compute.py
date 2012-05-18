@@ -22,7 +22,7 @@ class Jad_Compute(object):
       self.MakeVectors(dict_list)
 
   def MakeVectors(self,dict_list):
-    #print dict_list
+    print dict_list
     r.gROOT.ProcessLine(".L tdrstyle.C")
     r.setstyle()
     r.gROOT.SetBatch(True)
@@ -62,74 +62,70 @@ class Jad_Compute(object):
 
     if self.Classic == "True" :
       print "In classic mode"
-      test_1 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -1.,'box' : "True", 'plot_title':"#mu + jets #rightarrow #mu#mu + jets",'scale':None,'reduce':"False",'file_name':'Classic_mu_to_dimuon','spread':'True' } 
+      test_1 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -1.,'box' : "True", 'plot_title':"#mu + jets #rightarrow #mu#mu + jets",'scale':None,'reduce':"True",'file_name':'Classic_mu_to_dimuon','spread':'True' } 
       test_2 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "True", 'plot_title':"#gamma + jets #rightarrow #mu#mu + jets ",'scale':None,'reduce':"True",'file_name':'Classic_gamma_to_dimuon','spread':'True' } 
       test_3 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -3.,'box' : "True", 'plot_title':"#gamma + jets #rightarrow #mu + jets",'scale':None,'reduce':"True",'file_name':'Classic_gamma_to_muon','spread':'False' }
 
-      test_dicts = [test_1,test_2]
+      test_dicts = [test_1,test_2,test_3]
     else:
 
-      test_1 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -100.,'box' : "True", 'plot_title':"#mu + jets (#alpha_{T}>0.55) #rightarrow #mu#mu + jets (#alpha_{T}>0.55)",'scale':None, 'reduce':"True", 'file_name':'Btag_mu_to_dimuon_alphaT_Cut','spread':"False"} 
-      test_2 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -1.,'box' : "True",'plot_title':"#mu + jets (no #alpha_{T}) #rightarrow #mu#mu + jets (no #alpha_{T})" ,'scale':None , 'reduce':"True", 'file_name':'Btag_mu_to_dimuon_no_alphaT_Cut','spread':"False" } 
+      test_1 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -100.,'box' : "True", 'plot_title':"#mu + jets (#alpha_{T}>0.55) #rightarrow #mu#mu + jets (#alpha_{T}>0.55)",'scale':None, 'reduce':"False", 'file_name':'Btag_mu_to_dimuon_alphaT_Cut','spread':"False"} 
+      test_2 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -1.,'box' : "True",'plot_title':"#mu + jets (no #alpha_{T}) #rightarrow #mu#mu + jets (no #alpha_{T})" ,'scale':None , 'reduce':"False", 'file_name':'Btag_mu_to_dimuon_no_alphaT_Cut','spread':"False" } 
       test_3 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -2.,'box' : "False",'plot_title':"#mu + jets (no #alpha_{T}) #rightarrow #mu + jets (#alpha_{T}>0.55)",'scale':None , 'reduce':"False", 'file_name':'Btag_mu_to_mu_with_without_alphaT','spread':"False" } 
-      test_4 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -3.,'box' : "False",'plot_title':"#mu#mu + jets (no #alpha_{T}) #rightarrow #mu#mu + jets (#alpha_{T}>0.55)",'scale':None , 'reduce':"True",'file_name':'Btag_dimuon_to_dimuon_with_without_alphaT','spread':"False"} 
+      test_4 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -3.,'box' : "False",'plot_title':"#mu#mu + jets (no #alpha_{T}) #rightarrow #mu#mu + jets (#alpha_{T}>0.55)",'scale':None , 'reduce':"False",'file_name':'Btag_dimuon_to_dimuon_with_without_alphaT','spread':"False"} 
       test_5 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -4.,'box' : "False",'plot_title':"#mu + jets (0-b-tag) #rightarrow #mu + jets (1-b-tag) (no #alpha_{T})",'scale': None , 'reduce':"False",'file_name':'Btag_mu_zero_mu_one_no_alphaT_Cut','spread':"False" } 
       test_6 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -5.,'box' : "False",'plot_title':"#mu + jets (0-b-tag) #rightarrow #mu + jets (>1-b-tag) (no #alpha_{T})",'scale':None , 'reduce':"False",'file_name':'Btag_mu_zero_mu_greater_one_no_alphaT_Cut','spread':"False"   }
       test_7 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -6.,'box' : "False",'plot_title':"#mu + jets (1-b-tag) #rightarrow #mu + jets (>1-b-tag) (no #alpha_{T})",'scale': None , 'reduce':"False",'file_name':'Btag_mu_one_mu_greater_one_no_alphaT_Cut','spread':"False"   }
       test_8 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -7.,'box' : "True",'plot_title':"#mu + jets (1-b-tag) #rightarrow #mu#mu + jets (1-b-tag) (no #alpha_{T})",'scale':None , 'reduce':"False",'file_name':'Btag_mu_one_dimuon_one_no_alphaT_Cut','spread':"False"  }
-      test_9 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -8,'box' : "False",'plot_title':"#mu + jets (1-b-tag)(no #alpha_{T}) #rightarrow #mu + jets (1-b-tag) (#alpha_{T} > 0.55)" ,'scale':None , 'reduce':"True",'file_name':'Btag_mu_one_mu_one_with_without_alphaT_Cut','spread':"False"  }
+      test_9 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -8,'box' : "False",'plot_title':"#mu + jets (1-b-tag)(no #alpha_{T}) #rightarrow #mu + jets (1-b-tag) (#alpha_{T} > 0.55)" ,'scale':None , 'reduce':"False",'file_name':'Btag_mu_one_mu_one_with_without_alphaT_Cut','spread':"False"  }
       test_10 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -9,'box' : "False",'plot_title':"#mu#mu + jets (1-b-tag)(no #alpha_{T}) #rightarrow #mu#mu + jets (1-b-tag) (#alpha_{T} > 0.55)" ,'scale':None , 'reduce':"True",'file_name':'Btag_dimuon_one_dimuon_one_with_without_alphaT','spread':"False"  }
-      test_11 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -10,'box' : "False",'plot_title':"#mu + jets (>1-b-tag)(no #alpha_{T}) #rightarrow #mu + jets (>1-b-tag) (#alpha_{T} > 0.55)" ,'scale':None , 'reduce':"True",'file_name':'Btag_mu_greater_one_mu_greater_one_with_without_alphaT','spread':"False"  }
+      test_11 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -10,'box' : "False",'plot_title':"#mu + jets (>1-b-tag)(no #alpha_{T}) #rightarrow #mu + jets (>1-b-tag) (#alpha_{T} > 0.55)" ,'scale':None , 'reduce':"False",'file_name':'Btag_mu_greater_one_mu_greater_one_with_without_alphaT','spread':"False"  }
       test_12 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -11.,'box' : "False",'plot_title':"#mu + jets (1-b-tag) #rightarrow #mu + jets (2-b-tag) (no #alpha_{T})",'scale': None , 'reduce':"False",'file_name':'Btag_mu_one_mu_two_no_alphaT_Cut','spread':"False"   }
       test_13 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -13.,'box' : "False",'plot_title':"#mu#mu + jets (1-b-tag) #rightarrow #mu#mu + jets (2-b-tag) (no #alpha_{T})",'scale': None , 'reduce':"False",'file_name':'Btag_mumu_one_mumu_two_no_alphaT_Cut','spread':"False"   }
       test_14 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -14.,'box' : "False",'plot_title':"#mu#mu + jets (0-b-tag) #rightarrow #mu#mu + jets (1-b-tag) (no #alpha_{T})",'scale': None , 'reduce':"False",'file_name':'Btag_mumu_zero_mmuu_one_no_alphaT_Cut','spread':"False" }
-      test_15 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -15.,'box' : "False",'plot_title':"#mu + jets (1-b-tag) #rightarrow #mu + jets (2-b-tag) ( no #alpha_{T})",'scale': None , 'reduce':"False",'file_name':'Btag_mu_one_mu_two_no_alphaT_Cut','spread':"False"   } 
+      test_15 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -15.,'box' : "False",'plot_title':"#mu + jets (1-b-tag) #rightarrow #mu + jets (2-b-tag) (#alpha_{T} > 0.55)",'scale': None , 'reduce':"False",'file_name':'Btag_mu_one_mu_two_with_alphaT_Cut','spread':"False"   } 
       test_16 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -4.,'box' : "False",'plot_title':"#mu + jets (0-b-tag) (no #alpha_{T}) #rightarrow #mu + jets (1-b-tag) (#alpha_{T} > 0.55)",'scale': None , 'reduce':"False",'file_name':'Btag_mu_zero_no_alphaT_mu_one_alphaT_Cut','spread':"False" }
       test_17 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -11.,'box' : "False",'plot_title':"#mu + jets (1-b-tag) (no #alpha_{T}) #rightarrow #mu + jets (2-b-tag) (#alpha_{T} >0.55)",'scale': None , 'reduce':"False",'file_name':'Btag_mu_one_no_alphaT_mu_two_alphaT_Cut','spread':"False"   }
-      test_18 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -8,'box' : "False",'plot_title':"#mu + jets (0-b-tag)(no #alpha_{T}) #rightarrow #mu + jets (0-b-tag) (#alpha_{T} > 0.55)" ,'scale':None , 'reduce':"True",'file_name':'Btag_mu_zero_mu_zero_with_without_alphaT_Cut','spread':"False"  }
-      test_19 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -19.,'box' : "True", 'plot_title':"#gamma + jets (1-btag) #rightarrow #mu#mu + jets (1-btag) (no #alphaT) ",'scale':None,'reduce':"True",'file_name':'Btag_one_gamma_to_dimuon','spread':'True' } 
-      test_20 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -19.,'box' : "True", 'plot_title':"#mu#mu + jets (no #alphaT) #rightarrow #gamma + jets ",'scale':None,'reduce':"True",'file_name':'Baseline_dimuon_to_gamma','spread':'True' }  
-      test_21 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -21.,'box' : "True", 'plot_title':"#gamma + jets (0-btag) #rightarrow #mu#mu + jets (0-btag) (no #alphaT) ",'scale':None,'reduce':"True",'file_name':'Btag_zero_gamma_to_dimuon','spread':'True' } 
-      test_22 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -22.,'box' : "True", 'plot_title':"#mu + jets (0-btag) #rightarrow #mu#mu + jets (#alphaT > 0.55) ",'scale':None,'reduce':"False",'file_name':'Btag_zero_mu_to_dimuon_Inclusive','spread':'True' } 
-      test_23 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -23.,'box' : "True", 'plot_title':"#mu + jets (0-btag) #rightarrow #mu#mu + jets ( no #alphaT) ",'scale':None,'reduce':"False",'file_name':'Btag_zero_mu_to_dimuon_Inclusive_noAlphaT','spread':'True' } 
-
-
+      test_18 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -8,'box' : "False",'plot_title':"#mu + jets (0-b-tag)(no #alpha_{T}) #rightarrow #mu + jets (0-b-tag) (#alpha_{T} > 0.55)" ,'scale':None , 'reduce':"False",'file_name':'Btag_mu_zero_mu_zero_with_without_alphaT_Cut','spread':"False"  }
+      test_19 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -19.,'box' : "True", 'plot_title':"#gamma + jets (1-btag) #rightarrow #mu#mu + jets (1-btag) (no #alphaT) ",'scale':None,'reduce':"False",'file_name':'Btag_one_gamma_to_dimuon','spread':'True' } 
+      test_20 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -19.,'box' : "True", 'plot_title':"#gamma + jets #rightarrow #mu#mu + jets (no #alphaT) ",'scale':None,'reduce':"True",'file_name':'Baseline_gamma_to_dimuon','spread':'True' }  
+      test_21 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -21.,'box' : "True", 'plot_title':"#gamma + jets (0-btag) #rightarrow #mu#mu + jets (0-btag) (no #alphaT) ",'scale':None,'reduce':"False",'file_name':'Btag_zero_gamma_to_dimuon','spread':'True' } 
 
       
-      #test_dicts = [test_1,test_2,test_3,test_4,test_5,test_6,test_7,test_8,test_9,test_10,test_11,test_12,test_13,test_14,test_15]
+      test_dicts = [test_1,test_2,test_3,test_4,test_5,test_8,test_14,test_12,test_20]
       #test_dicts = [test_5,test_17,test_16,test_12,test_9,test_18 ] 
-      #test_dicts = [test_5,test_15,test_20,test_2]
-      test_dicts = [test_23]
+      #test_dicts = [test_19,test_21]
+      #test_dicts = [
 
     for self.file in dict_list:
       for self.entry in sorted(self.file.iterkeys()):
         if self.Classic == "True":
 
-          if self.file[self.entry]['AlphaT'] == '0.55' and self.file[self.entry]['Btag'] == 'BaseLine':
+          if self.file[self.entry]['AlphaT'] == '0.55' and self.file[self.entry]['Btag'] == 'Inclusive':
             self.Fill_Dictionary(test_1,Control = "Muon", Signal = "DiMuon")
 
-          if self.file[self.entry]['AlphaT'] == '0.55' and self.file[self.entry]['Btag'] == 'BaseLine':
+          if self.file[self.entry]['AlphaT'] == '0.55' and self.file[self.entry]['Btag'] == 'Inclusive':
             self.Fill_Dictionary(test_2,Control = "Photon", Signal = "DiMuon")
 
-          if self.file[self.entry]['AlphaT'] == '0.55' and self.file[self.entry]['Btag'] == 'BaseLine':
+          if self.file[self.entry]['AlphaT'] == '0.55' and self.file[self.entry]['Btag'] == 'Inclusive':
             self.Fill_Dictionary(test_3,Control = "Photon", Signal = "Muon")
 
         else:
 
-          if self.file[self.entry]['AlphaT'] == '0.55' and self.file[self.entry]['Btag'] == 'BaseLine':
+          if self.file[self.entry]['AlphaT'] == '0.55' and self.file[self.entry]['Btag'] == 'Inclusive':
             self.Fill_Dictionary(test_1,Control = "Muon", Signal = "DiMuon")
 
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'BaseLine':
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive':
             self.Fill_Dictionary(test_2,Control = "Muon", Signal = "DiMuon") 
 
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'BaseLine' :
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' :
             self.Fill_Dictionary(test_3,Control = "Muon", Signal = "Muon",Not_Do = 'Signal') 
-          if self.file[self.entry]['AlphaT'] == '0.55' and self.file[self.entry]['Btag'] == 'BaseLine' :
+          if self.file[self.entry]['AlphaT'] == '0.55' and self.file[self.entry]['Btag'] == 'Inclusive' :
             self.Fill_Dictionary(test_3,Control = "Muon", Signal = "Muon",Not_Do = 'Control')         
 
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'BaseLine' :
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' :
             self.Fill_Dictionary(test_4,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Signal') 
-          if self.file[self.entry]['AlphaT'] == '0.55' and self.file[self.entry]['Btag'] == 'BaseLine' :
+          if self.file[self.entry]['AlphaT'] == '0.55' and self.file[self.entry]['Btag'] == 'Inclusive' :
             self.Fill_Dictionary(test_4,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Control')
 
           if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Zero_btags' :
@@ -184,9 +180,9 @@ class Jad_Compute(object):
           if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'One_btag' :
             self.Fill_Dictionary(test_14,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Control')
 
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'One_btag' :
+          if self.file[self.entry]['AlphaT'] == '0.55' and self.file[self.entry]['Btag'] == 'One_btag' :
             self.Fill_Dictionary(test_15,Control = "Muon", Signal = "Muon",Not_Do = 'Signal') 
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Two_btags' :
+          if self.file[self.entry]['AlphaT'] == '0.55' and self.file[self.entry]['Btag'] == 'Two_btags' :
             self.Fill_Dictionary(test_15,Control = "Muon", Signal = "Muon",Not_Do = 'Control')
 
           if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Zero_btags' :
@@ -209,25 +205,15 @@ class Jad_Compute(object):
           if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'One_btag':
             self.Fill_Dictionary(test_19,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Control')
  
-          if self.file[self.entry]['AlphaT'] == '0.55' and self.file[self.entry]['Btag'] == 'BaseLine':
-            self.Fill_Dictionary(test_20,Control = "Photon", Signal = "Photon",Not_Do = 'Control') 
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'BaseLine':
-            self.Fill_Dictionary(test_20,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Signal') 
+          if self.file[self.entry]['AlphaT'] == '0.55' and self.file[self.entry]['Btag'] == 'Inclusive':
+            self.Fill_Dictionary(test_20,Control = "Photon", Signal = "Photon",Not_Do = 'Signal') 
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive':
+            self.Fill_Dictionary(test_20,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Control') 
 
           if self.file[self.entry]['AlphaT'] == '0.55' and self.file[self.entry]['Btag'] == 'Zero_btags':
             self.Fill_Dictionary(test_21,Control = "Photon", Signal = "Photon",Not_Do = 'Signal') 
           if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Zero_btags':
             self.Fill_Dictionary(test_21,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Control')
-
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Zero_btags':
-            self.Fill_Dictionary(test_22,Control = "Muon", Signal = "Muon",Not_Do = 'Signal') 
-          if self.file[self.entry]['AlphaT'] == '0.55' and self.file[self.entry]['Btag'] == 'BaseLine':
-            self.Fill_Dictionary(test_22,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Control')
-
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Zero_btags':
-            self.Fill_Dictionary(test_23,Control = "Muon", Signal = "Muon",Not_Do = 'Signal') 
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'BaseLine':
-            self.Fill_Dictionary(test_23,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Control')
     
     self.spread_counter = 0
     for test in test_dicts:
@@ -322,9 +308,9 @@ class Jad_Compute(object):
         data.SetPointEYlow(i+1,errl)
 
 
-        if val > 2.2 or min < -2.2:
-          max = val*1.1
-          min = -val*1.1
+        #if val > 2.2 or min < -2.2:
+        #  max = val*1.1
+        #  min = -val*1.1
         #if val < -2.2: min = val*1.1
         #print "Prediction %s\n" % val
         #print "Error High %s\n" %errh
@@ -354,20 +340,9 @@ class Jad_Compute(object):
      data.Draw("AP")
 
      if box == 'True':
-        if self.Classic == "True":
-          bv = r.TBox(hist_low,-0.2,975.,0.2)
-          bv.Draw()
-        else:
-          bl = r.TBox(hist_low,-0.1,575.,0.1)
-          bl.SetFillColor(kGray)
-          bm = r.TBox(575,-0.2,775.,0.2)
-          bm.SetFillColor(kGray) 
-          bh = r.TBox(775,-0.4,975.,0.4)
-          bh.SetFillColor(kGray) 
-
-          bl.Draw()
-          bm.Draw()
-          bh.Draw()
+        bv = r.TBox(hist_low,-0.2,975.,0.2)
+        bv.SetFillColor(kGray) 
+        bv.Draw()
         data.Draw("p")
         
         

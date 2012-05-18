@@ -10,7 +10,6 @@ import array, ast
 from math import *
 from plottingUtils import *
 from Jad_Compute import *
-from Btag_calculation import *
 
 def MC_Scaler(htbin,alphat_slice,mc_yield,sample = '',error = '',Keep_AlphaT = ''):
 	  
@@ -23,8 +22,8 @@ def MC_Scaler(htbin,alphat_slice,mc_yield,sample = '',error = '',Keep_AlphaT = '
     if sample == "Muon" and str(htbin) not in ["275","325"] and Keep_AlphaT != "True":
       #print "In Muon Trigger Scaling"
       if error:
-        return float((error*0.913)*math.sqrt(((mc_yield/error)*(mc_yield/error))+(0.01*0.01)))
-      else:return float(mc_yield*0.913)    
+        return float((error*0.95)*math.sqrt(((mc_yield/error)*(mc_yield/error))+(0.01*0.01)))
+      else:return float(mc_yield*0.95)    
     else:
       #print "In AlphaT Trigger Scaling"
       if alphat_slice == '0.01': scale_factor = htbin +'_0.55'
@@ -33,7 +32,7 @@ def MC_Scaler(htbin,alphat_slice,mc_yield,sample = '',error = '',Keep_AlphaT = '
 
 class Number_Extractor(object):
 
-  def __init__(self,sample_settings,sample_list,number,c_file = "",Triggers = "",Closure = "",Stats = "",AlphaT='',Trans_Plots = '',Calculation = '',Split_Lumi = ''):
+  def __init__(self,sample_settings,sample_list,number,c_file = "",Triggers = "",Closure = "",Stats = "",AlphaT='',Trans_Plots = ''):
 
     print "\n\nGetting Numbers\n\n"
     self.Settings = sample_settings
@@ -44,19 +43,9 @@ class Number_Extractor(object):
     self.c_file = c_file
     self.Make_2D_Histos = Trans_Plots
     self.number = number
-    self.Lumi_List = {"Had":0,"Muon":0,"DiMuon":0}
-    if Split_Lumi == "True":
-        print "Multiple Luminosity being used" 
-        for key in self.Settings["Multi_Lumi"]:
-                print "Sample %s   : Lumi %sfb" %(key , self.Settings["Multi_Lumi"][key])
-                self.Lumi_List[key] = self.Settings["Multi_Lumi"][key]
-    else: 
-        print "Single Luminosity of All Samples is %s fb\n\n" %self.Settings["Lumo"]
-        for entry in self.Lumi_List: self.Lumi_List[entry] = self.Settings["Lumo"]
-    print self.Lumi_List
+    print "Luminosity of Sample is %s fb\n\n" %self.Settings["Lumo"]
     r.gROOT.SetBatch(True)
-    if Calculation: self.return_dict = Btag_Calc(sample_settings,sample_list,Calculation,number,AlphaT,self.Lumi_List).Make_Dict(sample_settings,sample_list,number) 
-    else:  self.Create_Dictionary(sample_settings,sample_list)
+    self.Create_Dictionary(sample_settings,sample_list)
     if self.Make_Root_Stats_File == "True": self.Begin_Stats_Root_Output(sample_settings)
     self.Prediction_Maker(sample_settings,self.return_dict)
     if self.Make_2D_Histos: self.Make_2D_Table(sample_settings,self.return_dict,self.Translation_Dict)
@@ -167,15 +156,16 @@ class Number_Extractor(object):
                 for histName in settings['plots']:
                     checkht = dir
                     dir = fi[1]+dir
-                    Luminosity = self.Lumi_List[fi[3]]
-                    normal =  GetSumHist(File = ["%s.root"%fi[0]], Directories = [dir], Hist = histName, Col = r.kBlack, Norm = None if "n" == key[0] else [float(Luminosity*1000)/100.], LegendText = "nBtag")  
+                    normal =  GetSumHist(File = ["%s.root"%fi[0]], Directories = [dir], Hist = histName, Col = r.kBlack, Norm = None if "n" == key[0] else [float(self.Settings["Lumo"]*1000)/100.], LegendText = "nBtag")  
                     normal.HideOverFlow()
                     if self.Keep_AlphaT == "True":
+                      #print "Keeping AlphaT Cut"
                       err = r.Double(0.0)
                       normal.hObj.IntegralAndError(int(float(lower)/0.01)+1,int(float(higher)/0.01),err)
                       table_entries +=" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.Integral(int(float(lower)/0.01)+1,int(float(higher)/0.01))),err,fi[2],fi[3],lower)
                       #table_entries +=" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.Integral(int(float(0.55)/0.01)+1,int(float(10)/0.01)) if fi[3] =="Had" or str(checkht[0:3]) == "275" or str(checkht[0:3]) == "325" else (normal.hObj.Integral(int(float(lower)/0.01)+1,int(float(higher)/0.01)))),err,fi[2],fi[3],lower)
                     else:
+                      #print "No AlphaT for Control Sample Higher Bins"
                       err = r.Double(0.0)
                       if (fi[3] == "Had" or str(checkht[0:3]) == "275" or str(checkht[0:3]) == "325"):normal.hObj.IntegralAndError(int(float(lower)/0.01)+1,int(float(higher)/0.01),err)
                       else: normal.hObj.IntegralAndError(1,2000,err)
@@ -185,10 +175,8 @@ class Number_Extractor(object):
          '''
          Photon dictionaries, uncomment as necessary
          '''
-         if self.number == "Two_btags": table_entries += self.photon_dict_two_btag() 
          if self.number == "Zero_btags": table_entries += self.photon_dict_zero_btag()  
-         if self.number == "One_btag": table_entries += self.photon_dict_one_btag() 
-         if self.number == "More_Than_Zero_btags": table_entries += self.photon_dict_btag()
+         if self.number == "One_btag": table_entries += self.photon_dict_one_btag()  
          #table_entries += self.photon_dict_btag()          
          if self.number == "BaseLine": table_entries += self.photon_dict()
 
@@ -260,27 +248,6 @@ class Number_Extractor(object):
     return s
 
 
-  def photon_dict_two_btag(self):
-    s= "\"phot1\":{\"HT\":\"275\",\"Yield\":0,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
-    s+= "\"phot2\":{\"HT\":\"325\",\"Yield\":0,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
-    s+= "\"phot3\":{\"HT\":\"375\",\"Yield\":16.,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":4.},\n"
-    s+= "\"phot4\":{\"HT\":\"475\",\"Yield\":6.,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":2.},\n"
-    s+= "\"phot5\":{\"HT\":\"575\",\"Yield\":0.,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":1.0},\n"
-    s+= "\"phot6\":{\"HT\":\"675\",\"Yield\":2.1,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":1.0},\n"
-    s+= "\"phot7\":{\"HT\":\"775\",\"Yield\":0.,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0.9},\n"
-    s+= "\"phot8\":{\"HT\":\"875\",\"Yield\":0.9,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0.9},\n"
-    s+= "\"nphot1\":{\"HT\":\"275\",\"Yield\":0,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
-    s+= "\"nphot2\":{\"HT\":\"325\",\"Yield\":0,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
-    s+= "\"nphot3\":{\"HT\":\"375\",\"Yield\":10.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
-    s+= "\"nphot4\":{\"HT\":\"475\",\"Yield\":4.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
-    s+= "\"nphot5\":{\"HT\":\"575\",\"Yield\":2.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
-    s+= "\"nphot6\":{\"HT\":\"675\",\"Yield\":4.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
-    s+= "\"nphot7\":{\"HT\":\"775\",\"Yield\":0.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
-    s+= "\"nphot8\":{\"HT\":\"875\",\"Yield\":0.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
-
-    return s
-
-
 
 
   def photon_dict(self):
@@ -344,6 +311,12 @@ class Number_Extractor(object):
       #self.alphat = ('0.55')
       entries = ('Data','Yield','SM_Stat_Error','Muon_Trans','DiMuon_Trans','TotError','AlphaT','Btag','SampleName')
       trans_entries = ('Tot_SM_Trans','Tot_SM_Trans_Error','Muon_Trans','Muon_Trans_Error','DiMuon_Trans','DiMuon_Trans_Error','Photon_Trans','Photon_Trans_Error')
+      MC_Weights = {"TTbar":0.00425452,"WJetsInc":0.0666131,"WJets250":0.000450549,"WJets300":0.00102329,"Zinv50":0.00485311,"Zinv100":0.00410382,"Zinv200":0.0013739,"DY":0.00849073,"Single_Tbar_tW":0.000921006,"Single_Tbar_t":0.000947643,"Single_T_tW":0.00091676,"Single_T_t":0.000915857,"WW":0.000722991,"WZ":0.000253803,"ZZ":0.00010278,"QCDb":1,"Photon":1.,"Data":1.}
+
+      #L1 OffSet MC Weights
+      #MC_Weights = {"TTbar":0.00425455,"WJetsInc":0.0507652,"WJets250":0.000400796,"WJets300":0.00102321,"Zinv50":0.00379111,"Zinv100":0.00318891,"Zinv200":0.00137389,"DY":0.00965997,"Single_Tbar_tW":0.00097485,"Single_Tbar_t":0.000947641,"Single_T_tW":0.000938672,"Single_T_t":0.00102475,"WW":0.000658555,"WZ":0.000246629,"ZZ":0.00010229,"QCDb":1,"Photon":1.,"Data":1.}
+
+
 
       #========
       self.Translation_Dict = dict.fromkeys(self.alphat)
@@ -428,10 +401,10 @@ class Number_Extractor(object):
 
         for entry,fi in dict.iteritems():
           if str(fi['AlphaT']) == str(slices).split('_')[0] :
-            #print str(slices).split('_')[0]
             Error = 0
-            if dict[entry]["Category"] == "Photon": Error = dict[entry]["Error"]*(0.48/4.55)*(1.15)
+            if dict[entry]["Category"] == "Photon": Error = dict[entry]["Error"]
             else : 
+              #Error = math.sqrt(dict[entry]["Yield"]*float(MC_Weights[dict[entry]["SampleType"]])*float(self.Settings["Lumo"]*10))
               Error = float(dict[entry]["Error"])
             if dict[entry]["SampleType"] == "Data":
               if dict[entry]["Category"] == "Had": 
@@ -569,7 +542,7 @@ class Number_Extractor(object):
 
             elif dict[entry]["Category"] == "Photon":
                 inphoton = True
-                self.Photon_Yield_Per_Bin[dict[entry]["HT"]]["Yield"] +=  dict[entry]["Yield"]*(0.48/4.55)*(1.15)
+                self.Photon_Yield_Per_Bin[dict[entry]["HT"]]["Yield"] +=  dict[entry]["Yield"]
                 self.Photon_Yield_Per_Bin[dict[entry]["HT"]]["TotError"].append(Error)
           
         for bin in self.Muon_Yield_Per_Bin: 
@@ -657,8 +630,8 @@ class Number_Extractor(object):
   def Jad_Output(self,input):
     print "\n\n"
     for file in input:
-      #print input
-      #print "\n\n\n\n"
+      print input
+      print "\n\n\n\n"
       self.c_file.append(file)
 
   def Begin_Stats_Root_Output(self,settings): 
@@ -682,9 +655,7 @@ class Number_Extractor(object):
         self.Stats.cd(dir)
         for hist in th1_plots:
           plot = TH1F(hist,"",1,0,1)
-          if dir == "had":plot.SetBinContent(1,self.Lumi_List["Had"])
-          if dir == "muon":plot.SetBinContent(1,self.Lumi_List["Muon"])
-          if dir == "mumu":plot.SetBinContent(1,self.Lumi_List["DiMuon"])
+          plot.SetBinContent(1,Lumi)
           if dir == "photon": plot.SetBinContent(1,Photon_Lumi) 
           plot.Write()
         for second_hist in th2_plots:
@@ -918,7 +889,7 @@ class Number_Extractor(object):
   def Latex_Table(self,dict,rows,caption = ""):
       s = "\n"
       s += r'''\begin{table}[ht!]'''
-      s += "\n\caption{%s %s fb$^{-1}$}"%(caption,str(self.Lumi_List["Had"]))
+      s += "\n\caption{%s %s fb$^{-1}$}"%(caption,str(self.Settings["Lumo"]))
       s += "\n\centering"
       s += "\n"+r'''\footnotesize'''
       s += "\n\\begin{tabular}{ |c|c|c|c|c| }"
