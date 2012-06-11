@@ -21,7 +21,7 @@ class Btag_Calc(object):
         self.btag_multiplicity = btag_measure
         self.Btag_Rate(btag_measure)
         self.DiMuon_Fit(self.Btag_Efficiencies)
-        #print self.Btag_Efficiencies["DiMuon"]
+        print self.Btag_Efficiencies["Had"]
         self.lumi_dict = lumi_dict
 
    def DiMuon_Fit(self,dictionary):
@@ -56,7 +56,7 @@ class Btag_Calc(object):
 
 
    def Make_Dict(self,settings,samples,number):
-
+        print "In here"
         htbins = ["275_325","325_375","375_475","475_575","575_675","675_775","775_875","875"]
         table_entries = "{"
         for key,fi in sorted(samples.iteritems()):
@@ -87,7 +87,12 @@ class Btag_Calc(object):
                                         plot = file.Get(sample_dir+"/"+subkey.GetName())
                    if fi[2] != "Data":table_entries += self.Make_Prediction(plot,fi[3],fi[2],number,dir[0:3],lower)
                    else: table_entries += self.Data_Yield(fi[0],fi[1],dir,lower,higher,fi[2],fi[3])
-        if number == "Inclusive" or number == "BaseLine": table_entries += self.photon_baseline_dict()
+        #if number == "Inclusive" or number == "BaseLine": table_entries += self.photon_baseline_dict()
+        if number == "Zero_btags": table_entries += self.photon_zero_dict()
+        if number == "One_btag": table_entries += self.photon_one_dict()
+        if number == "Two_btags": table_entries += self.photon_two_dict()
+
+
         table_entries += "}"
         return_dict = ast.literal_eval(table_entries)
         #print table_entries
@@ -110,6 +115,69 @@ class Btag_Calc(object):
             s+= "\"nphot5\":{\"HT\":\"575\",\"Yield\":18.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
             s+= "\"nphot6\":{\"HT\":\"675\",\"Yield\":6.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
             s+= "\"nphot7\":{\"HT\":\"775\",\"Yield\":1.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"nphot8\":{\"HT\":\"875\",\"Yield\":0.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+
+            return s
+
+   def photon_zero_dict(self):
+
+            s= "\"phot1\":{\"HT\":\"275\",\"Yield\":0,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"phot2\":{\"HT\":\"325\",\"Yield\":0,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"phot3\":{\"HT\":\"375\",\"Yield\":0,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"phot4\":{\"HT\":\"475\",\"Yield\":153.52,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":11.62},\n"
+            s+= "\"phot5\":{\"HT\":\"575\",\"Yield\":55.42,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":8.},\n"
+            s+= "\"phot6\":{\"HT\":\"675\",\"Yield\":20.65,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":4.0},\n"
+            s+= "\"phot7\":{\"HT\":\"775\",\"Yield\":8.09,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":2.5},\n"
+            s+= "\"phot8\":{\"HT\":\"875\",\"Yield\":5.75,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":1.73},\n"
+            s+= "\"nphot1\":{\"HT\":\"275\",\"Yield\":0,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"nphot2\":{\"HT\":\"325\",\"Yield\":0,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"nphot3\":{\"HT\":\"375\",\"Yield\":0,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"nphot4\":{\"HT\":\"475\",\"Yield\":135,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"nphot5\":{\"HT\":\"575\",\"Yield\":64.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"nphot6\":{\"HT\":\"675\",\"Yield\":16.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"nphot7\":{\"HT\":\"775\",\"Yield\":6.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"nphot8\":{\"HT\":\"875\",\"Yield\":3.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+
+            return s
+
+   def photon_one_dict(self):
+
+            s= "\"phot1\":{\"HT\":\"275\",\"Yield\":0,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"phot2\":{\"HT\":\"325\",\"Yield\":0,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"phot3\":{\"HT\":\"375\",\"Yield\":0,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"phot4\":{\"HT\":\"475\",\"Yield\":16.75,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":2.28},\n"
+            s+= "\"phot5\":{\"HT\":\"575\",\"Yield\":5.77,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":1.31},\n"
+            s+= "\"phot6\":{\"HT\":\"675\",\"Yield\":1.98,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0.59},\n"
+            s+= "\"phot7\":{\"HT\":\"775\",\"Yield\":0.54,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0.27},\n"
+            s+= "\"phot8\":{\"HT\":\"875\",\"Yield\":1.33,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0.7},\n"
+            s+= "\"nphot1\":{\"HT\":\"275\",\"Yield\":0,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"nphot2\":{\"HT\":\"325\",\"Yield\":0,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"nphot3\":{\"HT\":\"375\",\"Yield\":0,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"nphot4\":{\"HT\":\"475\",\"Yield\":29,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"nphot5\":{\"HT\":\"575\",\"Yield\":6.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"nphot6\":{\"HT\":\"675\",\"Yield\":5.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"nphot7\":{\"HT\":\"775\",\"Yield\":1.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"nphot8\":{\"HT\":\"875\",\"Yield\":0.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+
+            return s
+
+   def photon_two_dict(self):
+
+            s= "\"phot1\":{\"HT\":\"275\",\"Yield\":0,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"phot2\":{\"HT\":\"325\",\"Yield\":0,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"phot3\":{\"HT\":\"375\",\"Yield\":0,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"phot4\":{\"HT\":\"475\",\"Yield\":0.84,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0.34},\n"
+            s+= "\"phot5\":{\"HT\":\"575\",\"Yield\":1.76,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0.8},\n"
+            s+= "\"phot6\":{\"HT\":\"675\",\"Yield\":0.03,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0.03},\n"
+            s+= "\"phot7\":{\"HT\":\"775\",\"Yield\":0.003,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0.003},\n"
+            s+= "\"phot8\":{\"HT\":\"875\",\"Yield\":0.3,\"SampleType\":\"Photon\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0.3},\n"
+            s+= "\"nphot1\":{\"HT\":\"275\",\"Yield\":0,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"nphot2\":{\"HT\":\"325\",\"Yield\":0,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"nphot3\":{\"HT\":\"375\",\"Yield\":0,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"nphot4\":{\"HT\":\"475\",\"Yield\":4,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"nphot5\":{\"HT\":\"575\",\"Yield\":2.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"nphot6\":{\"HT\":\"675\",\"Yield\":0.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
+            s+= "\"nphot7\":{\"HT\":\"775\",\"Yield\":0.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
             s+= "\"nphot8\":{\"HT\":\"875\",\"Yield\":0.,\"SampleType\":\"Data\",\"Category\":\"Photon\",\"AlphaT\":0.55,\"Error\":0},\n"
 
             return s
@@ -137,7 +205,7 @@ class Btag_Calc(object):
 
 
    def Make_Prediction(self,plot,sample,category,btag_number,htbin,alphaT):  
-        
+        #print "Making Prediction" 
         def Pred_Zero(plot,htbin,sample,e,m):
              
           sum_zero = 0
@@ -193,6 +261,7 @@ class Btag_Calc(object):
 
           for b in range (0,plot.GetNbinsX()):
             for noB in range(2,plot.GetNbinsY()):
+              #print "Pred_Two = %s" %pred_two
               if b == 3: pred_two += pow((1-e),b)*noB*0.5*(noB-1)*m*m*pow((1-m),noB-2)*plot.GetBinContent(b+1,noB+1)
               else:pred_two += pow((1-e),b)*noB*0.5*(noB-1)*m*m*pow((1-m),noB-2)*plot.GetBinContent(b+1,noB+1)
           

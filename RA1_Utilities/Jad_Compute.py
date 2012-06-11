@@ -18,7 +18,7 @@ class Jad_Compute(object):
       print "\n\n Now Computing Jad Translation Plots\n\n"
       self.Lumo = Lumo
       self.Classic = classic
-      #print dict_list
+      print dict_list
       self.MakeVectors(dict_list)
 
   def MakeVectors(self,dict_list):
@@ -87,15 +87,23 @@ class Jad_Compute(object):
       test_16 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -4.,'box' : "False",'plot_title':"#mu + jets (0-b-tag) (no #alpha_{T}) #rightarrow #mu + jets (1-b-tag) (#alpha_{T} > 0.55)",'scale': None , 'reduce':"False",'file_name':'Btag_mu_zero_no_alphaT_mu_one_alphaT_Cut','spread':"False" }
       test_17 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -11.,'box' : "False",'plot_title':"#mu + jets (1-b-tag) (no #alpha_{T}) #rightarrow #mu + jets (2-b-tag) (#alpha_{T} >0.55)",'scale': None , 'reduce':"False",'file_name':'Btag_mu_one_no_alphaT_mu_two_alphaT_Cut','spread':"False"   }
       test_18 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -8,'box' : "False",'plot_title':"#mu + jets (0-b-tag)(no #alpha_{T}) #rightarrow #mu + jets (0-b-tag) (#alpha_{T} > 0.55)" ,'scale':None , 'reduce':"False",'file_name':'Btag_mu_zero_mu_zero_with_without_alphaT_Cut','spread':"False"  }
-      test_19 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -19.,'box' : "True", 'plot_title':"#gamma + jets (1-btag) #rightarrow #mu#mu + jets (1-btag) (no #alphaT) ",'scale':None,'reduce':"False",'file_name':'Btag_one_gamma_to_dimuon','spread':'True' } 
+      test_19 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -19.,'box' : "True", 'plot_title':"#gamma + jets (1-btag) #rightarrow #mu#mu + jets (1-btag) (no #alphaT) ",'scale':None,'reduce':"True",'file_name':'Btag_one_gamma_to_dimuon','spread':'True' } 
       test_20 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -19.,'box' : "True", 'plot_title':"#gamma + jets #rightarrow #mu#mu + jets (no #alphaT) ",'scale':None,'reduce':"True",'file_name':'Baseline_gamma_to_dimuon','spread':'True' }  
-      test_21 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -21.,'box' : "True", 'plot_title':"#gamma + jets (0-btag) #rightarrow #mu#mu + jets (0-btag) (no #alphaT) ",'scale':None,'reduce':"False",'file_name':'Btag_zero_gamma_to_dimuon','spread':'True' } 
+      test_21 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -21.,'box' : "True", 'plot_title':"#gamma + jets (0-btag) #rightarrow #mu#mu + jets (no #alphaT) ",'scale':None,'reduce':"True",'file_name':'Btag_zero_gamma_to_inclusive_dimuon','spread':'True' }
+      test_22 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'DCE':[],'DSE':[],'option' : -1.,'box' : "True",'plot_title':"ttbar + jets 7TeV (no #alpha_{T}) #rightarrow ttbar + jets 8TeV (no #alpha_{T})" ,'scale':None , 'reduce':"False", 'file_name':'Btag_ttbar_7_8_TeV','spread':"False" } 
+      test_23 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'DCE':[],'DSE':[],'option' : -1.,'box' : "True",'plot_title':"mumu + jets 7TeV #rightarrow mu + jets 8TeV(TTbar only)" ,'scale':None , 'reduce':"False", 'file_name':'Btag_dimuon_ttbar_7_8_TeV','spread':"False" }
+      test_24 = {'MCS' : [], 'MCSE': [],'MCC': [], 'MCCE':[],'DC':[],'DS':[],'option' : -100.,'box' : "True", 'plot_title':"#mu + jets (#alpha_{T}>0.55) #rightarrow #mu#mu + jets (no #alpha_{T})",'scale':None, 'reduce':"False", 'file_name':'Btag_mu_to_dimuon_alphaT_Cut','spread':"False"} 
+
+
+
+
+
 
       
-      test_dicts = [test_1,test_2,test_3,test_4,test_5,test_8,test_14,test_12,test_20]
+      test_dicts = [test_1,test_2,test_3,test_4,test_5,test_8,test_14,test_19,test_12,test_21,test_13,test_14,test_15,test_7,test_6,test_24]
       #test_dicts = [test_5,test_17,test_16,test_12,test_9,test_18 ] 
       #test_dicts = [test_19,test_21]
-      #test_dicts = [
+      #test_dicts = [test_22,test_23]
 
     for self.file in dict_list:
       for self.entry in sorted(self.file.iterkeys()):
@@ -212,15 +220,35 @@ class Jad_Compute(object):
 
           if self.file[self.entry]['AlphaT'] == '0.55' and self.file[self.entry]['Btag'] == 'Zero_btags':
             self.Fill_Dictionary(test_21,Control = "Photon", Signal = "Photon",Not_Do = 'Signal') 
-          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Zero_btags':
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive':
             self.Fill_Dictionary(test_21,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Control')
+
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive':
+            self.Fill_MC_Dictionary(test_22, Signal = "Muon_WJets",Signal_1="Muon_TTbar")
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive':
+            self.Fill_MC_Dictionary(test_22,Control = "Had_WJets", Control_1 = "Had_TTbar")
+
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive':
+            self.Fill_MC_Dictionary(test_23,Control = "DiMu_WJets", Signal = "Muon_WJets",Control_1 = "DiMu_TTbar",Signal_1="Muon_TTbar")
+ 
+          if self.file[self.entry]['AlphaT'] == '0.55' and self.file[self.entry]['Btag'] == 'Inclusive' :
+            self.Fill_Dictionary(test_24,Control = "Muon", Signal = "Muon",Not_Do = 'Signal') 
+          if self.file[self.entry]['AlphaT'] == '0.01' and self.file[self.entry]['Btag'] == 'Inclusive' :
+            self.Fill_Dictionary(test_24,Control = "DiMuon", Signal = "DiMuon",Not_Do = 'Control')         
+
+
+
+
     
     self.spread_counter = 0
     for test in test_dicts:
        if self.Classic == "True":
         self.Make_Plots(test['MCS'],test['MCSE'],test['MCC'],test['MCCE'],test['DC'],test['DS'],test['option'],test['box'],test['plot_title'],test['scale'],test['file_name'],reduce = test['reduce'],spread = test['spread'])
-       else:  
+       else: 
+        print test 
+        #self.Make_Plots(test['MCS'],test['MCSE'],test['MCC'],test['MCCE'],test['DC'],test['DS'],test['option'],test['box'],test['plot_title'],test['scale'],test['file_name'],reduce = test['reduce'],spread = test['spread'],dc_error =test['DCE'],ds_error=test['DSE'])
         self.Make_Plots(test['MCS'],test['MCSE'],test['MCC'],test['MCCE'],test['DC'],test['DS'],test['option'],test['box'],test['plot_title'],test['scale'],test['file_name'],reduce = test['reduce'],spread = test['spread'])
+
 
     for hist in self.Spread_Array:
       hist.Write()
@@ -236,11 +264,29 @@ class Jad_Compute(object):
             closure_dictionary['MCSE'].append(self.file[self.entry]['SM_Stat_Error'])
             closure_dictionary['DS'].append(self.file[self.entry]['Data'])
 
+          return closure_dictionary
+ 
+  def Fill_MC_Dictionary(self,closure_dictionary,Control = '',Signal = '',Control_1 = '',Signal_1 = ''):
+          
+          if self.file[self.entry]['SampleName'] == Control and Control:
+            closure_dictionary['DC'].append(self.file[self.entry]['Yield'])
+            closure_dictionary['DCE'].append(self.file[self.entry]['SM_Stat_Error'])
+          elif self.file[self.entry]['SampleName'] == Signal and Signal:
+            closure_dictionary['DS'].append(self.file[self.entry]['Yield'])
+            closure_dictionary['DSE'].append(self.file[self.entry]['SM_Stat_Error'])
+
+          elif self.file[self.entry]['SampleName'] == Control_1:
+            closure_dictionary['MCC'].append(self.file[self.entry]['Yield'])
+            closure_dictionary['MCCE'].append(self.file[self.entry]['SM_Stat_Error'])
+          elif self.file[self.entry]['SampleName'] == Signal_1:
+            closure_dictionary['MCS'].append(self.file[self.entry]['Yield'])
+            closure_dictionary['MCSE'].append(self.file[self.entry]['SM_Stat_Error'])
+
           return closure_dictionary 
 
-  def Make_Plots(self,MCS,MCSE,MCC,MCCE,DC,DS,option,box = '',plot_title='',scale='',file_name='',reduce='',spread=''):
+  def Make_Plots(self,MCS,MCSE,MCC,MCCE,DC,DS,option,box = '',plot_title='',scale='',file_name='',reduce='',spread='',dc_error='',ds_error=''):
      if spread == "True": self.spread_counter = self.spread_counter + 1
-     if reduce == "True": hist_low = 375
+     if reduce == "True": hist_low = 475
      else: hist_low = 275
 
      max = 2.0
@@ -277,9 +323,14 @@ class Jad_Compute(object):
         except ZeroDivisionError:val = 0.0
         data.SetPoint(i+1,self.axis[i+j]+offset,val-1.0)
         #Make Errors
-        eh = sqrt(DC[i])
-        el = sqrt(DC[i])
-        if DC[i] < 10.: self.Poission(DC[i],eh,el)
+        if dc_error:
+           print "inher"
+           eh = dc_error[i]
+           el = dc_error[i]
+        else:
+           eh = sqrt(DC[i])
+           el = sqrt(DC[i])
+           if DC[i] < 10.: self.Poission(DC[i],eh,el)
 
         #Total Error on prediction
         try:errh = prediction * sqrt( ((MCSE[i] / MCS[i]) * (MCSE[i] / MCS[i])) + ((MCCE[i] / MCC[i]) * (MCCE[i] / MCC[i])) + ((eh / DC[i]) * (eh / DC[i])) )
@@ -308,9 +359,9 @@ class Jad_Compute(object):
         data.SetPointEYlow(i+1,errl)
 
 
-        #if val > 2.2 or min < -2.2:
-        #  max = val*1.1
-        #  min = -val*1.1
+        #if val > 2.2 or val < -2.2:
+        #  max = fabs(val)*1.1
+        #  min = -fabs(val)*1.1
         #if val < -2.2: min = val*1.1
         #print "Prediction %s\n" % val
         #print "Error High %s\n" %errh
@@ -356,7 +407,7 @@ class Jad_Compute(object):
      leg.SetTextSize(0.04)
      #leg.Draw("SAME")
 
-     tex = r.TLatex(0.12,0.84,"CMS, %s fb^{-1}, #sqrt{s} = 7 TeV" % self.Lumo )
+     tex = r.TLatex(0.12,0.84,"CMS, %s fb^{-1}, #sqrt{s} = 8 TeV" % self.Lumo )
      tex.SetNDC()
      tex.SetTextSize(0.04)
      tex.Draw("SAME")

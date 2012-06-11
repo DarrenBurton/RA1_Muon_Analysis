@@ -14,17 +14,26 @@ from Btag_calculation import *
 
 def MC_Scaler(htbin,alphat_slice,mc_yield,sample = '',error = '',Keep_AlphaT = ''):
 	  
-    AlphaT_Scale = {"275_0.55":float(0.727),"325_0.55":float(0.869),"375_0.55":float(0.943),"475_0.55":float(1.0),"575_0.55":1.,"675_0.55":1.,"775_0.55":1.,"875_0.55":1.,"575_0.53":float(0.970),"675_0.53":float(0.970),"775_0.53":float(0.970),"875_0.53":float(0.970),"775_0.52":1.,"875_0.52":1.}
+    #AlphaT_Scale = {"275_0.55":float(0.727),"325_0.55":float(0.869),"375_0.55":float(0.943),"475_0.55":float(1.0),"575_0.55":1.,"675_0.55":1.,"775_0.55":1.,"875_0.55":1.,"575_0.53":float(0.970),"675_0.53":float(0.970),"775_0.53":float(0.970),"875_0.53":float(0.970),"775_0.52":1.,"875_0.52":1.}
 
-    AlphaT_Error = {"275_0.55":float(0.018),"325_0.55":float(0.028),"375_0.55":float(0.009),"475_0.55":float(0.048),"575_0.55":float(0.048),"675_0.55":float(0.048),"775_0.55":float(0.048),"875_0.55":float(0.048),"575_0.53":float(0.05),"675_0.53":float(0.05),"775_0.53":float(0.05),"875_0.53":float(0.05),"775_0.52":float(0.207),"875_0.52":float(0.207)}
+    #AlphaT_Error = {"275_0.55":float(0.018),"325_0.55":float(0.028),"375_0.55":float(0.009),"475_0.55":float(0.048),"575_0.55":float(0.048),"675_0.55":float(0.048),"775_0.55":float(0.048),"875_0.55":float(0.048),"575_0.53":float(0.05),"675_0.53":float(0.05),"775_0.53":float(0.05),"875_0.53":float(0.05),"775_0.52":float(0.207),"875_0.52":float(0.207)}
+
+    AlphaT_Scale = {"275_0.55":float(0.916),"325_0.55":float(0.988),"375_0.55":float(1.0),"475_0.55":float(1.0),"575_0.55":1.,"675_0.55":1.,"775_0.55":1.,"875_0.55":1.,"575_0.53":float(0.970),"675_0.53":float(0.970),"775_0.53":float(0.970),"875_0.53":float(0.970),"775_0.52":1.,"875_0.52":1.}
+
+    AlphaT_Error = {"275_0.55":float(0.011),"325_0.55":float(0.009),"375_0.55":float(0.011),"475_0.55":float(0.032),"575_0.55":float(0.059),"675_0.55":float(0.059),"775_0.55":float(0.059),"875_0.55":float(0.059),"575_0.53":float(0.05),"675_0.53":float(0.05),"775_0.53":float(0.05),"875_0.53":float(0.05),"775_0.52":float(0.207),"875_0.52":float(0.207)}
+
+    DiMuon_Scale = {"275":float(0.95),"325":float(0.96),"375":float(0.96),"475":float(0.97),"575":float(0.97),"675":float(0.97),"775":float(0.98),"875":float(0.98)}
+
 
     scale_factor = htbin +'_'+ alphat_slice
     if mc_yield == 0: return float(mc_yield)    
-    if sample == "Muon" and str(htbin) not in ["275","325"] and Keep_AlphaT != "True":
-      #print "In Muon Trigger Scaling"
+    if sample == "Muon":  #and str(htbin) not in ["275","325"] and Keep_AlphaT != "True":
       if error:
-        return float((error*0.913)*math.sqrt(((mc_yield/error)*(mc_yield/error))+(0.01*0.01)))
-      else:return float(mc_yield*0.913)    
+        return float((error*0.88)*math.sqrt(((mc_yield/error)*(mc_yield/error))+(0.05*0.05)))
+      else:return float(mc_yield*0.88)  
+    elif sample == "DiMuon":
+        if error: return float((error*DiMuon_Scale[htbin])*math.sqrt(((mc_yield/error)*(mc_yield/error))+(0.03*0.03)))
+        else: return float(mc_yield*DiMuon_Scale[htbin])
     else:
       #print "In AlphaT Trigger Scaling"
       if alphat_slice == '0.01': scale_factor = htbin +'_0.55'
@@ -177,10 +186,10 @@ class Number_Extractor(object):
                       #table_entries +=" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.Integral(int(float(0.55)/0.01)+1,int(float(10)/0.01)) if fi[3] =="Had" or str(checkht[0:3]) == "275" or str(checkht[0:3]) == "325" else (normal.hObj.Integral(int(float(lower)/0.01)+1,int(float(higher)/0.01)))),err,fi[2],fi[3],lower)
                     else:
                       err = r.Double(0.0)
-                      if (fi[3] == "Had" or str(checkht[0:3]) == "275" or str(checkht[0:3]) == "325"):normal.hObj.IntegralAndError(int(float(lower)/0.01)+1,int(float(higher)/0.01),err)
+                      if fi[3] == "Had":normal.hObj.IntegralAndError(int(float(lower)/0.01)+1,int(float(higher)/0.01),err)
                       else: normal.hObj.IntegralAndError(1,2000,err)
 
-                      table_entries +=" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.Integral(int(float(lower)/0.01)+1,int(float(higher)/0.01)) if fi[3] =="Had" or str(checkht[0:3]) == "275" or str(checkht[0:3]) == "325" else (normal.hObj.Integral())),err,fi[2],fi[3],lower)
+                      table_entries +=" \"Yield\": %.3e ,\"Error\":\"%s\",\"SampleType\":\"%s\",\"Category\":\"%s\",\"AlphaT\":%s},\n"%((normal.hObj.Integral(int(float(lower)/0.01)+1,int(float(higher)/0.01)) if fi[3] =="Had" else (normal.hObj.Integral())),err,fi[2],fi[3],lower)
                     normal.a.Close()
          '''
          Photon dictionaries, uncomment as necessary
@@ -411,11 +420,15 @@ class Number_Extractor(object):
 
         had_dict = [self.Had_Yield_Per_Bin,self.Had_Muon_WJets_Yield_Per_Bin,self.Had_Muon_TTbar_Yield_Per_Bin,self.Had_Muon_Yield_Per_Bin,self.Had_Zmumu_Yield_Per_Bin,        self.Had_Single_Top_Yield_Per_Bin,self.Had_DY_Yield_Per_Bin,self.Had_WW_Yield_Per_Bin, self.Had_WZ_Yield_Per_Bin,self.Had_ZZ_Yield_Per_Bin, self.Had_QCD_B_Yield_Per_Bin]
 
-        muon_dict = [self.Muon_Single_Top_Yield_Per_Bin, self.Muon_DY_Yield_Per_Bin,self.DiMuon_Yield_Per_Bin,self.Muon_Yield_Per_Bin,self.Muon_TTbar_Yield_Per_Bin,self.Muon_WJets_Yield_Per_Bin,self.DiMuon_Single_Top_Yield_Per_Bin, self.DiMuon_DY_Yield_Per_Bin,self.DiMuon_TTbar_Yield_Per_Bin,self.DiMuon_WJets_Yield_Per_Bin, self.DiMuon_WW_Yield_Per_Bin, self.DiMuon_WZ_Yield_Per_Bin,self.DiMuon_ZZ_Yield_Per_Bin, self.DiMuon_QCD_B_Yield_Per_Bin,self.Muon_WW_Yield_Per_Bin, self.Muon_WZ_Yield_Per_Bin,self.Muon_ZZ_Yield_Per_Bin, self.Muon_QCD_B_Yield_Per_Bin, self.Muon_Zinv_Yield_Per_Bin,self.DiMuon_Zinv_Yield_Per_Bin  ]
+        muon_dict = [self.Muon_Single_Top_Yield_Per_Bin, self.Muon_DY_Yield_Per_Bin,self.DiMuon_Yield_Per_Bin,self.Muon_Yield_Per_Bin,self.Muon_TTbar_Yield_Per_Bin,self.Muon_WJets_Yield_Per_Bin,self.Muon_WW_Yield_Per_Bin, self.Muon_WZ_Yield_Per_Bin,self.Muon_ZZ_Yield_Per_Bin, self.Muon_QCD_B_Yield_Per_Bin, self.Muon_Zinv_Yield_Per_Bin  ]
+
+        dimuon_dict = [ self.DiMuon_Single_Top_Yield_Per_Bin, self.DiMuon_DY_Yield_Per_Bin,self.DiMuon_TTbar_Yield_Per_Bin,self.DiMuon_WJets_Yield_Per_Bin, self.DiMuon_WW_Yield_Per_Bin, self.DiMuon_WZ_Yield_Per_Bin,self.DiMuon_ZZ_Yield_Per_Bin, self.DiMuon_QCD_B_Yield_Per_Bin,self.DiMuon_Zinv_Yield_Per_Bin  ]
 
         # List of Dictionaries for Jad's Closure Tests
 
         jad_dictionaries = [self.Muon_Yield_Per_Bin,self.DiMuon_Yield_Per_Bin,self.Photon_Yield_Per_Bin]
+        #jad_dictionaries = [self.Muon_TTbar_Yield_Per_Bin,self.Had_Muon_TTbar_Yield_Per_Bin,self.Had_Muon_WJets_Yield_Per_Bin,self.Muon_WJets_Yield_Per_Bin,self.DiMuon_WJets_Yield_Per_Bin,self.DiMuon_TTbar_Yield_Per_Bin]
+
         for dicto in dictionaries:
           for key in self.bins:
             dicto[key] = dict.fromkeys(entries,0)
@@ -430,7 +443,7 @@ class Number_Extractor(object):
           if str(fi['AlphaT']) == str(slices).split('_')[0] :
             #print str(slices).split('_')[0]
             Error = 0
-            if dict[entry]["Category"] == "Photon": Error = dict[entry]["Error"]*(0.48/4.55)*(1.15)
+            if dict[entry]["Category"] == "Photon": Error = dict[entry]["Error"]  #*(0.48/4.55)*(1.15)
             else : 
               Error = float(dict[entry]["Error"])
             if dict[entry]["SampleType"] == "Data":
@@ -476,9 +489,13 @@ class Number_Extractor(object):
                   elif dict[entry]["SampleType"] == "TTbar":
                      self.Had_Muon_TTbar_Yield_Per_Bin[dict[entry]["HT"]]["Yield"] +=  dict[entry]["Yield"]
                      self.Had_Muon_TTbar_Yield_Per_Bin[dict[entry]["HT"]]["TotError"].append(Error)
+                     self.Had_Muon_TTbar_Yield_Per_Bin[dict[entry]["HT"]]["SampleName"] = "Had_TTbar" 
+
                   elif dict[entry]["SampleType"] == "WJetsInc" or dict[entry]["SampleType"] == "WJets250" or dict[entry]["SampleType"] == "WJets300":
                       self.Had_Muon_WJets_Yield_Per_Bin[dict[entry]["HT"]]["Yield"] +=  dict[entry]["Yield"]
                       self.Had_Muon_WJets_Yield_Per_Bin[dict[entry]["HT"]]["TotError"].append(Error)
+                      self.Had_Muon_WJets_Yield_Per_Bin[dict[entry]["HT"]]["SampleName"] = "Had_WJets" 
+
                   elif dict[entry]["SampleType"] == "DY":
                       self.Had_DY_Yield_Per_Bin[dict[entry]["HT"]]["Yield"] +=  dict[entry]["Yield"]
                       self.Had_DY_Yield_Per_Bin[dict[entry]["HT"]]["TotError"].append(Error)
@@ -499,9 +516,13 @@ class Number_Extractor(object):
                 if dict[entry]["SampleType"] == "TTbar":
                      self.Muon_TTbar_Yield_Per_Bin[dict[entry]["HT"]]["Yield"] +=  dict[entry]["Yield"]
                      self.Muon_TTbar_Yield_Per_Bin[dict[entry]["HT"]]["TotError"].append(Error)
+                     self.Muon_TTbar_Yield_Per_Bin[dict[entry]["HT"]]["SampleName"] = "Muon_TTbar" 
+
                 elif dict[entry]["SampleType"] == "WJetsInc" or dict[entry]["SampleType"] == "WJets250" or dict[entry]["SampleType"] == "WJets300":
                      self.Muon_WJets_Yield_Per_Bin[dict[entry]["HT"]]["Yield"] +=  dict[entry]["Yield"]
                      self.Muon_WJets_Yield_Per_Bin[dict[entry]["HT"]]["TotError"].append(Error)
+                     self.Muon_WJets_Yield_Per_Bin[dict[entry]["HT"]]["SampleName"] = "Muon_WJets" 
+
                 elif dict[entry]["SampleType"] == "DY":
                       self.Muon_DY_Yield_Per_Bin[dict[entry]["HT"]]["Yield"] +=  dict[entry]["Yield"]
                       self.Muon_DY_Yield_Per_Bin[dict[entry]["HT"]]["TotError"].append(Error)
@@ -536,9 +557,13 @@ class Number_Extractor(object):
                 if dict[entry]["SampleType"] == "TTbar":
                      self.DiMuon_TTbar_Yield_Per_Bin[dict[entry]["HT"]]["Yield"] +=  dict[entry]["Yield"]
                      self.DiMuon_TTbar_Yield_Per_Bin[dict[entry]["HT"]]["TotError"].append(Error)
+                     self.DiMuon_TTbar_Yield_Per_Bin[dict[entry]["HT"]]["SampleName"] = "DiMu_TTbar" 
+
                 elif dict[entry]["SampleType"] == "WJetsInc" or dict[entry]["SampleType"] == "WJets250" or dict[entry]["SampleType"] == "WJets300":
                      self.DiMuon_WJets_Yield_Per_Bin[dict[entry]["HT"]]["Yield"] +=  dict[entry]["Yield"]
                      self.DiMuon_WJets_Yield_Per_Bin[dict[entry]["HT"]]["TotError"].append(Error)
+                     self.DiMuon_WJets_Yield_Per_Bin[dict[entry]["HT"]]["SampleName"] = "DiMu_WJets" 
+
                 elif dict[entry]["SampleType"] == "DY":
                       self.DiMuon_DY_Yield_Per_Bin[dict[entry]["HT"]]["Yield"] +=  dict[entry]["Yield"]
                       self.DiMuon_DY_Yield_Per_Bin[dict[entry]["HT"]]["TotError"].append(Error)
@@ -569,7 +594,7 @@ class Number_Extractor(object):
 
             elif dict[entry]["Category"] == "Photon":
                 inphoton = True
-                self.Photon_Yield_Per_Bin[dict[entry]["HT"]]["Yield"] +=  dict[entry]["Yield"]*(0.48/4.55)*(1.15)
+                self.Photon_Yield_Per_Bin[dict[entry]["HT"]]["Yield"] +=  dict[entry]["Yield"] #*(0.48/4.55)*(1.15)
                 self.Photon_Yield_Per_Bin[dict[entry]["HT"]]["TotError"].append(Error)
           
         for bin in self.Muon_Yield_Per_Bin: 
@@ -586,6 +611,9 @@ class Number_Extractor(object):
             for muon_sample in muon_dict:
               muon_sample[bin]["Yield"] = MC_Scaler(bin,muon_sample[bin]['AlphaT'],muon_sample[bin]["Yield"],sample = "Muon",Keep_AlphaT = self.Keep_AlphaT)
               muon_sample[bin]["SM_Stat_Error"] = MC_Scaler(bin,muon_sample[bin]['AlphaT'],muon_sample[bin]["SM_Stat_Error"],sample = "Muon",error = muon_sample[bin]["Yield"],Keep_AlphaT = self.Keep_AlphaT)
+            for dimuon_sample in dimuon_dict:
+              dimuon_sample[bin]["Yield"] = MC_Scaler(bin,dimuon_sample[bin]['AlphaT'],dimuon_sample[bin]["Yield"],sample = "DiMuon",Keep_AlphaT = self.Keep_AlphaT)
+              dimuon_sample[bin]["SM_Stat_Error"] = MC_Scaler(bin,dimuon_sample[bin]['AlphaT'],dimuon_sample[bin]["SM_Stat_Error"],sample = "DiMuon",error = dimuon_sample[bin]["Yield"],Keep_AlphaT = self.Keep_AlphaT)
 
        
         if inhad_wjet and indimuon and inmuon and inhad_zinv:
@@ -818,8 +846,8 @@ class Number_Extractor(object):
 
       if category == "Di_Muon": self.Latex_Table(dict,caption = "AlphaT: %s Muon to Predict DiMuon closure test"%alphat_slice[:4], 
             rows = [{"label": r'''$\mu\bar{\mu} +$ jets selection MC''',"entryFunc": self.MakeList(self.DiMuon_Yield_Per_Bin,"Yield","SM_Stat_Error")},
-                    {"label": r'''WJets DiMuon MC''',"entryFunc": self.MakeList(self.DiMuon_TTbar_Yield_Per_Bin,"Yield","SM_Stat_Error")},
-                    {"label": r'''$t\bar{t}$ DiMuon MC''',"entryFunc": self.MakeList(self.DiMuon_WJets_Yield_Per_Bin,"Yield","SM_Stat_Error")},
+                    {"label": r'''WJets DiMuon MC''',"entryFunc": self.MakeList(self.DiMuon_WJets_Yield_Per_Bin,"Yield","SM_Stat_Error")},
+                    {"label": r'''$t\bar{t}$ DiMuon MC''',"entryFunc": self.MakeList(self.DiMuon_TTbar_Yield_Per_Bin,"Yield","SM_Stat_Error")},
                     {"label": r'''Single $t$ DiMuon MC''',"entryFunc": self.MakeList(self.DiMuon_Single_Top_Yield_Per_Bin,"Yield","SM_Stat_Error")},
                     {"label": r'''DY DiMuon MC''',"entryFunc": self.MakeList(self.DiMuon_DY_Yield_Per_Bin,"Yield","SM_Stat_Error"),"addhline":True},
                     {"label": r'''$\mu +$ jets selection MC''',         "entryFunc":self.MakeList(self.Muon_Yield_Per_Bin,"Yield","SM_Stat_Error")},
